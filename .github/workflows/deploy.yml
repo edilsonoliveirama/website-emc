@@ -22,7 +22,7 @@ jobs:
           command_timeout: 20m
           script: |
             set -e
-            PROJECT_DIR="/opt/composedir/emc-website"
+            PROJECT_DIR="/opt/composedir/website-emc"
             cd "$PROJECT_DIR"
 
             echo "Pulling latest code..."
