@@ -1,0 +1,55 @@
+name: Deploy Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2  # v1.2.5
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          command_timeout: 20m
+          script: |
+            set -e
+            PROJECT_DIR="/opt/composedir/emc-website"
+            cd "$PROJECT_DIR"
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Building image..."
+            docker build -t emc-website:latest .
+
+            echo "Restarting container..."
+            docker stop emc-website 2>/dev/null || true
+            docker rm emc-website 2>/dev/null || true
+            docker run -d \
+              --name emc-website \
+              --restart unless-stopped \
+              --network traefik-net \
+              --label "traefik.enable=true" \
+              --label "traefik.docker.network=traefik-net" \
+              --label "traefik.http.routers.emc-website.rule=Host(\`emcsolucoes.com.br\`)" \
+              --label "traefik.http.routers.emc-website.entrypoints=websecure" \
+              --label "traefik.http.routers.emc-website.tls=true" \
+              --label "traefik.http.routers.emc-website.tls.certresolver=myresolver" \
+              --label "traefik.http.routers.emc-website.priority=100" \
+              --label "traefik.http.services.emc-website.loadbalancer.server.port=3000" \
+              emc-website:latest
+
+            echo "Cleaning up unused images, networks and build cache..."
+            docker system prune -a -f
+
+            echo "Deploy complete!"
+            docker ps --filter "name=emc-website"
