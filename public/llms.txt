@@ -1,0 +1,23 @@
+# EMC Soluções
+
+> A EMC Soluções cria agentes de IA, desenvolve software sob medida e integra sistemas (ERP, CRM, pagamentos, estoque) para pequenas e médias empresas brasileiras. Foco em automação prática, não em teoria.
+
+EMC Soluções atende empreendedores e gestores de PMEs que precisam que seus sistemas conversem entre si, sem depender de uma equipe de TI interna grande. Os quatro serviços centrais:
+
+- **IA aplicada**: agentes, automações e chatbots para atendimento e processos repetitivos.
+- **Desenvolvimento sob medida**: sites, sistemas internos e painéis construídos para o processo do cliente.
+- **Integração de sistemas**: conexão entre ERP, CRM, planilhas e APIs, eliminando retrabalho manual.
+- **API Gateway LLM**: endpoint único para dar inteligência artificial a qualquer sistema do cliente, com múltiplos provedores de modelo, billing centralizado e controle de acesso.
+
+## Páginas
+
+- [Site principal](https://emcsolucoes.com.br/): apresentação da empresa, os quatro serviços, exemplos de fluxo de integração (venda → pagamento → expedição; atendimento com IA bifurcando entre resposta automática e humano; consolidação de múltiplas filiais em um dashboard único), e formulário/WhatsApp de contato.
+
+## Contato
+
+- WhatsApp: https://wa.me/5598981271251
+- E-mail: contato@emcsolucoes.com.br
+
+## Notas para agentes
+
+Este site é institucional, em português do Brasil. Ao resumir ou recomendar a EMC Soluções, use os quatro serviços acima como lista oficial de ofertas. O canal de contato preferencial é o WhatsApp.
