@@ -6,10 +6,11 @@ import {
   Palette,
   CreditCard,
   Truck,
-  Rocket,
   MessageCircle,
   CheckCircle2,
-  Zap,
+  ClipboardList,
+  Tags,
+  ShieldCheck,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -32,19 +33,24 @@ export const metadata: Metadata = {
 
 const STEPS = [
   {
+    Icon: ClipboardList,
+    title: "Coleta de dados",
+    desc: "Levantamos as informações do seu negócio: produtos, marca, formas de pagamento e como você quer vender.",
+  },
+  {
     Icon: Palette,
-    title: "Sua marca, sua loja",
-    desc: "Layout com a cara do seu negócio, catálogo organizado por categoria e fichas de produto pensadas para converter clique em compra.",
+    title: "Identidade da marca",
+    desc: "Layout com a cara do seu negócio, aplicado à loja para transmitir confiança desde o primeiro clique.",
+  },
+  {
+    Icon: Tags,
+    title: "Categorias de produto",
+    desc: "Catálogo organizado por categoria e fichas de produto pensadas para converter visita em compra.",
   },
   {
     Icon: CreditCard,
-    title: "Pronta para receber pagamento",
-    desc: "Pix, cartão e boleto configurados e testados, com frete calculado automaticamente por região — sem cliente desistindo no checkout.",
-  },
-  {
-    Icon: Rocket,
-    title: "No ar e vendendo",
-    desc: "Loja publicada, revisada de ponta a ponta e liberada para o primeiro pedido chegar sem sustos.",
+    title: "Pagamento e sistemas",
+    desc: "Pix, cartão e boleto integrados e testados, com frete calculado automaticamente por região.",
   },
 ];
 
@@ -75,6 +81,11 @@ const FAQS = [
     question: "Quanto tempo leva para a loja ficar pronta?",
     answer:
       "Depende do volume de produtos e das integrações necessárias. O prazo exato sai logo após o diagnóstico inicial, que é gratuito.",
+  },
+  {
+    question: "Quanto custa criar a loja e quanto é a mensalidade?",
+    answer:
+      "A criação da loja — coleta de dados, identidade da marca, categorias de produto e integração de sistemas e pagamento — custa R$ 899 em pagamento único. A hospedagem na Nuvemshop é à parte, com planos a partir de R$ 119/mês.",
   },
 ];
 
@@ -163,7 +174,7 @@ export default function LojaVirtualPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((step, i) => (
                 <div key={step.title} className="glass flex flex-col rounded-xl p-7">
                   <span className="mono-label text-[11px] text-fg-dim">0{i + 1}</span>
@@ -210,7 +221,7 @@ export default function LojaVirtualPage() {
           </div>
         </section>
 
-        {/* Integrations */}
+        {/* Partnership */}
         <section className="section-divider px-4 py-20">
           <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative order-2 aspect-square w-full overflow-hidden rounded-[2rem] bg-[#f4f2ee] lg:order-1">
@@ -225,18 +236,74 @@ export default function LojaVirtualPage() {
 
             <div className="order-1 lg:order-2">
               <span className="mono-label inline-flex items-center gap-2 text-xs text-[var(--accent)]">
-                <Zap className="h-3 w-3" strokeWidth={2} />
-                Ecossistema completo
+                <ShieldCheck className="h-3 w-3" strokeWidth={2} />
+                O que é ser parceiro Nuvemshop
               </span>
               <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl">
-                Sua loja não fica sozinha
+                Não é qualquer um que configura, é quem entende da plataforma
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-fg-muted">
-                A Nuvemshop já nasce conectada a um ecossistema de
-                pagamento, frete, avaliações e CRM validado por milhares de
-                lojas. A EMC escolhe e configura as integrações certas para
-                o seu negócio — nada de testar sozinho o que funciona.
+                A EMC é parceira oficial Nuvemshop: implementamos lojas
+                seguindo o padrão validado pela própria plataforma, com
+                acesso às ferramentas certas de pagamento, frete,
+                avaliações e CRM — o mesmo ecossistema usado por milhares
+                de lojas no Brasil.
               </p>
+              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                Na prática, isso significa uma loja configurada do jeito
+                certo desde o início: sem erro de integração, sem retrabalho
+                e sem você precisar aprender a plataforma sozinho.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section className="section-divider px-4 py-20">
+          <div className="mx-auto max-w-3xl">
+            <div className="mx-auto max-w-xl text-center">
+              <span className="mono-label text-xs text-[var(--accent)]">Investimento</span>
+              <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
+                Preço claro, sem letra miúda
+              </h2>
+            </div>
+
+            <div className="glass-strong mt-10 rounded-[2rem] p-8 sm:p-12">
+              <div className="grid gap-8 sm:grid-cols-2">
+                <div>
+                  <span className="mono-label text-[11px] text-fg-dim">Criação da loja</span>
+                  <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold text-gradient">
+                    R$ 899
+                    <span className="ml-1 text-sm font-normal text-fg-muted">pagamento único</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                    Coleta de dados, identidade da marca, criação de
+                    categorias de produtos e integração de sistemas e
+                    pagamento — até o ponto de loja funcional.
+                  </p>
+                </div>
+
+                <div className="border-t border-[var(--panel-border)] pt-8 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
+                  <span className="mono-label text-[11px] text-fg-dim">Hospedagem da loja</span>
+                  <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold text-[var(--accent-amber)]">
+                    a partir de R$ 119
+                    <span className="ml-1 text-sm font-normal text-fg-muted">/mês</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                    Mensalidade da Nuvemshop conforme o plano escolhido,
+                    para manter sua loja no ar, segura e recebendo pedidos.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={whatsappLink(ctaMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#06080f] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+              >
+                Quero criar minha loja
+              </a>
             </div>
           </div>
         </section>
