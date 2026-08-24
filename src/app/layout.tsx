@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import { faqJsonLd } from "@/components/FAQ";
 import { SITE_URL, WHATSAPP_NUMBER, CONTACT_EMAIL } from "@/lib/contact";
 
 const spaceGrotesk = Space_Grotesk({
@@ -87,7 +88,6 @@ export const metadata: Metadata = {
 };
 
 const organizationJsonLd = {
-  "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: "EMC Soluções",
@@ -112,6 +112,55 @@ const organizationJsonLd = {
   ],
 };
 
+const websiteJsonLd = {
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: "EMC Soluções",
+  description: DESCRIPTION,
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  inLanguage: "pt-BR",
+};
+
+const servicesJsonLd = [
+  {
+    name: "IA aplicada",
+    description:
+      "Agentes, automações e chatbots que assumem tarefas repetitivas de atendimento e processos, liberando a equipe para o que importa.",
+  },
+  {
+    name: "Desenvolvimento sob medida",
+    description:
+      "Sites, sistemas internos e painéis construídos para o processo específico do cliente, não o contrário.",
+  },
+  {
+    name: "Integração de sistemas",
+    description:
+      "Conexão entre ERP, CRM, planilhas e APIs em um só fluxo, eliminando retrabalho manual de dados.",
+  },
+  {
+    name: "API Gateway LLM",
+    description:
+      "Endpoint único para dar inteligência artificial a qualquer sistema, com múltiplos provedores de modelo, billing e controle de acesso centralizados.",
+  },
+].map((s) => ({
+  "@type": "Service",
+  serviceType: s.name,
+  name: s.name,
+  description: s.description,
+  provider: { "@id": `${SITE_URL}/#organization` },
+  areaServed: "BR",
+  audience: {
+    "@type": "Audience",
+    audienceType: "Pequenas e médias empresas",
+  },
+}));
+
+const jsonLdGraph = {
+  "@context": "https://schema.org",
+  "@graph": [organizationJsonLd, websiteJsonLd, faqJsonLd, ...servicesJsonLd],
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -122,7 +171,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--fg)]">

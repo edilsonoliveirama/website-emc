@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 const STORAGE_KEY = "emc-cookie-consent";
@@ -38,7 +39,11 @@ export default function CookieConsent() {
             <p className="text-sm leading-relaxed text-fg-muted">
               Usamos cookies para melhorar sua experiência e entender como o
               site é usado. Ao continuar, você concorda com nossa
-              utilização de cookies, conforme a LGPD.
+              utilização de cookies, conforme a LGPD. Veja nossa{" "}
+              <Link href="/privacidade" className="text-[var(--accent)] underline-offset-2 hover:underline">
+                Política de Privacidade
+              </Link>
+              .
             </p>
             <div className="flex shrink-0 gap-2">
               <button

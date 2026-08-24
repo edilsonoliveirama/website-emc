@@ -9,6 +9,7 @@ import MergeFlow from "@/components/MergeFlow";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
+import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -36,6 +37,7 @@ export default function Home() {
         <Testimonials />
         <Pricing />
         <About />
+        <FAQ />
         <Contact />
       </main>
       <Footer />

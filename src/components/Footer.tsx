@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE, WHATSAPP_DISPLAY } from "@/lib/contact";
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
           <span>EMC Soluções — IA, Desenvolvimento e Integração</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <a
             href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
             target="_blank"
@@ -17,6 +18,12 @@ export default function Footer() {
           >
             WhatsApp {WHATSAPP_DISPLAY}
           </a>
+          <Link href="/privacidade" className="transition-colors hover:text-fg">
+            Privacidade
+          </Link>
+          <Link href="/termos" className="transition-colors hover:text-fg">
+            Termos de Uso
+          </Link>
           <span>© {new Date().getFullYear()} EMC Soluções. Todos os direitos reservados.</span>
         </div>
       </div>
