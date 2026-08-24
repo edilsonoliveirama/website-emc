@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-
-const STORAGE_KEY = "emc-cookie-consent";
+import { CONSENT_STORAGE_KEY, CONSENT_EVENT } from "@/lib/contact";
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
     if (!stored) {
       const timer = setTimeout(() => setVisible(true), 900);
       return () => clearTimeout(timer);
@@ -18,7 +17,8 @@ export default function CookieConsent() {
   }, []);
 
   function respond(choice: "accepted" | "rejected") {
-    window.localStorage.setItem(STORAGE_KEY, choice);
+    window.localStorage.setItem(CONSENT_STORAGE_KEY, choice);
+    window.dispatchEvent(new Event(CONSENT_EVENT));
     setVisible(false);
   }
 

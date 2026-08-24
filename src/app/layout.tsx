@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import { faqJsonLd } from "@/components/FAQ";
 import { SITE_URL, WHATSAPP_NUMBER, CONTACT_EMAIL } from "@/lib/contact";
@@ -183,6 +184,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--fg)]">
         {children}
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
