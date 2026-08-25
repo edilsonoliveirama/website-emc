@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
 
 const LINKS = [
-  { href: "#servicos", label: "Serviços", id: "servicos" },
-  { href: "#sobre", label: "Sobre", id: "sobre" },
-  { href: "#contato", label: "Contato", id: "contato" },
+  { href: "/#servicos", label: "Serviços", id: "servicos" },
+  { href: "/#sobre", label: "Sobre", id: "sobre" },
+  { href: "/blog", label: "Blog", id: "blog" },
+  { href: "/#contato", label: "Contato", id: "contato" },
 ];
 
 export default function Header() {
@@ -59,18 +61,18 @@ export default function Header() {
           scrolled ? "border-[var(--panel-border-strong)] shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)]" : ""
         }`}
       >
-        <a
-          href="#top"
+        <Link
+          href="/"
           onClick={() => setMenuOpen(false)}
           className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_2px_var(--accent)]" />
           EMC <span className="text-fg-muted font-medium">Soluções</span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
           {LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className={`relative rounded-full px-4 py-1.5 text-sm transition-colors ${
@@ -85,7 +87,7 @@ export default function Header() {
                 />
               )}
               <span className="relative">{l.label}</span>
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -134,7 +136,7 @@ export default function Header() {
             className="glass-strong absolute left-4 right-4 top-[calc(100%+0.5rem)] flex flex-col gap-1 rounded-2xl p-3 md:hidden"
           >
             {LINKS.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
@@ -143,7 +145,7 @@ export default function Header() {
                 }`}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
             <a
               href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}

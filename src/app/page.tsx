@@ -6,7 +6,7 @@ import InlineCTA from "@/components/InlineCTA";
 import IntegrationFlow from "@/components/IntegrationFlow";
 import BranchFlow from "@/components/BranchFlow";
 import MergeFlow from "@/components/MergeFlow";
-import Testimonials from "@/components/Testimonials";
+import BlogTeaser from "@/components/BlogTeaser";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
 import FAQ from "@/components/FAQ";
@@ -34,7 +34,7 @@ export default function Home() {
           text="Quero integrar meus sistemas"
           message="Olá! Vi os exemplos de integração no site e quero saber mais."
         />
-        <Testimonials />
+        <BlogTeaser />
         <Pricing />
         <About />
         <FAQ />

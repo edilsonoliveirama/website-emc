@@ -18,6 +18,9 @@ export default function Footer() {
           >
             WhatsApp {WHATSAPP_DISPLAY}
           </a>
+          <Link href="/blog" className="transition-colors hover:text-fg">
+            Blog
+          </Link>
           <Link href="/privacidade" className="transition-colors hover:text-fg">
             Privacidade
           </Link>

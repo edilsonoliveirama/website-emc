@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/contact";
+import { getAllPostsMeta } from "@/lib/blog";
 
 const SECTIONS = [
   "servicos",
@@ -7,7 +8,6 @@ const SECTIONS = [
   "fluxo-pagamento",
   "fluxo-atendimento",
   "fluxo-filiais",
-  "depoimentos",
   "investimento",
   "perguntas-frequentes",
   "sobre",
@@ -35,6 +35,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    ...getAllPostsMeta().map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified: new Date(`${post.updatedAt ?? post.date}T12:00:00`),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     {
       url: `${SITE_URL}/privacidade`,
       lastModified,

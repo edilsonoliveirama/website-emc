@@ -1,0 +1,70 @@
+---
+title: "Integrar ERP e CRM sem retrabalho manual: o guia prático"
+description: "Os três padrões mais comuns para conectar ERP e CRM — e como escolher o certo sem contratar um projeto de meses."
+date: "2026-07-22"
+author: "EMC Soluções"
+tags: ["integração", "erp", "crm"]
+coverImage: "/blog/integrar-erp-crm-sem-retrabalho.jpg"
+---
+
+Toda empresa que cresce chega no mesmo ponto: o time de vendas usa um CRM, o
+financeiro usa um ERP, e alguém no meio fica copiando dado de um sistema
+para o outro à mão. É lento, gera erro de digitação e trava o crescimento
+da operação.
+
+Existem três padrões de integração possíveis. Vale entender as diferenças
+antes de contratar qualquer solução.
+
+## 1. Integração via API direta
+
+Quando ERP e CRM expõem APIs REST, a forma mais simples é conectar os dois
+diretamente, com um serviço pequeno rodando entre eles.
+
+```python
+import requests
+
+def sync_new_lead(lead: dict) -> None:
+    erp_payload = {
+        "nome": lead["name"],
+        "documento": lead["tax_id"],
+        "origem": "crm",
+    }
+    requests.post(
+        "https://erp.empresa.com/api/clientes",
+        json=erp_payload,
+        headers={"Authorization": f"Bearer {ERP_TOKEN}"},
+    )
+```
+
+Funciona bem quando o volume de eventos é baixo e previsível — novo cliente,
+novo pedido, atualização de status.
+
+## 2. Integração via fila de eventos
+
+Quando o volume cresce ou os sistemas não podem ficar indisponíveis um para
+o outro, uma fila (RabbitMQ, SQS, etc) desacopla os dois lados: o CRM publica
+um evento, o ERP consome quando puder.
+
+Isso evita que uma instabilidade no ERP derrube o cadastro de leads no CRM,
+e vice-versa.
+
+## 3. Middleware de sincronização com regras de negócio
+
+Quando existe lógica real de tradução entre os dois sistemas — códigos de
+produto diferentes, regras fiscais, deduplicação de clientes — um middleware
+dedicado é o caminho certo. Ele guarda o mapeamento entre os dois mundos e
+aplica as regras antes de gravar em qualquer lado.
+
+## Como escolher
+
+- **Poucos eventos por dia, sistemas estáveis** → API direta
+- **Alto volume ou sistemas com indisponibilidade frequente** → fila de eventos
+- **Regras de negócio complexas na tradução dos dados** → middleware dedicado
+
+Na maioria dos casos que vemos em PMEs brasileiras, a combinação de fila de
+eventos com um middleware leve resolve o problema sem exigir reescrever
+nenhum dos dois sistemas existentes.
+
+Se sua equipe ainda copia dado à mão entre ERP e CRM, isso é sinal de que já
+passou da hora. [Fale com a EMC no WhatsApp](https://wa.me/5598981271251?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20EMC.)
+para mapear o caminho mais rápido para o seu caso.

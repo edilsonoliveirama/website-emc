@@ -1,0 +1,80 @@
+---
+title: "API Gateway LLM: como centralizar IA para todos os sistemas da empresa"
+description: "Por que um endpoint único para modelos de IA reduz custo, risco e retrabalho na hora de espalhar inteligência artificial entre ERP, CRM e atendimento."
+date: "2026-08-10"
+author: "EMC Soluções"
+tags: ["ia", "arquitetura", "integração"]
+coverImage: "/blog/api-gateway-llm-para-pmes.jpg"
+---
+
+Toda empresa que começa a usar IA em mais de um sistema esbarra no mesmo
+problema: cada equipe integra direto com um provedor de modelo diferente,
+cada uma guarda sua própria chave de API, e ninguém tem visão consolidada de
+quanto está sendo gasto ou quem está chamando o quê.
+
+Um **API Gateway LLM** resolve isso colocando uma camada única entre seus
+sistemas internos e os provedores de modelo (OpenAI, Anthropic, modelos
+locais, etc). Em vez de cada integração falar diretamente com um provedor,
+tudo passa por um endpoint interno.
+
+## O problema sem gateway
+
+Imagine três sistemas usando IA: um chatbot de atendimento, um classificador
+de tickets e um gerador de propostas comerciais. Sem gateway, isso vira:
+
+- 3 chaves de API diferentes espalhadas em `.env` de projetos distintos
+- 3 lugares para trocar de provedor se o preço ou a qualidade mudar
+- Nenhum controle central de custo por sistema ou por equipe
+- Nenhum log unificado para auditoria
+
+## Como funciona na prática
+
+O gateway expõe uma API HTTP simples. Os sistemas internos chamam sempre o
+mesmo endpoint, e o gateway decide para qual provedor rotear:
+
+```typescript
+// cliente interno — nunca muda, independente do provedor por trás
+const response = await fetch("https://gateway.interno/v1/complete", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${GATEWAY_TOKEN}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    model: "default",
+    prompt: "Classifique o ticket abaixo por urgência...",
+  }),
+});
+```
+
+Por trás do endpoint `/v1/complete`, o gateway pode:
+
+1. Rotear para o provedor mais barato disponível no momento
+2. Aplicar fallback automático se um provedor cair
+3. Registrar tokens consumidos por sistema, para billing interno
+4. Aplicar limites de taxa por equipe ou por chave
+
+## Benefícios diretos
+
+| Sem gateway | Com gateway |
+| --- | --- |
+| Chave de API em cada projeto | Uma única credencial de saída |
+| Troca de provedor = reescrever código | Troca de provedor = mudar config |
+| Custo difícil de rastrear | Custo por sistema, em um painel |
+| Sem fallback se provedor cair | Fallback automático entre provedores |
+
+> Na prática, empresas que centralizam o acesso a modelos de IA relatam
+> quedas relevantes de custo só por conseguir enxergar onde o gasto estava
+> concentrado — antes disso, ninguém sabia.
+
+## Quando vale a pena
+
+Se sua empresa usa IA em **um único lugar**, o gateway é over-engineering.
+Mas a partir do segundo ou terceiro sistema com IA embutida — chatbot,
+automação de e-mail, geração de relatórios — o gateway paga por si mesmo em
+poucos meses, só em economia de tempo de integração e em visibilidade de
+custo.
+
+Se sua empresa está nesse ponto, [fale com a EMC no WhatsApp](https://wa.me/5598981271251?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20EMC.)
+para um diagnóstico gratuito sobre como estruturar esse gateway no seu stack
+atual.
