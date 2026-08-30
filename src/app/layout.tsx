@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const TITLE = "EMC Soluções — IA, Desenvolvimento e Integração de Sistemas";
+const TITLE = "EMC Soluções: IA, Desenvolvimento e Integração de Sistemas";
 const DESCRIPTION =
   "A EMC Soluções cria agentes de IA, desenvolve software sob medida e integra ERP, CRM e sistemas de pagamento para pequenas e médias empresas brasileiras. Diagnóstico gratuito via WhatsApp.";
 
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: TITLE,
-    template: "%s — EMC Soluções",
+    template: "%s | EMC Soluções",
   },
   description: DESCRIPTION,
   keywords: [
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "EMC Soluções — IA, Desenvolvimento e Integração de Sistemas",
+        alt: "EMC Soluções: IA, Desenvolvimento e Integração de Sistemas",
       },
     ],
   },

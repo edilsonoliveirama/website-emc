@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-fg-dim sm:flex-row">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-          <span>EMC Soluções — IA, Desenvolvimento e Integração</span>
+          <span>EMC Soluções: IA, Desenvolvimento e Integração</span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <a

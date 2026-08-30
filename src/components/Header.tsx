@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
 
 const LINKS = [
@@ -57,7 +58,7 @@ export default function Header() {
       className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 pt-4"
     >
       <div
-        className={`glass flex w-full max-w-5xl items-center justify-between rounded-2xl px-5 py-3 transition-[box-shadow,border-color,background] duration-300 ${
+        className={`flex w-full max-w-6xl items-center justify-between rounded-2xl border border-[var(--panel-border)] bg-[var(--bg-elev)] px-5 py-3 transition-[box-shadow,border-color] duration-300 ${
           scrolled ? "border-[var(--panel-border-strong)] shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)]" : ""
         }`}
       >
@@ -66,7 +67,7 @@ export default function Header() {
           onClick={() => setMenuOpen(false)}
           className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
         >
-          <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_2px_var(--accent)]" />
+          <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7" priority />
           EMC <span className="text-fg-muted font-medium">Soluções</span>
         </Link>
 

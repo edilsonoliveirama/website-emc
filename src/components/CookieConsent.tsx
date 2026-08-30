@@ -35,7 +35,7 @@ export default function CookieConsent() {
           aria-label="Aviso de cookies"
           className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-xl sm:inset-x-auto sm:right-6 sm:bottom-6"
         >
-          <div className="glass-strong flex flex-col gap-4 rounded-2xl p-5 sm:flex-row sm:items-center sm:p-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-[var(--panel-border-strong)] bg-[var(--bg-elev)] p-5 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)] sm:flex-row sm:items-center sm:p-6">
             <p className="text-sm leading-relaxed text-fg-muted">
               Usamos cookies para melhorar sua experiência e entender como o
               site é usado. Ao continuar, você concorda com nossa

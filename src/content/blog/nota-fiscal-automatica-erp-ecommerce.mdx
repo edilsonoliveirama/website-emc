@@ -9,7 +9,7 @@ coverImage: "/blog/nota-fiscal-automatica-erp-ecommerce.jpg"
 
 Emitir nota fiscal manualmente para cada pedido funciona até a operação
 crescer. A partir de um certo volume, digitar item, quantidade, CFOP e
-cliente à mão para cada venda vira o gargalo do dia — e cada nota digitada
+cliente à mão para cada venda vira o gargalo do dia, e cada nota digitada
 manualmente é uma chance de erro fiscal, que custa mais caro de corrigir
 depois do que de prevenir antes.
 
@@ -23,13 +23,13 @@ Sem integração, o caminho típico é:
 4. A nota emitida precisa ser conciliada de volta com o pedido
 
 Cada etapa manual é um ponto de falha: item errado, CFOP incorreto para o
-tipo de operação, cliente com CPF/CNPJ digitado errado — problemas que só
+tipo de operação, cliente com CPF/CNPJ digitado errado, problemas que só
 aparecem depois, na hora de prestar contas ao fisco.
 
 ## Como fica com integração
 
-A integração conecta três pontas — e-commerce ou CRM, ERP e emissor fiscal
-— para que o pedido vire nota automaticamente, sem retrabalho manual.
+A integração conecta três pontas (e-commerce ou CRM, ERP e emissor fiscal)
+para que o pedido vire nota automaticamente, sem retrabalho manual.
 
 ```json
 // payload disparado quando o pedido muda para "pago"
@@ -52,22 +52,22 @@ uma tela de emissão manual.
 
 **Regra fiscal por tipo de produto.** Produtos diferentes podem ter CFOP,
 NCM e alíquota diferentes. Essa regra precisa estar mapeada corretamente no
-ERP antes de automatizar — automatizar uma regra fiscal errada só emite
+ERP antes de automatizar: automatizar uma regra fiscal errada só emite
 nota errada mais rápido.
 
 **Contingência quando o emissor cai.** SEFAZ e emissores fiscais têm
 janelas de instabilidade. O fluxo precisa ter fila de reprocessamento: se a
-emissão falhar, o pedido não pode ficar travado — ele entra numa fila e
+emissão falhar, o pedido não pode ficar travado: ele entra numa fila e
 tenta de novo automaticamente.
 
-**Cancelamento e devolução.** O fluxo inverso — pedido cancelado depois da
-nota emitida — também precisa de tratamento automático, senão volta a
+**Cancelamento e devolução.** O fluxo inverso, pedido cancelado depois da
+nota emitida, também precisa de tratamento automático, senão volta a
 gerar trabalho manual, só que na ponta de correção.
 
 ## O ganho real
 
-Além do tempo economizado, o ganho maior costuma ser redução de erro fiscal
-— que gasta muito mais tempo corrigindo depois do que a automação levou
+Além do tempo economizado, o ganho maior costuma ser redução de erro fiscal,
+que gasta muito mais tempo corrigindo depois do que a automação levou
 para implementar. Empresas que fazem entre 50 e 100 pedidos por dia
 costumam sentir esse gargalo primeiro na equipe financeira, antes mesmo do
 comercial reclamar.

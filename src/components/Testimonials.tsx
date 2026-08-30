@@ -9,19 +9,19 @@ const TESTIMONIALS = [
     name: "Nome do Cliente",
     role: "Cargo, Empresa",
     quote:
-      "Depoimento de exemplo — substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
+      "Depoimento de exemplo, substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
   },
   {
     name: "Nome do Cliente",
     role: "Cargo, Empresa",
     quote:
-      "Depoimento de exemplo — substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
+      "Depoimento de exemplo, substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
   },
   {
     name: "Nome do Cliente",
     role: "Cargo, Empresa",
     quote:
-      "Depoimento de exemplo — substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
+      "Depoimento de exemplo, substituir pelo relato real de um cliente sobre o resultado obtido com a EMC.",
   },
 ];
 

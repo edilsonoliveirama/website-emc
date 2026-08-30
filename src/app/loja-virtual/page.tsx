@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { whatsappLink, SITE_URL } from "@/lib/contact";
 
-const TITLE = "Loja Virtual Nuvemshop — Criação e Configuração | EMC Soluções";
+const TITLE = "Loja Virtual Nuvemshop: Criação e Configuração | EMC Soluções";
 const DESCRIPTION =
   "A EMC Soluções é parceira oficial Nuvemshop. Criamos sua loja virtual completa e pronta para vender: layout, pagamento, frete e integração com WhatsApp.";
 
@@ -55,7 +55,7 @@ const STEPS = [
 ];
 
 const BENEFITS = [
-  "Loja Nuvemshop configurada do zero até o primeiro pedido — sem enrolação técnica da sua parte",
+  "Loja Nuvemshop configurada do zero até o primeiro pedido, sem enrolação técnica da sua parte",
   "Pix, cartão e boleto funcionando corretamente desde o primeiro dia",
   "Frete calculado automaticamente por região, sem planilha manual",
   "Base pronta para conectar IA de atendimento e vendas pelo WhatsApp",
@@ -65,7 +65,7 @@ const FAQS = [
   {
     question: "A EMC é parceira oficial da Nuvemshop?",
     answer:
-      "Sim. A EMC Soluções é parceira Nuvemshop e configura lojas na plataforma seguindo as melhores práticas de conversão e usabilidade — a mesma tecnologia usada por milhares de lojas no Brasil.",
+      "Sim. A EMC Soluções é parceira Nuvemshop e configura lojas na plataforma seguindo as melhores práticas de conversão e usabilidade, a mesma tecnologia usada por milhares de lojas no Brasil.",
   },
   {
     question: "Preciso já ter os produtos cadastrados?",
@@ -85,7 +85,7 @@ const FAQS = [
   {
     question: "Quanto custa criar a loja e quanto é a mensalidade?",
     answer:
-      "A criação da loja — coleta de dados, identidade da marca, categorias de produto e integração de sistemas e pagamento — custa R$ 899 em pagamento único. A hospedagem na Nuvemshop é à parte, com planos a partir de R$ 119/mês.",
+      "A criação da loja (coleta de dados, identidade da marca, categorias de produto e integração de sistemas e pagamento) custa R$ 899 em pagamento único. A hospedagem na Nuvemshop é à parte, com planos a partir de R$ 119/mês.",
   },
 ];
 
@@ -124,8 +124,8 @@ export default function LojaVirtualPage() {
 
               <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-muted sm:text-lg">
                 Chega de perder venda por não ter loja online. A EMC é
-                parceira oficial Nuvemshop e entrega sua loja completa —
-                layout, produtos, pagamento e frete — pronta para vender
+                parceira oficial Nuvemshop e entrega sua loja completa:
+                layout, produtos, pagamento e frete, pronta para vender
                 desde o primeiro dia.
               </p>
 
@@ -213,7 +213,7 @@ export default function LojaVirtualPage() {
                 <Truck className="h-5 w-5 shrink-0 text-fg-dim" strokeWidth={1.6} />
                 <p className="text-xs leading-relaxed text-fg-dim">
                   Depois da loja pronta, a EMC também integra atendimento via
-                  IA no WhatsApp — do primeiro contato ao pagamento
+                  IA no WhatsApp, do primeiro contato ao pagamento
                   confirmado.
                 </p>
               </div>
@@ -246,7 +246,7 @@ export default function LojaVirtualPage() {
                 A EMC é parceira oficial Nuvemshop: implementamos lojas
                 seguindo o padrão validado pela própria plataforma, com
                 acesso às ferramentas certas de pagamento, frete,
-                avaliações e CRM — o mesmo ecossistema usado por milhares
+                avaliações e CRM, o mesmo ecossistema usado por milhares
                 de lojas no Brasil.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-fg-muted">
@@ -279,7 +279,7 @@ export default function LojaVirtualPage() {
                   <p className="mt-3 text-sm leading-relaxed text-fg-muted">
                     Coleta de dados, identidade da marca, criação de
                     categorias de produtos e integração de sistemas e
-                    pagamento — até o ponto de loja funcional.
+                    pagamento, até o ponto de loja funcional.
                   </p>
                 </div>
 

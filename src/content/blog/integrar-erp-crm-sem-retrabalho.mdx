@@ -1,6 +1,6 @@
 ---
 title: "Integrar ERP e CRM sem retrabalho manual: o guia prático"
-description: "Os três padrões mais comuns para conectar ERP e CRM — e como escolher o certo sem contratar um projeto de meses."
+description: "Os três padrões mais comuns para conectar ERP e CRM, e como escolher o certo sem contratar um projeto de meses."
 date: "2026-07-22"
 author: "EMC Soluções"
 tags: ["integração", "erp", "crm"]
@@ -36,7 +36,7 @@ def sync_new_lead(lead: dict) -> None:
     )
 ```
 
-Funciona bem quando o volume de eventos é baixo e previsível — novo cliente,
+Funciona bem quando o volume de eventos é baixo e previsível: novo cliente,
 novo pedido, atualização de status.
 
 ## 2. Integração via fila de eventos
@@ -50,8 +50,8 @@ e vice-versa.
 
 ## 3. Middleware de sincronização com regras de negócio
 
-Quando existe lógica real de tradução entre os dois sistemas — códigos de
-produto diferentes, regras fiscais, deduplicação de clientes — um middleware
+Quando existe lógica real de tradução entre os dois sistemas (códigos de
+produto diferentes, regras fiscais, deduplicação de clientes), um middleware
 dedicado é o caminho certo. Ele guarda o mapeamento entre os dois mundos e
 aplica as regras antes de gravar em qualquer lado.
 

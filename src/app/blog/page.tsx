@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/blog` },
   openGraph: {
     type: "website",
-    title: `${TITLE} — EMC Soluções`,
+    title: `${TITLE} | EMC Soluções`,
     description: DESCRIPTION,
     url: `${SITE_URL}/blog`,
   },

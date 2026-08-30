@@ -21,7 +21,7 @@ export default function Contact() {
     setStatus("sending");
 
     try {
-      const subject = encodeURIComponent(`Contato via site — ${name}`);
+      const subject = encodeURIComponent(`Contato via site: ${name}`);
       const body = encodeURIComponent(`${message}\n\n${name} · ${email}`);
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
       setStatus("sent");

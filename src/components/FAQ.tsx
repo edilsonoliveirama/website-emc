@@ -29,7 +29,7 @@ const FAQS = [
   {
     question: "O que é o API Gateway LLM da EMC?",
     answer:
-      "É um endpoint único que dá inteligência artificial a qualquer sistema do cliente, unificando múltiplos provedores de modelo de IA, com billing centralizado e controle de acesso por chave — sem depender de um único fornecedor de IA.",
+      "É um endpoint único que dá inteligência artificial a qualquer sistema do cliente, unificando múltiplos provedores de modelo de IA, com billing centralizado e controle de acesso por chave, sem depender de um único fornecedor de IA.",
   },
   {
     question: "Como entro em contato com a EMC Soluções?",

@@ -48,7 +48,7 @@ export default function Pricing() {
             Faixas de investimento por frente
           </h2>
           <p className="mt-4 text-fg-muted">
-            Cada projeto é orçado sob medida — os valores abaixo são o ponto
+            Cada projeto é orçado sob medida: os valores abaixo são o ponto
             de partida mais comum para cada tipo de solução.
           </p>
         </motion.div>

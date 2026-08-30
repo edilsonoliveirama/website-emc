@@ -12,7 +12,7 @@ const SERVICES = [
   {
     tag: "system.build",
     title: "Desenvolvimento sob medida",
-    desc: "Sites, sistemas e aplicações construídos para o seu processo — não o contrário.",
+    desc: "Sites, sistemas e aplicações construídos para o seu processo, não o contrário.",
     points: ["Sites e sistemas web", "Aplicações internas", "Painéis e dashboards"],
   },
   {
@@ -24,7 +24,7 @@ const SERVICES = [
   {
     tag: "system.gateway",
     title: "API Gateway LLM",
-    desc: "Um único endpoint para dar inteligência artificial a qualquer sistema seu — sem depender de um provedor só.",
+    desc: "Um único endpoint para dar inteligência artificial a qualquer sistema seu, sem depender de um provedor só.",
     points: ["Múltiplos modelos e provedores unificados", "Billing e custo centralizado", "Segurança e controle de acesso por chave"],
   },
 ];
@@ -45,7 +45,7 @@ export default function Services() {
             Quatro frentes, um único fluxo
           </h2>
           <p className="mt-4 text-fg-muted">
-            Cada serviço resolve uma dor específica — juntos, eliminam o
+            Cada serviço resolve uma dor específica: juntos, eliminam o
             atrito entre pessoas, dados e ferramentas.
           </p>
         </motion.div>

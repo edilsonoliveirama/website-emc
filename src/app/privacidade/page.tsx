@@ -17,7 +17,7 @@ export default function PrivacidadePage() {
         {/* TODO: incluir razão social e CNPJ reais */}
         (&ldquo;EMC&rdquo;, &ldquo;nós&rdquo;) coleta, usa, armazena e protege dados
         pessoais de visitantes e clientes deste site, em conformidade com a
-        Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).
+        Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).
       </p>
 
       <div>

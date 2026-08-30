@@ -22,12 +22,12 @@ const AIRPODS_SCRIPT: Bubble[] = [
   { id: "m1", from: "customer", kind: "text", text: "Oi, vocês têm o AirPods Max preto?" },
   { id: "t1", from: "ai", kind: "typing" },
   { id: "m2", from: "ai", kind: "image", text: "Temos! Esse aqui é o mais pedido 👇" },
-  { id: "m3", from: "ai", kind: "text", text: "AirPods Max — R$ 179,90, com frete grátis" },
+  { id: "m3", from: "ai", kind: "text", text: "AirPods Max, R$ 179,90, com frete grátis" },
   { id: "m4", from: "customer", kind: "text", text: "Perfeito, quero esse!" },
   { id: "m5", from: "ai", kind: "pix", text: "Segue o Pix para pagamento" },
   { id: "m6", from: "ai", kind: "system", text: "Pagamento confirmado" },
   { id: "m7", from: "ai", kind: "text", text: "Recebemos! Comprovante enviado no WhatsApp e no e-mail ✅" },
-  { id: "m8", from: "ai", kind: "system", text: "Pedido liberado — envio ou retirada na loja" },
+  { id: "m8", from: "ai", kind: "system", text: "Pedido liberado: envio ou retirada na loja" },
 ];
 
 const PIZZARIA_SCRIPT: Bubble[] = [
@@ -35,7 +35,7 @@ const PIZZARIA_SCRIPT: Bubble[] = [
   { id: "pt1", from: "ai", kind: "typing" },
   { id: "p2", from: "ai", kind: "text", text: "Fazemos sim! 🍕 Qual pizza você quer hoje?" },
   { id: "p3", from: "customer", kind: "text", text: "Uma grande de calabresa, borda recheada" },
-  { id: "p4", from: "ai", kind: "text", text: "Grande calabresa c/ borda recheada — R$ 62,00\nEntrega em ~35 min" },
+  { id: "p4", from: "ai", kind: "text", text: "Grande calabresa c/ borda recheada, R$ 62,00\nEntrega em ~35 min" },
   { id: "p5", from: "customer", kind: "text", text: "Fechado!" },
   { id: "p6", from: "ai", kind: "pix", text: "Segue o Pix para pagamento" },
   { id: "p7", from: "ai", kind: "system", text: "Pagamento confirmado" },
@@ -94,7 +94,7 @@ export default function SalesFlow() {
           </h2>
           <p className="mt-4 text-fg-muted">
             A IA conduz a conversa do primeiro &ldquo;oi&rdquo; ao pagamento confirmado:
-            mostra o produto, cobra no Pix e organiza a entrega — tudo dentro
+            mostra o produto, cobra no Pix e organiza a entrega, tudo dentro
             do WhatsApp. O mesmo motor atende qualquer segmento.
           </p>
         </motion.div>

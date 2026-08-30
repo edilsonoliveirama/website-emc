@@ -33,7 +33,7 @@ O gateway expõe uma API HTTP simples. Os sistemas internos chamam sempre o
 mesmo endpoint, e o gateway decide para qual provedor rotear:
 
 ```typescript
-// cliente interno — nunca muda, independente do provedor por trás
+// cliente interno, nunca muda, independente do provedor por trás
 const response = await fetch("https://gateway.interno/v1/complete", {
   method: "POST",
   headers: {
@@ -65,13 +65,13 @@ Por trás do endpoint `/v1/complete`, o gateway pode:
 
 > Na prática, empresas que centralizam o acesso a modelos de IA relatam
 > quedas relevantes de custo só por conseguir enxergar onde o gasto estava
-> concentrado — antes disso, ninguém sabia.
+> concentrado. Antes disso, ninguém sabia.
 
 ## Quando vale a pena
 
 Se sua empresa usa IA em **um único lugar**, o gateway é over-engineering.
-Mas a partir do segundo ou terceiro sistema com IA embutida — chatbot,
-automação de e-mail, geração de relatórios — o gateway paga por si mesmo em
+Mas a partir do segundo ou terceiro sistema com IA embutida (chatbot,
+automação de e-mail, geração de relatórios) o gateway paga por si mesmo em
 poucos meses, só em economia de tempo de integração e em visibilidade de
 custo.
 

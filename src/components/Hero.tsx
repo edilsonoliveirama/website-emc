@@ -28,7 +28,7 @@ export default function Hero() {
 
           <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-muted sm:text-lg">
             A EMC Soluções projeta IA aplicada, desenvolve software sob medida
-            e integra as ferramentas que seu negócio já usa — para que
+            e integra as ferramentas que seu negócio já usa, para que
             pequenas e médias empresas operem com a eficiência de uma
             grande.
           </p>
