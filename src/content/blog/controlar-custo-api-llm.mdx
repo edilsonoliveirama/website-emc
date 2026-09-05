@@ -1,0 +1,83 @@
+---
+title: "Preço de IA caiu, mas a fatura ainda assusta: como controlar o custo real de LLM"
+description: "A guerra de preços entre provedores de IA baixou o custo por token, mas o gasto total das empresas continua subindo. O problema não é o preço, é a falta de controle sobre o consumo."
+date: "2026-09-05"
+author: "EMC Soluções"
+tags: ["ia", "arquitetura", "custo"]
+coverImage: "/blog/controlar-custo-api-llm.jpg"
+---
+
+Os principais provedores de modelos de IA estão em guerra de preço declarada.
+O custo por token caiu de forma consistente nos últimos meses, com descontos
+adicionais para processamento em lote e para conteúdo em cache. Por essa
+lógica, o gasto de empresas com IA deveria estar caindo. Na prática, projeções
+recentes indicam o contrário: uma fatia relevante dos projetos de IA agêntica
+tende a ser cancelada nos próximos anos, e o motivo mais citado não é
+qualidade do modelo, é custo que saiu do controle.
+
+## Como o preço caindo ainda gera fatura maior
+
+Preço por token menor não significa gasto total menor, porque o volume de
+chamadas cresce mais rápido do que o preço cai. Um agente de IA que antes
+fazia uma chamada por interação agora pode fazer cinco ou dez, porque
+"pensa em etapas", consulta ferramentas, revisa a própria resposta. Cada
+etapa é mais barata isoladamente, mas a soma cresce.
+
+```text
+Antes: 1 chamada por atendimento = R$ 0,02
+Agora: 1 chamada por atendimento vira 6 chamadas
+       (interpretar intenção, consultar CRM, consultar
+       estoque, redigir resposta, revisar tom, confirmar
+       dado) = 6 x custo menor por chamada,
+       mas o total por atendimento pode ser maior que antes.
+```
+
+Sem visibilidade de quantas chamadas cada fluxo realmente faz, a economia
+no preço por token vira ilusão na fatura mensal.
+
+## Onde o gasto foge do controle
+
+**Múltiplos times contratando modelo de forma independente.** Cada equipe
+que integra IA direto com um provedor tende a escolher o modelo mais caro
+disponível "porque funciona melhor", sem comparar com uma opção mais barata
+que resolveria o mesmo problema.
+
+**Nenhum limite de uso por sistema ou por projeto.** Sem um teto de gasto
+configurado, um bug em loop ou um pico de uso inesperado pode gerar uma
+fatura muito acima do previsto antes que alguém perceba.
+
+**Cache e processamento em lote não aproveitados.** Provedores oferecem
+desconto de até 90% para conteúdo em cache e 50% para processamento
+assíncrono em lote, mas isso exige desenho técnico deliberado. A maioria
+das integrações feitas rápido demais ignora essas opções.
+
+## Como manter o controle sem abrir mão da IA
+
+**Um único ponto de acesso a modelos, com teto de gasto configurável.**
+Quando todo sistema da empresa passa por um mesmo gateway para consultar
+IA, fica possível definir limite de gasto por sistema, por equipe ou por
+projeto, e ser avisado antes de estourar, não depois.
+
+**Escolha de modelo por tarefa, não por padrão.** Nem toda tarefa precisa
+do modelo mais caro e mais capaz. Classificar um ticket de suporte não
+exige o mesmo modelo que redigir uma proposta comercial complexa. Rotear
+cada tipo de tarefa para o modelo certo, mais barato quando a tarefa
+permite, é uma das formas mais diretas de reduzir custo sem perder
+qualidade onde importa.
+
+**Visibilidade de custo por chamada, não só por fatura mensal.** Saber
+quanto cada fluxo de IA custa individualmente é o que permite identificar
+qual automação vale o investimento e qual está gastando mais do que
+entrega de valor.
+
+## O ponto central
+
+A guerra de preço entre provedores de IA é uma boa notícia, mas só se
+traduz em economia real para quem tem controle de quanto, onde e por que
+está gastando. Sem isso, o custo por token mais barato só disfarça, por
+um tempo, um consumo que está crescendo sem supervisão.
+
+Se sua empresa usa IA em mais de um sistema e não tem visão clara de
+quanto isso custa por mês, [fale com a EMC no
+WhatsApp](https://wa.me/5598981271251?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20da%20EMC.)
+para estruturar esse controle antes que a fatura surpreenda.
