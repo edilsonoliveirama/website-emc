@@ -3,27 +3,35 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import { whatsappLink, CONTACT_EMAIL, WHATSAPP_DISPLAY } from "@/lib/contact";
+import { whatsappLink, WHATSAPP_DISPLAY } from "@/lib/contact";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
+    const company = String(data.get("company") ?? "");
     const message = String(data.get("message") ?? "");
 
     setStatus("sending");
 
     try {
-      const subject = encodeURIComponent(`Contato via site: ${name}`);
-      const body = encodeURIComponent(`${message}\n\n${name} · ${email}`);
-      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      const lines = [
+        "Olá! Vim pelo site e quero falar sobre um projeto.",
+        "",
+        `Nome: ${name}`,
+        `E-mail: ${email}`,
+        ...(company ? [`Empresa: ${company}`] : []),
+        "",
+        message,
+      ];
+      window.open(whatsappLink(lines.join("\n")), "_blank", "noopener,noreferrer");
       setStatus("sent");
       form.reset();
     } catch {
@@ -110,12 +118,12 @@ export default function Contact() {
             disabled={status === "sending"}
             className="mt-2 w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#06080f] transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 sm:w-auto sm:justify-self-start"
           >
-            {status === "sending" ? "Abrindo seu e-mail..." : "Enviar mensagem"}
+            {status === "sending" ? "Abrindo o WhatsApp..." : "Enviar mensagem no WhatsApp"}
           </button>
 
           {status === "sent" && (
             <p className="text-sm text-[var(--accent)]">
-              Seu cliente de e-mail foi aberto com a mensagem pronta. Se não abriu, escreva direto para {CONTACT_EMAIL}.
+              O WhatsApp foi aberto com a mensagem pronta. Se não abriu, chame direto em {WHATSAPP_DISPLAY}.
             </p>
           )}
         </motion.form>

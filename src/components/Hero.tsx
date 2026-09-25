@@ -22,15 +22,15 @@ export default function Hero() {
           </span>
 
           <h1 className="mt-6 font-[family-name:var(--font-display)] text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-[3.4rem]">
-            Seus sistemas,{" "}
-            <span className="text-gradient">conversando entre si.</span>
+            Menos trabalho manual.{" "}
+            <span className="text-gradient">Mais negócio rodando sozinho.</span>
           </h1>
 
           <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-muted sm:text-lg">
-            A EMC Soluções projeta IA aplicada, desenvolve software sob medida
-            e integra as ferramentas que seu negócio já usa, para que
-            pequenas e médias empresas operem com a eficiência de uma
-            grande.
+            A EMC Soluções aplica IA, desenvolve software sob medida e integra
+            as ferramentas que sua empresa já usa, para que pequenos e médios
+            negócios operem com a eficiência de uma grande, sem contratar uma
+            equipe de tecnologia inteira.
           </p>
 
           <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
@@ -49,6 +49,10 @@ export default function Hero() {
               Ver soluções
             </a>
           </div>
+
+          <p className="mt-4 text-xs text-fg-dim">
+            Conversa de 20 minutos no WhatsApp, sem compromisso.
+          </p>
         </motion.div>
 
         <motion.div

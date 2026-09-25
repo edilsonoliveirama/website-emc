@@ -97,7 +97,7 @@ export default function Header() {
             href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[#06080f] transition-transform hover:scale-[1.03] active:scale-[0.98] sm:inline-block"
+            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[#06080f] transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
           >
             Falar com a EMC
           </a>
@@ -153,7 +153,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="mt-1 rounded-xl bg-[var(--accent)] px-4 py-3 text-center text-sm font-medium text-[#06080f]"
+              className="mt-1 rounded-full bg-[var(--accent)] px-4 py-3 text-center text-sm font-medium text-[#06080f]"
             >
               Falar com a EMC
             </a>

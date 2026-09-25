@@ -8,6 +8,7 @@ const SECTIONS = [
   "fluxo-pagamento",
   "fluxo-atendimento",
   "fluxo-filiais",
+  "como-trabalhamos",
   "investimento",
   "perguntas-frequentes",
   "sobre",

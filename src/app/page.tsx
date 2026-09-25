@@ -7,6 +7,7 @@ import IntegrationFlow from "@/components/IntegrationFlow";
 import BranchFlow from "@/components/BranchFlow";
 import MergeFlow from "@/components/MergeFlow";
 import BlogTeaser from "@/components/BlogTeaser";
+import HowWeWork from "@/components/HowWeWork";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
 import FAQ from "@/components/FAQ";
@@ -35,6 +36,7 @@ export default function Home() {
           message="Olá! Vi os exemplos de integração no site e quero saber mais."
         />
         <BlogTeaser />
+        <HowWeWork />
         <Pricing />
         <About />
         <FAQ />

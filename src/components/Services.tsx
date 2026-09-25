@@ -7,25 +7,25 @@ const SERVICES = [
     tag: "system.ai",
     title: "IA aplicada",
     desc: "Agentes, automações e chatbots que assumem tarefas repetitivas e liberam sua equipe para o que realmente importa.",
-    points: ["Atendimento automatizado", "Automação de processos", "Análise e geração de conteúdo"],
+    points: ["Atende clientes 24 horas, todo dia", "Processos manuais rodando sozinhos", "Conteúdo e relatórios gerados na hora"],
   },
   {
     tag: "system.build",
     title: "Desenvolvimento sob medida",
     desc: "Sites, sistemas e aplicações construídos para o seu processo, não o contrário.",
-    points: ["Sites e sistemas web", "Aplicações internas", "Painéis e dashboards"],
+    points: ["Site que já nasce pronto pra vender", "Sistema do jeito que sua equipe trabalha", "Suporte contínuo após a entrega"],
   },
   {
     tag: "system.connect",
     title: "Integração de sistemas",
     desc: "ERP, CRM, planilhas e APIs conversando em um só fluxo, sem retrabalho manual.",
-    points: ["Conexão entre ERP/CRM", "APIs e webhooks", "Sincronização de dados"],
+    points: ["Fim da planilha copiada à mão", "Sistemas conectados por API", "Dado sincronizado em tempo real"],
   },
   {
     tag: "system.gateway",
     title: "API Gateway LLM",
     desc: "Um único endpoint para dar inteligência artificial a qualquer sistema seu, sem depender de um provedor só.",
-    points: ["Múltiplos modelos e provedores unificados", "Billing e custo centralizado", "Segurança e controle de acesso por chave"],
+    points: ["Um ponto só de acesso a modelos de IA", "Custo e uso visíveis em um painel", "Acesso controlado por chave e sistema"],
   },
 ];
 
@@ -38,7 +38,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl"
+          className="mx-auto max-w-xl text-center"
         >
           <span className="mono-label text-xs text-[var(--accent)]">Soluções</span>
           <h2 id="servicos-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">

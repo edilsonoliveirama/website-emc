@@ -8,27 +8,39 @@ const TIERS = [
   {
     tag: "system.ai",
     title: "IA aplicada",
+    quoteLabel: "IA aplicada",
     from: "R$ 1.500",
     period: "projeto",
-    desc: "Agentes e automações para o seu atendimento ou processo interno.",
+    desc: "Atenda mais rápido e automatize o que hoje consome tempo da sua equipe.",
     points: ["Chatbot ou agente de atendimento", "Fluxo de automação sob medida", "Integração com WhatsApp/e-mail"],
   },
   {
     tag: "system.build",
     title: "Desenvolvimento",
+    quoteLabel: "desenvolvimento",
     from: "R$ 2.500",
     period: "projeto",
-    desc: "Sites e sistemas construídos para o seu processo específico.",
+    desc: "Um site ou sistema construído para o seu processo, pronto para crescer com você.",
     points: ["Site institucional ou landing page", "Painel ou sistema interno", "Suporte pós-entrega"],
     featured: true,
   },
   {
     tag: "system.connect",
     title: "Integração",
+    quoteLabel: "integração de sistemas",
     from: "R$ 1.200",
     period: "projeto",
-    desc: "Conecte ferramentas que hoje não conversam entre si.",
+    desc: "Pare de copiar dado à mão entre sistemas que já fazem parte do seu dia a dia.",
     points: ["ERP, CRM ou planilhas conectados", "APIs e webhooks", "Sincronização automática de dados"],
+  },
+  {
+    tag: "system.gateway",
+    title: "API Gateway LLM",
+    quoteLabel: "o API Gateway LLM",
+    from: "R$ 1.800",
+    period: "projeto",
+    desc: "Um único ponto de acesso a IA para todos os seus sistemas, com custo sob controle.",
+    points: ["Múltiplos modelos e provedores unificados", "Billing e custo centralizado", "Segurança e controle de acesso por chave"],
   },
 ];
 
@@ -45,7 +57,7 @@ export default function Pricing() {
         >
           <span className="mono-label text-xs text-[var(--accent)]">Investimento</span>
           <h2 id="investimento-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            Faixas de investimento por frente
+            Quanto custa? Preço claro, antes de começar
           </h2>
           <p className="mt-4 text-fg-muted">
             Cada projeto é orçado sob medida: os valores abaixo são o ponto
@@ -53,7 +65,7 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {TIERS.map((tier, i) => (
             <motion.div
               key={tier.title}
@@ -105,7 +117,7 @@ export default function Pricing() {
               </ul>
 
               <a
-                href={whatsappLink(`Olá! Quero um orçamento para ${tier.title.toLowerCase()}.`)}
+                href={whatsappLink(`Olá! Quero um orçamento para ${tier.quoteLabel}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`mt-7 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] ${

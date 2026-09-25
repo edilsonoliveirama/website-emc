@@ -161,8 +161,8 @@ export default function LojaVirtualPage() {
         </section>
 
         {/* Steps */}
-        <section id="como-funciona" className="section-divider px-4 py-20">
-          <div className="mx-auto max-w-5xl">
+        <section id="como-funciona" className="section-divider px-4 py-28">
+          <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-xl text-center">
               <span className="mono-label text-xs text-[var(--accent)]">Como funciona</span>
               <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -192,11 +192,11 @@ export default function LojaVirtualPage() {
         </section>
 
         {/* Benefits */}
-        <section className="section-divider px-4 py-20">
+        <section className="section-divider px-4 py-28">
           <div className="mx-auto max-w-3xl">
             <div className="glass-strong rounded-[2rem] p-8 sm:p-12">
               <span className="mono-label text-xs text-[var(--accent)]">O que entregamos</span>
-              <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl">
+              <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
                 Tudo que sua loja precisa para ir ao ar
               </h2>
 
@@ -222,7 +222,7 @@ export default function LojaVirtualPage() {
         </section>
 
         {/* Partnership */}
-        <section className="section-divider px-4 py-20">
+        <section className="section-divider px-4 py-28">
           <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative order-2 aspect-square w-full overflow-hidden rounded-[2rem] bg-[#f4f2ee] lg:order-1">
               <Image
@@ -239,7 +239,7 @@ export default function LojaVirtualPage() {
                 <ShieldCheck className="h-3 w-3" strokeWidth={2} />
                 O que é ser parceiro Nuvemshop
               </span>
-              <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl">
+              <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
                 Não é qualquer um que configura, é quem entende da plataforma
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-fg-muted">
@@ -259,7 +259,7 @@ export default function LojaVirtualPage() {
         </section>
 
         {/* Pricing */}
-        <section className="section-divider px-4 py-20">
+        <section className="section-divider px-4 py-28">
           <div className="mx-auto max-w-3xl">
             <div className="mx-auto max-w-xl text-center">
               <span className="mono-label text-xs text-[var(--accent)]">Investimento</span>
@@ -309,7 +309,7 @@ export default function LojaVirtualPage() {
         </section>
 
         {/* FAQ */}
-        <section className="section-divider px-4 py-20">
+        <section className="section-divider px-4 py-28">
           <div className="mx-auto max-w-3xl">
             <div className="mx-auto max-w-xl text-center">
               <span className="mono-label text-xs text-[var(--accent)]">Dúvidas</span>

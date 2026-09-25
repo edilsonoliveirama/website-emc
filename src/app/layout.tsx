@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
+import MotionProvider from "@/components/MotionProvider";
 import { faqJsonLd } from "@/components/FAQ";
 import { SITE_URL, WHATSAPP_NUMBER, CONTACT_EMAIL } from "@/lib/contact";
 
@@ -182,8 +183,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--bg)] text-[var(--fg)]">
-        {children}
-        <CookieConsent />
+        <MotionProvider>
+          {children}
+          <CookieConsent />
+        </MotionProvider>
         <Analytics />
       </body>
     </html>
