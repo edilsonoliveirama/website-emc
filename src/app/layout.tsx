@@ -25,9 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-const TITLE = "EMC Soluções: IA, Desenvolvimento e Integração de Sistemas";
+const TITLE = "EMC Soluções: Gestão, Nota Fiscal, WhatsApp e IA para PMEs";
 const DESCRIPTION =
-  "A EMC Soluções cria agentes de IA, desenvolve software sob medida e integra ERP, CRM e sistemas de pagamento para pequenas e médias empresas brasileiras. Diagnóstico gratuito via WhatsApp.";
+  "Sistema de gestão, emissor de nota fiscal, API de WhatsApp e tokens de IA (GPT, Claude, GLM), integrados e com suporte de quem desenvolveu. Software sob medida para pequenas e médias empresas. Diagnóstico gratuito.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
   },
   description: DESCRIPTION,
   keywords: [
-    "inteligência artificial para empresas",
-    "automação com IA",
+    "sistema de gestão para pequenas empresas",
+    "emissor de nota fiscal",
+    "API de WhatsApp para empresas",
+    "tokens de IA GPT Claude GLM",
+    "API de inteligência artificial",
     "integração de sistemas",
-    "API Gateway LLM",
     "desenvolvimento de software sob medida",
-    "integração ERP CRM",
-    "chatbot para empresas",
-    "consultoria de tecnologia PME",
+    "automação com IA",
   ],
   authors: [{ name: "EMC Soluções" }],
   creator: "EMC Soluções",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "EMC Soluções: IA, Desenvolvimento e Integração de Sistemas",
+        alt: TITLE,
       },
     ],
   },
@@ -104,10 +104,12 @@ const organizationJsonLd = {
   email: CONTACT_EMAIL,
   areaServed: "BR",
   knowsAbout: [
-    "Inteligência artificial aplicada",
+    "Sistemas de gestão empresarial",
+    "Emissão de nota fiscal eletrônica",
+    "API de WhatsApp",
+    "Modelos de linguagem (LLM)",
     "Desenvolvimento de software",
     "Integração de sistemas",
-    "API Gateway para LLMs",
   ],
   contactPoint: [
     {
@@ -132,24 +134,34 @@ const websiteJsonLd = {
 
 const servicesJsonLd = [
   {
-    name: "IA aplicada",
+    name: "Sistema de gestão",
     description:
-      "Agentes, automações e chatbots que assumem tarefas repetitivas de atendimento e processos, liberando a equipe para o que importa.",
+      "Vendas, financeiro, estoque e clientes em um só lugar, com indicadores do negócio em tempo real.",
   },
   {
-    name: "Desenvolvimento sob medida",
+    name: "Emissor de nota fiscal",
     description:
-      "Sites, sistemas internos e painéis construídos para o processo específico do cliente, não o contrário.",
+      "Emissão de nota fiscal integrada às vendas, com envio automático de XML e DANFE ao cliente.",
+  },
+  {
+    name: "API de WhatsApp",
+    description:
+      "Envio de mensagens pelo WhatsApp a partir dos sistemas da empresa, como confirmação de pedido, cobrança e aviso de entrega.",
+  },
+  {
+    name: "Tokens de IA",
+    description:
+      "Acesso a GPT, Claude, GLM e outros modelos de IA com uma única chave, consumo e custo centralizados.",
   },
   {
     name: "Integração de sistemas",
     description:
-      "Conexão entre ERP, CRM, planilhas e APIs em um só fluxo, eliminando retrabalho manual de dados.",
+      "Conexão entre ERP, CRM, loja virtual, planilhas e APIs em um só fluxo, eliminando retrabalho manual de dados.",
   },
   {
-    name: "API Gateway LLM",
+    name: "Desenvolvimento sob medida",
     description:
-      "Endpoint único para dar inteligência artificial a qualquer sistema, com múltiplos provedores de modelo, billing e controle de acesso centralizados.",
+      "Sites, sistemas internos e áreas restritas construídos para o processo específico do cliente.",
   },
 ].map((s) => ({
   "@type": "Service",

@@ -4,7 +4,12 @@ const FAQS = [
   {
     question: "O que a EMC Soluções faz?",
     answer:
-      "A EMC Soluções desenvolve agentes de IA, cria software sob medida e integra sistemas como ERP, CRM e meios de pagamento para pequenas e médias empresas brasileiras. O objetivo é eliminar processos manuais e fazer diferentes ferramentas conversarem entre si automaticamente.",
+      "A EMC Soluções oferece sistema de gestão, emissor de nota fiscal, API de WhatsApp e acesso a modelos de IA como GPT, Claude e GLM, além de desenvolver software sob medida e integrar sistemas para pequenas e médias empresas brasileiras. O objetivo é eliminar processos manuais e fazer as ferramentas do negócio conversarem entre si.",
+  },
+  {
+    question: "Preciso contratar todas as soluções juntas?",
+    answer:
+      "Não. Cada solução funciona sozinha. Você pode começar por uma, como o emissor de nota fiscal ou a API de WhatsApp, e conectar as outras depois, quando fizer sentido para o negócio.",
   },
   {
     question: "A EMC atende negócios pequenos ou só grandes empresas?",
@@ -14,7 +19,7 @@ const FAQS = [
   {
     question: "Quanto custa um projeto com a EMC Soluções?",
     answer:
-      "Os projetos são orçados sob medida. Como referência: automações e agentes de IA partem de R$ 1.500, integrações de sistemas partem de R$ 1.200, e desenvolvimento de sites ou sistemas parte de R$ 2.500. O valor final depende do escopo específico do projeto.",
+      "Depende do escopo. Depois de um diagnóstico gratuito, a EMC envia uma proposta com escopo e valor fechados antes de começar, sem surpresa no meio do projeto. Sistema de gestão, emissor de nota fiscal, API de WhatsApp e tokens de IA têm planos mensais conforme o volume de uso.",
   },
   {
     question: "É possível automatizar vendas pelo WhatsApp com a EMC?",
@@ -27,9 +32,9 @@ const FAQS = [
       "Sim. A EMC conecta ERP, CRM, planilhas e outras ferramentas via API, sincronizando dados automaticamente e eliminando retrabalho de digitação manual entre sistemas.",
   },
   {
-    question: "O que é o API Gateway LLM da EMC?",
+    question: "Como funciona o fornecimento de tokens de IA?",
     answer:
-      "É um endpoint único que dá inteligência artificial a qualquer sistema do cliente, unificando múltiplos provedores de modelo de IA, com billing centralizado e controle de acesso por chave, sem depender de um único fornecedor de IA.",
+      "Você recebe uma única chave de acesso para usar GPT, Claude, GLM e outros modelos de IA em qualquer sistema, com consumo e custo acompanhados em um painel e controle de acesso por chave. Assim a empresa não depende de um fornecedor só e enxerga quanto gasta com IA.",
   },
   {
     question: "Como entro em contato com a EMC Soluções?",

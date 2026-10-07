@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import CodeBlock from "@/components/blog/CodeBlock";
 
 function isExternal(href: string) {
   return /^https?:\/\//.test(href);
@@ -105,24 +106,20 @@ const components: MDXComponents = {
       {children}
     </td>
   ),
-  // Inline `code`. Fenced blocks are handled by rehype-pretty-code, which
-  // wraps them in <pre><code data-language>, bypassing this component.
-  code: ({ children, ...props }: HTMLAttributes<HTMLElement>) => (
-    <code
-      className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-[family-name:var(--font-mono)] text-[0.85em] text-[var(--accent-mint)]"
-      {...props}
-    >
-      {children}
-    </code>
-  ),
-  pre: ({ children, ...props }: HTMLAttributes<HTMLPreElement>) => (
-    <pre
-      className="glass mt-6 overflow-x-auto rounded-xl border-[var(--panel-border)] p-4 text-[0.85em] leading-relaxed font-[family-name:var(--font-mono)] [&>code]:bg-transparent [&>code]:p-0"
-      {...props}
-    >
-      {children}
-    </pre>
-  ),
+  // MDX maps every <code>, including the one rehype-pretty-code puts inside fenced
+  // blocks (marked with data-language). Only bare inline code gets the pill style.
+  code: ({ children, ...props }: HTMLAttributes<HTMLElement> & { "data-language"?: string }) =>
+    props["data-language"] ? (
+      <code {...props}>{children}</code>
+    ) : (
+      <code
+        className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-[family-name:var(--font-mono)] text-[0.85em] text-[var(--accent-mint)]"
+        {...props}
+      >
+        {children}
+      </code>
+    ),
+  pre: (props: HTMLAttributes<HTMLPreElement>) => <CodeBlock {...props} />,
 };
 
 export function useMDXComponents(overrides: MDXComponents = {}): MDXComponents {

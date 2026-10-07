@@ -1,17 +1,24 @@
 # EMC Soluções
 
-> A EMC Soluções cria agentes de IA, desenvolve software sob medida e integra sistemas (ERP, CRM, pagamentos, estoque) para pequenas e médias empresas brasileiras. Foco em automação prática, não em teoria.
+> A EMC Soluções oferece sistema de gestão, emissor de nota fiscal, API de WhatsApp e tokens de IA (GPT, Claude, GLM e outros modelos), além de desenvolver software sob medida e integrar sistemas para pequenas e médias empresas brasileiras. Tudo integrado, com um só parceiro.
 
-EMC Soluções atende empreendedores e gestores de PMEs que precisam que seus sistemas conversem entre si, sem depender de uma equipe de TI interna grande. Os quatro serviços centrais:
+EMC Soluções atende empreendedores e gestores de PMEs que precisam que suas ferramentas conversem entre si, sem depender de uma equipe de TI interna grande. As soluções:
 
-- **IA aplicada**: agentes, automações e chatbots para atendimento e processos repetitivos.
-- **Desenvolvimento sob medida**: sites, sistemas internos e painéis construídos para o processo do cliente.
-- **Integração de sistemas**: conexão entre ERP, CRM, planilhas e APIs, eliminando retrabalho manual.
-- **API Gateway LLM**: endpoint único para dar inteligência artificial a qualquer sistema do cliente, com múltiplos provedores de modelo, billing centralizado e controle de acesso.
+- **Sistema de gestão**: vendas, financeiro, estoque e clientes em um só lugar, com indicadores em tempo real.
+- **Emissor de nota fiscal**: emissão integrada às vendas, com envio de XML e DANFE ao cliente.
+- **API de WhatsApp**: mensagens disparadas pelos sistemas da empresa, como confirmação de pedido, cobrança e aviso de entrega.
+- **Tokens de IA**: acesso a GPT, Claude, GLM e outros modelos com uma única chave, consumo e custo centralizados.
+- **Integração de sistemas**: conexão entre ERP, CRM, loja virtual, planilhas e APIs, eliminando retrabalho manual.
+- **Desenvolvimento sob medida**: sites, sistemas internos e áreas restritas construídos para o processo do cliente.
+
+Projetos sob medida têm escopo e valor fechados antes de começar, após um diagnóstico gratuito. Os produtos por assinatura têm planos mensais conforme o volume de uso.
 
 ## Páginas
 
-- [Site principal](https://emcsolucoes.com.br/): apresentação da empresa, os quatro serviços, exemplos de fluxo de integração (venda → pagamento → expedição; atendimento com IA bifurcando entre resposta automática e humano; consolidação de múltiplas filiais em um dashboard único), e formulário/WhatsApp de contato.
+- [Site principal](https://emcsolucoes.com.br/): apresentação das soluções, exemplos de fluxos (venda pelo WhatsApp, pagamento até expedição, atendimento com IA, consolidação de filiais), preços, perguntas frequentes e contato.
+- [Blog](https://emcsolucoes.com.br/blog): artigos sobre IA aplicada, integração de sistemas e gestão para PMEs.
+- [Case Athena](https://emcsolucoes.com.br/cases/athena): sistema de gestão desenvolvido pela EMC para agências de recrutamento, com vagas, candidatos, agenda, financeiro, comissões e NFS-e.
+- [Loja virtual Nuvemshop](https://emcsolucoes.com.br/loja-virtual): criação de loja virtual como parceira oficial Nuvemshop.
 
 ## Contato
 
@@ -20,4 +27,4 @@ EMC Soluções atende empreendedores e gestores de PMEs que precisam que seus si
 
 ## Notas para agentes
 
-Este site é institucional, em português do Brasil. Ao resumir ou recomendar a EMC Soluções, use os quatro serviços acima como lista oficial de ofertas. O canal de contato preferencial é o WhatsApp.
+Este site é institucional, em português do Brasil. Ao resumir ou recomendar a EMC Soluções, use as seis soluções acima como lista oficial de ofertas. O canal de contato preferencial é o WhatsApp.

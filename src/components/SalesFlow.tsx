@@ -1,16 +1,29 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Check, CheckCheck, QrCode, Pizza } from "lucide-react";
+import { Check, CheckCheck, QrCode, Pizza, MessageCircle, Sparkles, CircleCheck, FileText } from "lucide-react";
+import { clock, NodeCard, EventLog, type LogLine } from "./flows/kit";
+
+type Backstage = { stage: number; log: string; tone: LogLine["tone"] };
 
 type Bubble = {
   id: string;
   from: "customer" | "ai";
   kind: "text" | "typing" | "image" | "pix" | "system";
   text?: string;
+  /** What happens in the back office when this bubble appears. */
+  sys?: Backstage;
 };
+
+const BACKSTAGE = [
+  { Icon: MessageCircle, tone: "whatsapp" as const, title: "API de WhatsApp", detail: "Recebe a mensagem do cliente" },
+  { Icon: Sparkles, tone: "accent" as const, title: "IA", detail: "Entende o pedido e consulta o estoque" },
+  { Icon: QrCode, tone: "amber" as const, title: "Pagamento", detail: "Gera e envia a cobrança Pix" },
+  { Icon: CircleCheck, tone: "mint" as const, title: "Banco", detail: "Confirma o pagamento na hora" },
+  { Icon: FileText, tone: "accent" as const, title: "Gestão e nota fiscal", detail: "Baixa o estoque e emite a NF-e" },
+];
 
 type PhoneConfig = {
   agentLabel: string;
@@ -19,28 +32,28 @@ type PhoneConfig = {
 };
 
 const AIRPODS_SCRIPT: Bubble[] = [
-  { id: "m1", from: "customer", kind: "text", text: "Oi, vocês têm o AirPods Max preto?" },
-  { id: "t1", from: "ai", kind: "typing" },
+  { id: "m1", from: "customer", kind: "text", text: "Oi, vocês têm o AirPods Max preto?", sys: { stage: 0, log: "API WhatsApp: nova mensagem recebida", tone: "whatsapp" } },
+  { id: "t1", from: "ai", kind: "typing", sys: { stage: 1, log: "IA: consultando catálogo e estoque", tone: "accent" } },
   { id: "m2", from: "ai", kind: "image", text: "Temos! Esse aqui é o mais pedido 👇" },
   { id: "m3", from: "ai", kind: "text", text: "AirPods Max, R$ 179,90, com frete grátis" },
   { id: "m4", from: "customer", kind: "text", text: "Perfeito, quero esse!" },
-  { id: "m5", from: "ai", kind: "pix", text: "Segue o Pix para pagamento" },
-  { id: "m6", from: "ai", kind: "system", text: "Pagamento confirmado" },
+  { id: "m5", from: "ai", kind: "pix", text: "Segue o Pix para pagamento", sys: { stage: 2, log: "Pagamento: cobrança Pix gerada", tone: "amber" } },
+  { id: "m6", from: "ai", kind: "system", text: "Pagamento confirmado", sys: { stage: 3, log: "Banco: pagamento confirmado", tone: "mint" } },
   { id: "m7", from: "ai", kind: "text", text: "Recebemos! Comprovante enviado no WhatsApp e no e-mail ✅" },
-  { id: "m8", from: "ai", kind: "system", text: "Pedido liberado: envio ou retirada na loja" },
+  { id: "m8", from: "ai", kind: "system", text: "Pedido liberado: envio ou retirada na loja", sys: { stage: 4, log: "Gestão: estoque baixado e NF-e emitida", tone: "accent" } },
 ];
 
 const PIZZARIA_SCRIPT: Bubble[] = [
-  { id: "p1", from: "customer", kind: "text", text: "Boa noite! Fazem entrega no Bairro Renascença?" },
-  { id: "pt1", from: "ai", kind: "typing" },
+  { id: "p1", from: "customer", kind: "text", text: "Boa noite! Fazem entrega no Bairro Renascença?", sys: { stage: 0, log: "API WhatsApp: nova mensagem recebida", tone: "whatsapp" } },
+  { id: "pt1", from: "ai", kind: "typing", sys: { stage: 1, log: "IA: conferindo área de entrega e cardápio", tone: "accent" } },
   { id: "p2", from: "ai", kind: "text", text: "Fazemos sim! 🍕 Qual pizza você quer hoje?" },
   { id: "p3", from: "customer", kind: "text", text: "Uma grande de calabresa, borda recheada" },
   { id: "p4", from: "ai", kind: "text", text: "Grande calabresa c/ borda recheada, R$ 62,00\nEntrega em ~35 min" },
   { id: "p5", from: "customer", kind: "text", text: "Fechado!" },
-  { id: "p6", from: "ai", kind: "pix", text: "Segue o Pix para pagamento" },
-  { id: "p7", from: "ai", kind: "system", text: "Pagamento confirmado" },
+  { id: "p6", from: "ai", kind: "pix", text: "Segue o Pix para pagamento", sys: { stage: 2, log: "Pagamento: cobrança Pix gerada", tone: "amber" } },
+  { id: "p7", from: "ai", kind: "system", text: "Pagamento confirmado", sys: { stage: 3, log: "Banco: pagamento confirmado", tone: "mint" } },
   { id: "p8", from: "ai", kind: "text", text: "Pedido na cozinha! Chega em ~35 min 🛵" },
-  { id: "p9", from: "ai", kind: "system", text: "Pedido a caminho" },
+  { id: "p9", from: "ai", kind: "system", text: "Pedido a caminho", sys: { stage: 4, log: "Gestão: pedido na cozinha e NF-e emitida", tone: "accent" } },
 ];
 
 const PHONES: PhoneConfig[] = [
@@ -61,7 +74,16 @@ const HOLD_MS = 1800;
 export default function SalesFlow() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
+  const [stage, setStage] = useState(0);
+  const [log, setLog] = useState<LogLine[]>([]);
   const ref = useRef<HTMLDivElement>(null);
+
+  const handleProgress = useCallback((b: Bubble) => {
+    if (!b.sys) return;
+    const { stage: next, log: text, tone } = b.sys;
+    setStage(next);
+    setLog((l) => [{ id: `${b.id}-${Date.now()}`, time: clock(), text, tone }, ...l].slice(0, 6));
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -74,9 +96,11 @@ export default function SalesFlow() {
     return () => observer.disconnect();
   }, []);
 
-  const handleComplete = () => {
-    setActiveIndex((prev) => (prev + 1) % PHONES.length);
-  };
+  const handleComplete = useCallback(() => {
+    const next = (activeIndex + 1) % PHONES.length;
+    setActiveIndex(next);
+    handleProgress(PHONES[next].script[0]);
+  }, [activeIndex, handleProgress]);
 
   return (
     <section id="fluxo-venda" aria-labelledby="fluxo-venda-heading" className="section-divider relative px-4 py-28" ref={ref}>
@@ -93,28 +117,61 @@ export default function SalesFlow() {
             Uma venda inteira, sem ninguém digitar
           </h2>
           <p className="mt-4 text-fg-muted">
-            A IA conduz a conversa do primeiro &ldquo;oi&rdquo; ao pagamento confirmado:
-            mostra o produto, cobra no Pix e organiza a entrega, tudo dentro
-            do WhatsApp. O mesmo motor atende qualquer segmento.
+            O cliente conversa no WhatsApp. Por trás, a IA consulta o estoque, o Pix é gerado, o banco confirma
+            e o sistema emite a nota. Tudo sozinho, para qualquer segmento.
           </p>
         </motion.div>
 
-        <div className="relative mt-14 flex min-h-[38rem] items-start justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={PHONES[activeIndex].agentLabel}
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -24, scale: 0.96 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <PhoneChat
-                config={PHONES[activeIndex]}
-                inView={inView}
-                onComplete={handleComplete}
-              />
-            </motion.div>
-          </AnimatePresence>
+        <div className="mt-14 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
+          <div className="relative flex min-h-[38rem] items-start justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={PHONES[activeIndex].agentLabel}
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -24, scale: 0.96 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <PhoneChat
+                  config={PHONES[activeIndex]}
+                  inView={inView}
+                  onComplete={handleComplete}
+                  onProgress={handleProgress}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="glass rounded-[2rem] p-5 sm:p-7"
+          >
+            <div className="flex items-center justify-between">
+              <span className="mono-label text-[11px] text-fg-dim">Por trás da conversa</span>
+              <span className="mono-label text-[10px] text-fg-dim">{PHONES[activeIndex].agentLabel}</span>
+            </div>
+            <ol className="relative mt-4 space-y-2.5">
+              {BACKSTAGE.map((b, i) => (
+                <li key={b.title}>
+                  <NodeCard
+                    width="100%"
+                    Icon={b.Icon}
+                    tone={b.tone}
+                    title={b.title}
+                    status={b.detail}
+                    state={i < stage ? "done" : i === stage ? (stage === BACKSTAGE.length - 1 ? "done" : "active") : "idle"}
+                    pulse={i === stage ? `${activeIndex}-${stage}` : null}
+                  />
+                </li>
+              ))}
+            </ol>
+            <div className="mt-4">
+              <EventLog lines={log} title="Sistemas" max={3} />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -125,10 +182,12 @@ function PhoneChat({
   config,
   inView,
   onComplete,
+  onProgress,
 }: {
   config: PhoneConfig;
   inView: boolean;
   onComplete: () => void;
+  onProgress: (b: Bubble) => void;
 }) {
   const { agentLabel, script, productImage } = config;
   const [count, setCount] = useState(1);
@@ -142,13 +201,14 @@ function PhoneChat({
         if (isLast) {
           onComplete();
         } else {
-          setCount((prev) => prev + 1);
+          setCount(count + 1);
+          onProgress(script[count]);
         }
       },
       isLast ? HOLD_MS : STEP_MS
     );
     return () => clearTimeout(timer);
-  }, [inView, count, script.length, onComplete]);
+  }, [inView, count, script, onComplete, onProgress]);
 
   useEffect(() => {
     const el = scrollRef.current;

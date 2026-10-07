@@ -72,7 +72,7 @@ export default function Contact() {
             rel="noopener noreferrer"
             className="glass group inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-whatsapp/15 text-whatsapp">
               <MessageCircle className="h-4 w-4" strokeWidth={2} />
             </span>
             Chamar no WhatsApp
@@ -116,7 +116,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="mt-2 w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#06080f] transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 sm:w-auto sm:justify-self-start"
+            className="btn-shine mt-2 w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 sm:w-auto sm:justify-self-start"
           >
             {status === "sending" ? "Abrindo o WhatsApp..." : "Enviar mensagem no WhatsApp"}
           </button>

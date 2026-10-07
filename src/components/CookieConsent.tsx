@@ -54,7 +54,7 @@ export default function CookieConsent() {
               </button>
               <button
                 onClick={() => respond("accepted")}
-                className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-[#06080f] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
               >
                 Aceitar
               </button>

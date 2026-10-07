@@ -85,7 +85,7 @@ const FAQS = [
   {
     question: "Quanto custa criar a loja e quanto é a mensalidade?",
     answer:
-      "A criação da loja (coleta de dados, identidade da marca, categorias de produto e integração de sistemas e pagamento) custa R$ 899 em pagamento único. A hospedagem na Nuvemshop é à parte, com planos a partir de R$ 119/mês.",
+      "A criação da loja (coleta de dados, identidade da marca, categorias de produto e integração de sistemas e pagamento) é cobrada uma única vez, com valor fechado após o diagnóstico gratuito. A hospedagem na Nuvemshop é uma mensalidade à parte, conforme o plano escolhido.",
   },
 ];
 
@@ -134,7 +134,7 @@ export default function LojaVirtualPage() {
                   href={whatsappLink(ctaMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#06080f] transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                  className="w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
                 >
                   Quero minha loja na Nuvemshop
                 </a>
@@ -264,17 +264,19 @@ export default function LojaVirtualPage() {
             <div className="mx-auto max-w-xl text-center">
               <span className="mono-label text-xs text-[var(--accent)]">Investimento</span>
               <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-                Preço claro, sem letra miúda
+                Sem letra miúda
               </h2>
+              <p className="mt-4 text-fg-muted">
+                Valor fechado depois do diagnóstico gratuito, antes de começar.
+              </p>
             </div>
 
             <div className="glass-strong mt-10 rounded-[2rem] p-8 sm:p-12">
               <div className="grid gap-8 sm:grid-cols-2">
                 <div>
                   <span className="mono-label text-[11px] text-fg-dim">Criação da loja</span>
-                  <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold text-gradient">
-                    R$ 899
-                    <span className="ml-1 text-sm font-normal text-fg-muted">pagamento único</span>
+                  <div className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-gradient">
+                    Pagamento único
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-fg-muted">
                     Coleta de dados, identidade da marca, criação de
@@ -285,9 +287,8 @@ export default function LojaVirtualPage() {
 
                 <div className="border-t border-[var(--panel-border)] pt-8 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
                   <span className="mono-label text-[11px] text-fg-dim">Hospedagem da loja</span>
-                  <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold text-[var(--accent-amber)]">
-                    a partir de R$ 119
-                    <span className="ml-1 text-sm font-normal text-fg-muted">/mês</span>
+                  <div className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[var(--accent-amber)]">
+                    Mensalidade Nuvemshop
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-fg-muted">
                     Mensalidade da Nuvemshop conforme o plano escolhido,
@@ -300,9 +301,9 @@ export default function LojaVirtualPage() {
                 href={whatsappLink(ctaMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#06080f] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
               >
-                Quero criar minha loja
+                Pedir orçamento da minha loja
               </a>
             </div>
           </div>
@@ -350,7 +351,7 @@ export default function LojaVirtualPage() {
               rel="noopener noreferrer"
               className="glass group mt-6 inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-whatsapp/15 text-whatsapp">
                 <MessageCircle className="h-4 w-4" strokeWidth={2} />
               </span>
               Falar com a EMC no WhatsApp

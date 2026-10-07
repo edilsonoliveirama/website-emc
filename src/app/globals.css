@@ -16,6 +16,7 @@
   --accent-mint-soft: rgba(61, 220, 151, 0.14);
   --accent-amber: #ffb454;
   --accent-amber-soft: rgba(255, 180, 84, 0.14);
+  --whatsapp: #25d366;
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -33,6 +34,7 @@
   --color-accent-2: var(--accent-2);
   --color-accent-mint: var(--accent-mint);
   --color-accent-amber: var(--accent-amber);
+  --color-whatsapp: var(--whatsapp);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
@@ -105,6 +107,46 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Periodic light sweep across primary CTAs */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: btn-shine 5s ease-in-out 1.5s infinite;
+}
+
+@keyframes btn-shine {
+  0%, 72% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+@keyframes flow-dash {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(260%); }
+}
+
+/* Cursor-following highlight used by <SpotlightCard> */
+.spotlight-card__surface {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--glow), transparent 65%);
+}
+
+.spotlight-card__border {
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(140, 170, 255, 0.55), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 
 .mono-label {

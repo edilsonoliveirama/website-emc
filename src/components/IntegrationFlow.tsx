@@ -1,269 +1,159 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Globe, CreditCard, CircleCheck, PackageCheck, Truck } from "lucide-react";
-import MobileFlowList from "./MobileFlowList";
+import { motion } from "framer-motion";
+import { Globe, CreditCard, CircleCheck, Truck } from "lucide-react";
+import { useInView, curve, clock, Edge, NodeCard, EventLog, FlowHeading, Positioned, type LogLine } from "./flows/kit";
 
-const STEPS = [
-  {
-    id: "site",
-    label: "Seu site",
-    detail: "Cliente finaliza o pedido",
-    Icon: Globe,
-  },
-  {
-    id: "payment",
-    label: "Integração de pagamento",
-    detail: "Cobrança processada via gateway",
-    Icon: CreditCard,
-  },
-  {
-    id: "confirmed",
-    label: "Pagamento confirmado",
-    detail: "Status sincronizado em tempo real",
-    Icon: CircleCheck,
-  },
-  {
-    id: "shipping",
-    label: "Expedição do produto",
-    detail: "Pedido liberado para envio",
-    Icon: PackageCheck,
-  },
+const Y = 50;
+const X = [12, 37.3, 62.7, 88];
+
+// [ms from cycle start, phase]: even phases = a node working, odd = packet travelling.
+const TIMELINE: [number, number][] = [
+  [0, 0],
+  [1100, 1],
+  [1900, 2],
+  [3000, 3],
+  [3800, 4],
+  [4900, 5],
+  [5700, 6],
 ];
+const CYCLE_MS = 8400;
 
-const STEP_DURATION = 1.4;
+function PaymentIcon({ run }: { run: boolean }) {
+  return (
+    <>
+      <CreditCard className="h-[18px] w-[18px]" strokeWidth={1.9} />
+      {run && (
+        <motion.span
+          className="absolute inset-y-0 w-3 bg-gradient-to-r from-transparent via-white/70 to-transparent"
+          initial={{ x: "-150%" }}
+          animate={{ x: "350%" }}
+          transition={{ duration: 0.9, repeat: Infinity, repeatDelay: 0.3, ease: "easeInOut" }}
+        />
+      )}
+    </>
+  );
+}
+
+function ConfirmIcon({ run, cycle }: { run: boolean; cycle: number }) {
+  if (!run) return <CircleCheck className="h-[18px] w-[18px]" strokeWidth={1.9} />;
+  return (
+    <svg key={cycle} viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+      <motion.circle cx="12" cy="12" r="10" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5 }} />
+      <motion.path d="M8 12.5l2.5 2.5L16 9.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.35, delay: 0.45 }} />
+    </svg>
+  );
+}
+
+function TruckIcon({ run }: { run: boolean }) {
+  if (!run) return <Truck className="h-[18px] w-[18px]" strokeWidth={1.9} />;
+  return (
+    <motion.span
+      initial={{ x: -16, opacity: 0 }}
+      animate={{ x: [-16, 0, 0, 18], opacity: [0, 1, 1, 0] }}
+      transition={{ duration: 2.2, times: [0, 0.25, 0.75, 1], repeat: Infinity, ease: "easeInOut" }}
+    >
+      <motion.span className="block" animate={{ y: [0, -1.2, 0, 0.8, 0] }} transition={{ duration: 0.3, repeat: Infinity }}>
+        <Truck className="h-[18px] w-[18px]" strokeWidth={1.9} />
+      </motion.span>
+    </motion.span>
+  );
+}
 
 export default function IntegrationFlow() {
-  const [active, setActive] = useState(0);
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref);
+  const [cycle, setCycle] = useState(0);
+  const [phase, setPhase] = useState(-1);
+  const [log, setLog] = useState<LogLine[]>([]);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.4 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const order = 8412 + cycle;
 
   useEffect(() => {
     if (!inView) return;
-    const interval = setInterval(() => {
-      setActive((prev) => (prev + 1) % STEPS.length);
-    }, STEP_DURATION * 1000);
-    return () => clearInterval(interval);
-  }, [inView]);
+    const n = 8412 + cycle;
+    const push = (text: string, tone: LogLine["tone"]) =>
+      setLog((l) => [{ id: `${cycle}-${text}`, time: clock(), text, tone }, ...l].slice(0, 6));
+    const timers = TIMELINE.map(([ms, ph]) =>
+      setTimeout(() => {
+        setPhase(ph);
+        if (ph === 0) push(`Site: novo pedido #${n}`, "accent");
+        if (ph === 2) push(`Gateway: cobrança Pix gerada para #${n}`, "amber");
+        if (ph === 4) push(`Webhook: pagamento de #${n} confirmado`, "mint");
+        if (ph === 6) push(`Expedição: etiqueta de #${n} gerada`, "accent");
+      }, ms),
+    );
+    timers.push(setTimeout(() => setCycle((c) => c + 1), CYCLE_MS));
+    return () => timers.forEach(clearTimeout);
+  }, [inView, cycle]);
 
-  // Segment the traveling pulse departs from; hidden on the wrap frame (last → first).
-  const pulseFrom = active > 0 ? active - 1 : -1;
+  const state = (node: number) => (phase > node * 2 ? "done" : phase === node * 2 ? "active" : "idle");
+
+  const steps = [
+    { Icon: Globe, title: "Seu site", work: `Pedido #${order} criado`, done: `Pedido #${order} enviado`, wait: "Aguardando pedido" },
+    { Icon: CreditCard, title: "Pagamento", work: "Gerando cobrança no gateway…", done: "Cobrança Pix enviada", wait: "Aguardando pedido", icon: <PaymentIcon run={phase === 2} />, tone: "amber" as const },
+    { Icon: CircleCheck, title: "Confirmação", work: "Pago, status sincronizado", done: "Pagamento confirmado", wait: "Aguardando pagamento", icon: <ConfirmIcon run={phase >= 4} cycle={cycle} />, tone: "mint" as const },
+    { Icon: Truck, title: "Expedição", work: "Etiqueta gerada, coleta agendada", done: "Pedido liberado", wait: "Aguardando confirmação", icon: <TruckIcon run={phase >= 6} /> },
+  ];
+
+  const card = (i: number, width?: string) => {
+    const s = steps[i];
+    const st = state(i);
+    const status = st === "active" || (i === 3 && phase >= 6) ? s.work : st === "done" ? s.done : s.wait;
+    return (
+      <NodeCard
+        width={width}
+        Icon={s.Icon}
+        iconNode={s.icon}
+        tone={s.tone}
+        title={s.title}
+        state={i === 3 && phase >= 6 ? "active" : st}
+        status={status}
+        statusKey={`${status}-${cycle}`}
+        pulse={st === "active" ? `${i}-${cycle}` : null}
+      />
+    );
+  };
 
   return (
-    <section id="fluxo-pagamento" aria-labelledby="fluxo-pagamento-heading" className="section-divider relative px-4 py-28" ref={ref}>
+    <section id="fluxo-pagamento" aria-labelledby="fluxo-pagamento-heading" ref={ref} className="section-divider relative px-4 py-28">
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-xl text-center"
-        >
-          <span className="mono-label text-xs text-[var(--accent)]">system.flow</span>
-          <h2 id="fluxo-pagamento-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            Da venda à expedição, sem intervenção manual
-          </h2>
-          <p className="mt-4 text-fg-muted">
-            Um exemplo real de integração que a EMC entrega: o pedido flui
-            entre sistemas sozinho, do clique de compra à separação do
-            produto.
-          </p>
-        </motion.div>
+        <FlowHeading tag="system.flow" id="fluxo-pagamento-heading" title="Da venda à expedição, sem intervenção manual">
+          O pedido passa sozinho pelo site, pelo pagamento e pela expedição. Cada sistema avisa o próximo, e
+          ninguém precisa conferir nada à mão.
+        </FlowHeading>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 rounded-[2rem] p-8 sm:p-12"
+          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
         >
-          <MobileFlowList
-            items={STEPS.map((step, i) => ({
-              id: step.id,
-              label: step.label,
-              detail: step.detail,
-              Icon: step.Icon,
-              active: i <= active,
-            }))}
-            pulseSegment={active > 0 ? active - 1 : undefined}
-            pulseKey={active}
-            pulseDuration={STEP_DURATION * 0.85}
-          />
-
-          <div className="relative hidden sm:block">
-            {/* Track line */}
-            <div className="absolute left-0 right-0 top-8 z-0 h-px bg-[var(--panel-border-strong)]" />
-
-            {/* Segment fills: each lights up once its step has been reached */}
-            {STEPS.slice(0, -1).map((step, i) => (
-              <motion.div
-                key={step.id}
-                className="absolute top-8 z-0 h-px origin-left bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)]"
-                style={{
-                  left: `${(i / (STEPS.length - 1)) * 100}%`,
-                  width: `${(1 / (STEPS.length - 1)) * 100}%`,
-                }}
-                animate={{ scaleX: i < active ? 1 : 0 }}
-                transition={{ duration: STEP_DURATION * 0.6, ease: "easeInOut" }}
-              />
-            ))}
-
-            {/* Traveling pulse: fades in, crosses the active segment, fades out */}
-            <AnimatePresence>
-              {pulseFrom >= 0 && (
-                <motion.div
-                  key={active}
-                  className="absolute top-8 z-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_14px_4px_var(--accent)]"
-                  initial={{
-                    left: `${(pulseFrom / (STEPS.length - 1)) * 100}%`,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    left: `${(active / (STEPS.length - 1)) * 100}%`,
-                    opacity: [0, 1, 1, 0],
-                  }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    left: { duration: STEP_DURATION * 0.75, ease: "easeInOut" },
-                    opacity: { duration: STEP_DURATION * 0.75, times: [0, 0.15, 0.8, 1] },
-                  }}
+          <div className="relative hidden h-36 w-full lg:block">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
+              {[0, 1, 2].map((i) => (
+                <Edge
+                  key={i}
+                  d={curve(X[i], Y, X[i + 1], Y)}
+                  lit={phase >= i * 2 + 1}
+                  trigger={phase >= i * 2 + 1 ? `${cycle}-${i}` : null}
+                  color={i === 1 ? "#3ddc97" : "#8ba4ff"}
                 />
-              )}
-            </AnimatePresence>
+              ))}
+            </svg>
+            {X.map((x, i) => (
+              <Positioned key={i} p={{ x, y: Y }}>
+                {card(i, "11.5rem")}
+              </Positioned>
+            ))}
+          </div>
 
-            <div className="relative grid grid-cols-4 gap-y-0">
-              {STEPS.map((step, i) => {
-                const isActive = i === active;
-                const isPast = i < active;
-                return (
-                  <div key={step.id} className="flex flex-col items-center text-center px-2">
-                    <motion.div
-                      animate={{
-                        scale: isActive ? 1.12 : 1,
-                        borderColor: isActive || isPast
-                          ? "rgba(140,170,255,0.6)"
-                          : "rgba(140,170,255,0.16)",
-                        backgroundColor: isActive
-                          ? "rgba(91,140,255,0.22)"
-                          : isPast
-                          ? "rgba(91,140,255,0.12)"
-                          : "rgba(14,20,36,0.95)",
-                        boxShadow: isActive
-                          ? "0 0 0 1px rgba(91,140,255,0.25), 0 8px 28px -6px rgba(91,140,255,0.55)"
-                          : "0 0 0 0 rgba(91,140,255,0)",
-                      }}
-                      transition={{ duration: 0.35 }}
-                      className="relative z-10 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border backdrop-blur-sm sm:h-16 sm:w-16"
-                    >
-                      {step.id === "payment" && isActive ? (
-                        <motion.div
-                          key={`payment-${active}`}
-                          initial={{ x: -10, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                          className="relative"
-                        >
-                          <CreditCard strokeWidth={1.6} className="h-6 w-6 text-[var(--accent)] sm:h-7 sm:w-7" />
-                          <motion.span
-                            className="absolute inset-y-0 left-0 w-full bg-gradient-to-b from-transparent via-white/70 to-transparent"
-                            style={{ mixBlendMode: "overlay" }}
-                            initial={{ x: "-120%" }}
-                            animate={{ x: "120%" }}
-                            transition={{ duration: STEP_DURATION * 0.75, ease: "easeInOut" }}
-                          />
-                        </motion.div>
-                      ) : step.id === "confirmed" && isActive ? (
-                        <motion.svg
-                          key={`confirmed-${active}`}
-                          viewBox="0 0 24 24"
-                          className="h-6 w-6 text-[var(--accent)] sm:h-7 sm:w-7"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={1.6}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <motion.circle
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: STEP_DURATION * 0.4, ease: "easeOut" }}
-                          />
-                          <motion.path
-                            d="M8 12.5l2.5 2.5L16 9.5"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: STEP_DURATION * 0.3, delay: STEP_DURATION * 0.35, ease: "easeOut" }}
-                          />
-                        </motion.svg>
-                      ) : step.id === "shipping" && isActive ? (
-                        <motion.div
-                          key={`shipping-${active}`}
-                          initial={{ x: "-140%", opacity: 0 }}
-                          animate={{ x: "160%", opacity: [0, 1, 1, 0] }}
-                          transition={{ duration: STEP_DURATION * 0.9, ease: "easeIn", times: [0, 0.2, 0.75, 1] }}
-                        >
-                          <motion.div
-                            animate={{ y: [0, -1.5, 0, 1, 0] }}
-                            transition={{ duration: 0.3, repeat: Infinity, ease: "easeInOut" }}
-                          >
-                            <Truck strokeWidth={1.6} className="h-6 w-6 text-[var(--accent)] sm:h-7 sm:w-7" />
-                          </motion.div>
-                        </motion.div>
-                      ) : (
-                        <step.Icon
-                          strokeWidth={1.6}
-                          className={`h-6 w-6 sm:h-7 sm:w-7 transition-colors duration-300 ${
-                            isActive || isPast ? "text-[var(--accent)]" : "text-fg-dim"
-                          }`}
-                        />
-                      )}
-                      {isActive && (
-                        <motion.span
-                          className="absolute inset-0 rounded-2xl border border-[var(--accent)]"
-                          initial={{ opacity: 0.6, scale: 1 }}
-                          animate={{ opacity: 0, scale: 1.4 }}
-                          transition={{
-                            duration: STEP_DURATION,
-                            repeat: Infinity,
-                            ease: "easeOut",
-                            delay: i === 0 ? 0 : STEP_DURATION * 0.75,
-                          }}
-                        />
-                      )}
-                    </motion.div>
+          <div className="flex flex-col gap-2.5 lg:hidden">{steps.map((_, i) => <div key={i}>{card(i, "100%")}</div>)}</div>
 
-                    <span
-                      className={`mono-label mt-4 text-[11px] transition-colors duration-300 ${
-                        isActive ? "text-[var(--accent)]" : "text-fg-dim"
-                      }`}
-                    >
-                      0{i + 1}
-                    </span>
-                    <h3 className="mt-1 font-[family-name:var(--font-display)] text-sm font-semibold sm:text-base">
-                      {step.label}
-                    </h3>
-                    <p className="mt-1 hidden text-xs text-fg-muted sm:block">
-                      {step.detail}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="mt-6 lg:mt-8">
+            <EventLog lines={log} title="Integrações" max={4} />
           </div>
         </motion.div>
       </div>

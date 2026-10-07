@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/contact";
 import { getAllPostsMeta } from "@/lib/blog";
+import { SINTAF_CASE_ENABLED } from "@/lib/features";
 
 const SECTIONS = [
   "servicos",
+  "cases",
   "fluxo-venda",
   "fluxo-pagamento",
   "fluxo-atendimento",
@@ -36,6 +38,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/cases/athena`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...(SINTAF_CASE_ENABLED
+      ? [
+          {
+            url: `${SITE_URL}/cases/sintaf-area-do-filiado`,
+            lastModified,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
     {
       url: `${SITE_URL}/blog`,
       lastModified,

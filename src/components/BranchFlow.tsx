@@ -1,274 +1,202 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, Brain, Bot, Headset, CircleCheck } from "lucide-react";
-import MobileFlowList from "./MobileFlowList";
+import { motion } from "framer-motion";
+import { MessageCircle, Brain, Bot, Headset, CircleCheck, Loader2 } from "lucide-react";
+import { useInView, curve, clock, Edge, NodeCard, EventLog, FlowHeading, Positioned, type LogLine } from "./flows/kit";
 
-type NodeDef = {
-  id: string;
-  x: number;
-  y: number;
-  label: string;
-  detail: string;
-  Icon: typeof Brain;
-};
+type Route = "auto" | "human";
 
-const NODES: Record<string, NodeDef> = {
-  message: { id: "message", x: 8, y: 50, label: "Mensagem recebida", detail: "Cliente escreve no WhatsApp, chat ou e-mail", Icon: MessageCircle },
-  triage: { id: "triage", x: 34, y: 50, label: "IA classifica", detail: "Gateway LLM analisa intenção e complexidade", Icon: Brain },
-  auto: { id: "auto", x: 66, y: 22, label: "Resolve automaticamente", detail: "Dúvida simples, resposta imediata", Icon: Bot },
-  human: { id: "human", x: 66, y: 78, label: "Escala para humano", detail: "Caso complexo, atendente assume com contexto pronto", Icon: Headset },
-  done: { id: "done", x: 92, y: 50, label: "Cliente atendido", detail: "Ticket resolvido e registrado", Icon: CircleCheck },
-};
-
-const EDGES: [string, string][] = [
-  ["message", "triage"],
-  ["triage", "auto"],
-  ["triage", "human"],
-  ["auto", "done"],
-  ["human", "done"],
+const SCENARIOS: { route: Route; message: string; intent: string; handled: string; outcome: string }[] = [
+  {
+    route: "auto",
+    message: "“Qual o horário de vocês no sábado?”",
+    intent: "Dúvida simples · resposta automática",
+    handled: "Respondeu em 3s com o horário",
+    outcome: "Resolvido sem fila de espera",
+  },
+  {
+    route: "human",
+    message: "“Fui cobrado duas vezes no cartão”",
+    intent: "Cobrança · caso sensível",
+    handled: "Ana assumiu com o histórico completo",
+    outcome: "Estorno resolvido pela atendente",
+  },
+  {
+    route: "auto",
+    message: "“Meu pedido já saiu para entrega?”",
+    intent: "Status de pedido · automático",
+    handled: "Enviou o código de rastreio na hora",
+    outcome: "Resolvido em 5 segundos",
+  },
 ];
 
-function edgePath(a: NodeDef, b: NodeDef) {
-  const midX = (a.x + b.x) / 2;
-  return `M ${a.x} ${a.y} C ${midX} ${a.y}, ${midX} ${b.y}, ${b.x} ${b.y}`;
-}
+// Node positions in the 0..100 diagram space.
+const P = {
+  msg: { x: 11, y: 50 },
+  ia: { x: 37, y: 50 },
+  auto: { x: 64, y: 20 },
+  human: { x: 64, y: 80 },
+  done: { x: 89, y: 50 },
+};
 
-const CYCLE_DURATION = 3.2;
-const PULSE_DURATION = CYCLE_DURATION * 0.85;
+// [ms from cycle start, phase]
+const TIMELINE: [number, number][] = [
+  [0, 0], // message arrives
+  [1000, 1], // comet msg -> IA
+  [1900, 2], // IA analysing
+  [2900, 3], // IA classified
+  [3300, 4], // comet IA -> route
+  [4200, 5], // route handling
+  [5200, 6], // comet route -> done
+  [6100, 7], // done
+];
+const CYCLE_MS = 8200;
 
 export default function BranchFlow() {
-  const [branch, setBranch] = useState<"auto" | "human">("auto");
-  const [pulseKey, setPulseKey] = useState(0);
-  const [mobileStep, setMobileStep] = useState(0);
-  const [inView, setInView] = useState(false);
-  const [pulsePos, setPulsePos] = useState<{ x: number; y: number; opacity: number }>({ x: NODES.message.x, y: NODES.message.y, opacity: 0 });
-  const ref = useRef<HTMLDivElement>(null);
-  const seg1Ref = useRef<SVGPathElement>(null);
-  const seg2Ref = useRef<SVGPathElement>(null);
-  const seg3Ref = useRef<SVGPathElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref);
+  const [cycle, setCycle] = useState(0);
+  const [phase, setPhase] = useState(-1);
+  const [log, setLog] = useState<LogLine[]>([]);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.4 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const sc = SCENARIOS[cycle % SCENARIOS.length];
 
   useEffect(() => {
     if (!inView) return;
-    const interval = setInterval(() => {
-      setBranch((prev) => (prev === "auto" ? "human" : "auto"));
-      setPulseKey((k) => k + 1);
-      setMobileStep(0);
-    }, CYCLE_DURATION * 1000);
-    return () => clearInterval(interval);
-  }, [inView]);
+    const s = SCENARIOS[cycle % SCENARIOS.length];
+    const push = (text: string, tone: LogLine["tone"]) =>
+      setLog((l) => [{ id: `${cycle}-${text}`, time: clock(), text, tone }, ...l].slice(0, 6));
 
-  useEffect(() => {
-    if (!inView) return;
-    const stepDuration = (CYCLE_DURATION * 1000) / 3;
-    const timers = [1, 2].map((step) =>
-      setTimeout(() => setMobileStep(step), step * stepDuration)
+    const timers = TIMELINE.map(([ms, ph]) =>
+      setTimeout(() => {
+        setPhase(ph);
+        if (ph === 0) push(`WhatsApp: ${s.message.replace(/[“”]/g, "")}`, "whatsapp");
+        if (ph === 3) push(`IA classificou: ${s.intent}`, "accent");
+        if (ph === 5) push(s.route === "auto" ? "Agente de IA respondeu o cliente" : "Encaminhado para atendente humano", s.route === "auto" ? "accent" : "amber");
+        if (ph === 7) push(`Ticket fechado: ${s.outcome}`, "mint");
+      }, ms),
     );
+    timers.push(setTimeout(() => setCycle((c) => c + 1), CYCLE_MS));
     return () => timers.forEach(clearTimeout);
-  }, [inView, pulseKey]);
+  }, [inView, cycle]);
 
-  useEffect(() => {
-    if (!inView) return;
-    let raf: number;
-    const start = performance.now();
+  const other: Route = sc.route === "auto" ? "human" : "auto";
+  const st = (from: number, to: number) => (phase >= to ? "done" : phase >= from ? "active" : "idle");
 
-    const tick = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      const t = Math.min(elapsed / PULSE_DURATION, 1);
+  const nodes = {
+    msg: { state: phase >= 1 ? "done" : phase >= 0 ? "active" : "idle", status: sc.message, statusKey: `m${cycle}` },
+    ia: {
+      state: st(2, 4),
+      status:
+        phase === 2 ? (
+          <span className="inline-flex items-center gap-1.5">
+            <Loader2 className="h-3 w-3 animate-spin text-[var(--accent)]" strokeWidth={3} /> Analisando intenção…
+          </span>
+        ) : phase >= 3 ? (
+          sc.intent
+        ) : (
+          "Aguardando mensagem"
+        ),
+      statusKey: phase === 2 ? `a${cycle}` : phase >= 3 ? `c${cycle}` : "w",
+    },
+    route: { state: st(5, 6), status: phase >= 5 ? sc.handled : "Aguardando decisão da IA", statusKey: phase >= 5 ? `h${cycle}` : "w" },
+    other: { state: phase >= 3 ? "dim" : "idle", status: other === "human" ? "Atendente disponível" : "Agente de IA disponível", statusKey: `o${other}` },
+    done: { state: phase >= 7 ? "done" : "idle", status: phase >= 7 ? sc.outcome : "Em andamento", statusKey: phase >= 7 ? `d${cycle}` : "w" },
+  } as const;
 
-      const seg1 = seg1Ref.current;
-      const seg2 = seg2Ref.current;
-      const seg3 = seg3Ref.current;
-      if (!seg1 || !seg2 || !seg3) return;
+  const routeNode = (r: Route) => (r === sc.route ? nodes.route : nodes.other);
+  const trig = (minPhase: number, edge: string) => (phase >= minPhase ? `${cycle}-${edge}` : null);
 
-      const len1 = seg1.getTotalLength();
-      const len2 = seg2.getTotalLength();
-      const len3 = seg3.getTotalLength();
-      const totalLen = len1 + len2 + len3;
-      const dist = t * totalLen;
-
-      let point: DOMPoint;
-      if (dist <= len1) {
-        point = seg1.getPointAtLength(dist);
-      } else if (dist <= len1 + len2) {
-        point = seg2.getPointAtLength(dist - len1);
-      } else {
-        point = seg3.getPointAtLength(Math.min(dist - len1 - len2, len3));
-      }
-
-      const opacity = t < 0.06 ? t / 0.06 : t > 0.92 ? (1 - t) / 0.08 : 1;
-      setPulsePos({ x: point.x, y: point.y, opacity: Math.max(0, Math.min(1, opacity)) });
-
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [pulseKey, inView, branch]);
-
-  const activePath = [NODES.message.id, NODES.triage.id, branch, NODES.done.id];
-  const isEdgeActive = (a: string, b: string) => {
-    const ia = activePath.indexOf(a);
-    const ib = activePath.indexOf(b);
-    return ia !== -1 && ib === ia + 1;
-  };
-  const isNodeActive = (id: string) => activePath.includes(id);
-
-  const branchNode = branch === "auto" ? NODES.auto : NODES.human;
+  const autoNode = routeNode("auto");
+  const humanNode = routeNode("human");
 
   return (
-    <section id="fluxo-atendimento" aria-labelledby="fluxo-atendimento-heading" className="section-divider relative px-4 py-28" ref={ref}>
+    <section id="fluxo-atendimento" aria-labelledby="fluxo-atendimento-heading" ref={ref} className="section-divider relative px-4 py-28">
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-xl text-center"
-        >
-          <span className="mono-label text-xs text-[var(--accent)]">system.route</span>
-          <h2 id="fluxo-atendimento-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            A IA decide o caminho certo para cada caso
-          </h2>
-          <p className="mt-4 text-fg-muted">
-            Outro exemplo comum: atendimento que se divide sozinho entre
-            resposta automática e um humano, sem o cliente perceber a
-            costura por trás.
-          </p>
-        </motion.div>
+        <FlowHeading tag="system.route" id="fluxo-atendimento-heading" title="A IA decide o caminho certo para cada caso">
+          Dúvida simples, a IA resolve na hora. Caso sensível, um atendente assume já com o histórico da conversa.
+          O cliente não percebe a costura por trás.
+        </FlowHeading>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 overflow-hidden rounded-[2rem] p-6 sm:p-10"
+          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
         >
-          <MobileFlowList
-            items={[
-              NODES.message,
-              NODES.triage,
-              NODES.auto,
-              NODES.human,
-              NODES.done,
-            ].map((n) => {
-              const isBranchOption = n.id === "auto" || n.id === "human";
-              const onActivePath = isNodeActive(n.id);
-              return {
-                id: n.id,
-                label: n.label,
-                detail: n.detail,
-                Icon: n.Icon,
-                active: onActivePath,
-                dimmed: isBranchOption && !onActivePath,
-              };
-            })}
-            pulseSegment={mobileStep < 2 ? mobileStep : branch === "auto" ? 2 : 3}
-            pulseKey={`${pulseKey}-${mobileStep}`}
-            pulseDuration={(CYCLE_DURATION * 1000) / 3 / 1000 * 0.85}
-          />
-
-          <div className="relative hidden aspect-[16/10] w-full sm:block sm:aspect-[2/1]">
+          {/* Desktop diagram */}
+          <div className="relative hidden aspect-[2.3/1] w-full lg:block">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
-              <defs>
-                <linearGradient id="branchLine" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#5b8cff" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#7c5cff" stopOpacity="0.2" />
-                </linearGradient>
-              </defs>
-
-              {EDGES.map(([a, b]) => (
-                <path
-                  key={`${a}-${b}`}
-                  d={edgePath(NODES[a], NODES[b])}
-                  fill="none"
-                  stroke={isEdgeActive(a, b) ? "url(#branchLine)" : "var(--panel-border)"}
-                  strokeWidth={isEdgeActive(a, b) ? 0.5 : 0.35}
-                  vectorEffect="non-scaling-stroke"
-                  className="transition-[stroke,stroke-width] duration-500"
-                />
-              ))}
-
-              {/* Hidden reference paths for the active route, used to sample exact curve points */}
-              <path ref={seg1Ref} d={edgePath(NODES.message, NODES.triage)} fill="none" stroke="none" />
-              <path ref={seg2Ref} d={edgePath(NODES.triage, branchNode)} fill="none" stroke="none" />
-              <path ref={seg3Ref} d={edgePath(branchNode, NODES.done)} fill="none" stroke="none" />
+              <Edge d={curve(P.msg.x, P.msg.y, P.ia.x, P.ia.y)} lit={phase >= 1} trigger={trig(1, "m-ia")} />
+              <Edge d={curve(P.ia.x, P.ia.y, P.auto.x, P.auto.y)} lit={phase >= 4 && sc.route === "auto"} trigger={sc.route === "auto" ? trig(4, "ia-r") : null} />
+              <Edge
+                d={curve(P.ia.x, P.ia.y, P.human.x, P.human.y)}
+                lit={phase >= 4 && sc.route === "human"}
+                trigger={sc.route === "human" ? trig(4, "ia-r") : null}
+                color="#ffb454"
+              />
+              <Edge d={curve(P.auto.x, P.auto.y, P.done.x, P.done.y)} lit={phase >= 6 && sc.route === "auto"} trigger={sc.route === "auto" ? trig(6, "r-d") : null} />
+              <Edge
+                d={curve(P.human.x, P.human.y, P.done.x, P.done.y)}
+                lit={phase >= 6 && sc.route === "human"}
+                trigger={sc.route === "human" ? trig(6, "r-d") : null}
+                color="#ffb454"
+              />
             </svg>
 
-            <div
-              className="pointer-events-none absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_14px_4px_var(--accent)]"
-              style={{
-                left: `${pulsePos.x}%`,
-                top: `${pulsePos.y}%`,
-                opacity: pulsePos.opacity,
-              }}
-            />
-
-            {Object.values(NODES).map((n) => {
-              const active = isNodeActive(n.id);
-              const isBranchLabel = n.id === "auto" || n.id === "human";
-              const dimmed = isBranchLabel && !active;
-              return (
-                <div
-                  key={n.id}
-                  className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center"
-                  style={{ left: `${n.x}%`, top: `${n.y}%`, width: "9.5rem" }}
-                >
-                  <motion.div
-                    animate={{
-                      borderColor: active ? "rgba(140,170,255,0.6)" : "rgba(140,170,255,0.16)",
-                      backgroundColor: active ? "rgba(91,140,255,0.18)" : "rgba(255,255,255,0.02)",
-                      opacity: dimmed ? 0.45 : 1,
-                    }}
-                    transition={{ duration: 0.4 }}
-                    className="relative flex h-12 w-12 items-center justify-center rounded-2xl border sm:h-14 sm:w-14"
-                  >
-                    <n.Icon
-                      strokeWidth={1.6}
-                      className={`h-5 w-5 sm:h-6 sm:w-6 transition-colors duration-300 ${
-                        active ? "text-[var(--accent)]" : "text-fg-dim"
-                      }`}
-                    />
-                  </motion.div>
-                  <h3
-                    className={`mt-3 font-[family-name:var(--font-display)] text-xs font-semibold transition-opacity duration-300 sm:text-sm ${
-                      dimmed ? "opacity-45" : "opacity-100"
-                    }`}
-                  >
-                    {n.label}
-                  </h3>
-                  <p
-                    className={`mt-1 hidden text-[11px] leading-snug text-fg-muted transition-opacity duration-300 sm:block ${
-                      dimmed ? "opacity-45" : "opacity-100"
-                    }`}
-                  >
-                    {n.detail}
-                  </p>
-                </div>
-              );
-            })}
+            <Positioned p={P.msg}>
+              <NodeCard Icon={MessageCircle} tone="whatsapp" title="Mensagem recebida" state={nodes.msg.state} status={nodes.msg.status} statusKey={nodes.msg.statusKey} />
+            </Positioned>
+            <Positioned p={P.ia}>
+              <NodeCard Icon={Brain} title="IA classifica" state={nodes.ia.state} status={nodes.ia.status} statusKey={nodes.ia.statusKey} pulse={phase >= 2 ? `ia${cycle}` : null} />
+            </Positioned>
+            <Positioned p={P.auto}>
+              <NodeCard Icon={Bot} title="Resolve automaticamente" state={autoNode.state} status={autoNode.status} statusKey={autoNode.statusKey} />
+            </Positioned>
+            <Positioned p={P.human}>
+              <NodeCard Icon={Headset} tone="amber" title="Escala para humano" state={humanNode.state} status={humanNode.status} statusKey={humanNode.statusKey} />
+            </Positioned>
+            <Positioned p={P.done}>
+              <NodeCard Icon={CircleCheck} tone="mint" title="Cliente atendido" state={nodes.done.state} status={nodes.done.status} statusKey={nodes.done.statusKey} pulse={phase >= 7 ? `d${cycle}` : null} />
+            </Positioned>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-2 sm:mt-4">
-            <span className="mono-label text-[11px] text-fg-dim">rota ativa</span>
-            <span className="mono-label rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]">
-              {branch === "auto" ? "resposta automática" : "atendimento humano"}
-            </span>
+          {/* Mobile: vertical story */}
+          <div className="flex flex-col items-stretch gap-2.5 lg:hidden">
+            <NodeCard width="100%" Icon={MessageCircle} tone="whatsapp" title="Mensagem recebida" state={nodes.msg.state} status={nodes.msg.status} statusKey={nodes.msg.statusKey} />
+            <NodeCard width="100%" Icon={Brain} title="IA classifica" state={nodes.ia.state} status={nodes.ia.status} statusKey={nodes.ia.statusKey} />
+            <NodeCard
+              width="100%"
+              Icon={sc.route === "auto" ? Bot : Headset}
+              tone={sc.route === "auto" ? "accent" : "amber"}
+              title={sc.route === "auto" ? "Resolve automaticamente" : "Escala para humano"}
+              state={nodes.route.state}
+              status={nodes.route.status}
+              statusKey={nodes.route.statusKey}
+            />
+            <NodeCard width="100%" Icon={CircleCheck} tone="mint" title="Cliente atendido" state={nodes.done.state} status={nodes.done.status} statusKey={nodes.done.statusKey} />
+          </div>
+
+          <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <EventLog lines={log} />
+            <div className="flex items-center gap-2 lg:flex-col lg:items-end">
+              <span className="mono-label text-[10px] text-fg-dim">rota ativa</span>
+              <span
+                className={`mono-label rounded-full border px-3 py-1 text-[11px] transition-colors ${
+                  sc.route === "auto"
+                    ? "border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[#bcd0ff]"
+                    : "border-[var(--accent-amber)]/40 bg-[var(--accent-amber-soft)] text-[var(--accent-amber)]"
+                }`}
+              >
+                {sc.route === "auto" ? "resposta automática" : "atendimento humano"}
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+

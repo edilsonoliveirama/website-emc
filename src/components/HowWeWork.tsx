@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MessageCircle, FileText, Rocket, LifeBuoy } from "lucide-react";
+import SpotlightCard from "./SpotlightCard";
 
 const STEPS = [
   {
@@ -65,18 +66,19 @@ export default function HowWeWork() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: i * 0.1 }}
-              className="glass relative flex flex-col rounded-xl p-6"
             >
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]">
-                  <s.Icon className="h-5 w-5" strokeWidth={1.8} />
-                </span>
-                <span className="mono-label text-xs text-fg-dim">{s.step}</span>
-              </div>
-              <h3 className="mt-4 font-[family-name:var(--font-display)] text-base font-semibold">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.desc}</p>
+              <SpotlightCard className="glass h-full rounded-2xl">
+                <div className="flex h-full flex-col p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]">
+                      <s.Icon className="h-5 w-5" strokeWidth={1.8} />
+                    </span>
+                    <span className="mono-label text-xs text-fg-dim">{s.step}</span>
+                  </div>
+                  <h3 className="mt-4 font-[family-name:var(--font-display)] text-base font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.desc}</p>
+                </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>

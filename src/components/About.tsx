@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import CountUp from "./CountUp";
 
 const STATS = [
-  { value: "4", label: "frentes de atuação", suffix: "" },
-  { value: "100", label: "foco em pequenas e médias empresas", suffix: "%" },
-  { value: "1", label: "ponto de contato, do diagnóstico à entrega", suffix: "" },
+  { value: 6, label: "soluções que se conectam entre si", suffix: "" },
+  { value: 100, label: "foco em pequenas e médias empresas", suffix: "%" },
+  { value: 1, label: "ponto de contato, do diagnóstico à entrega", suffix: "" },
 ];
 
 export default function About() {
@@ -25,10 +26,10 @@ export default function About() {
             </h2>
             <p className="mt-5 leading-relaxed text-fg-muted">
               A EMC Soluções nasceu para tirar pequenos e médios negócios da
-              posição de espectadores da transformação digital. Unimos
-              inteligência artificial, desenvolvimento e integração de
-              sistemas em um único fluxo de trabalho, sem burocracia, sem
-              excesso de fornecedores, sem enrolação.
+              posição de espectadores da transformação digital. Gestão, nota
+              fiscal, WhatsApp e inteligência artificial com um único
+              parceiro, sem burocracia, sem excesso de fornecedores, sem
+              enrolação.
             </p>
             <p className="mt-4 leading-relaxed text-fg-muted">
               Entendemos o processo que você já tem, identificamos onde a
@@ -47,7 +48,7 @@ export default function About() {
             {STATS.map((s) => (
               <div key={s.label} className="border-b border-[var(--panel-border)] pb-5 last:border-0 last:pb-0">
                 <div className="font-[family-name:var(--font-display)] text-4xl font-semibold text-gradient">
-                  {s.value}
+                  <CountUp to={s.value} />
                   {s.suffix}
                 </div>
                 <div className="mt-1 text-sm text-fg-muted">{s.label}</div>

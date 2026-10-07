@@ -1,285 +1,244 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Store, Network, LayoutDashboard } from "lucide-react";
-import MiniDashboard from "./MiniDashboard";
-import MobileFlowList from "./MobileFlowList";
+import { AnimatePresence, motion } from "framer-motion";
+import { Store, Network, LayoutDashboard, RefreshCw } from "lucide-react";
+import { useInView, curve, clock, Edge, NodeCard, EventLog, FlowHeading, Positioned, type LogLine } from "./flows/kit";
 
-type NodeDef = {
-  id: string;
-  x: number;
-  y: number;
-  label: string;
-  detail: string;
-  Icon: typeof Store;
-};
-
-const BRANCHES: NodeDef[] = [
-  { id: "loja-a", x: 8, y: 18, label: "Loja A", detail: "Vendas e estoque locais", Icon: Store },
-  { id: "loja-b", x: 8, y: 50, label: "Loja B", detail: "Vendas e estoque locais", Icon: Store },
-  { id: "loja-c", x: 8, y: 82, label: "Loja C", detail: "Vendas e estoque locais", Icon: Store },
+const STORES = [
+  { id: "A", name: "Loja Centro", p: { x: 12, y: 18 } },
+  { id: "B", name: "Loja Shopping", p: { x: 12, y: 50 } },
+  { id: "C", name: "Loja Bairro", p: { x: 12, y: 82 } },
 ];
+const HUB = { x: 47, y: 50 };
+const DASH = { x: 84, y: 50 };
 
-const HUB: NodeDef = { id: "hub", x: 50, y: 50, label: "Central EMC", detail: "Dados consolidados em tempo real", Icon: Network };
-const DASHBOARD: NodeDef = { id: "dashboard", x: 92, y: 50, label: "Dashboard unificado", detail: "Visão gerencial de todas as filiais", Icon: LayoutDashboard };
-
-function edgePath(a: NodeDef, b: NodeDef) {
-  const midX = (a.x + b.x) / 2;
-  return `M ${a.x} ${a.y} C ${midX} ${a.y}, ${midX} ${b.y}, ${b.x} ${b.y}`;
-}
-
-const CYCLE_DURATION = 1.6;
-const PULSE_DURATION = CYCLE_DURATION * 0.85;
+const INCREMENTS = [3, 1, 2, 4, 2, 3, 1, 2];
+const TICK_MS = 2000;
+const TO_HUB_MS = 800;
+const TO_DASH_MS = 650;
 
 export default function MergeFlow() {
-  const [activeBranch, setActiveBranch] = useState(0);
-  const [pulseKey, setPulseKey] = useState(0);
-  const [mobileStep, setMobileStep] = useState(0);
-  const [inView, setInView] = useState(false);
-  const [pulsePos, setPulsePos] = useState<{ x: number; y: number; opacity: number }>({
-    x: BRANCHES[0].x,
-    y: BRANCHES[0].y,
-    opacity: 0,
-  });
-  const ref = useRef<HTMLDivElement>(null);
-  const seg1Ref = useRef<SVGPathElement>(null);
-  const seg2Ref = useRef<SVGPathElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref);
+  const [tick, setTick] = useState(-1);
+  const [counts, setCounts] = useState([48, 36, 52]);
+  const [synced, setSynced] = useState([48, 36, 52]);
+  const [stage, setStage] = useState<"send" | "hub" | "dash">("dash");
+  const [log, setLog] = useState<LogLine[]>([]);
 
+  const active = tick >= 0 ? tick % STORES.length : -1;
+
+  // Start of each sync: the store registers the sale and starts sending.
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.4 }
+    if (!inView) return;
+    const t = setTimeout(
+      () => {
+        const next = tick + 1;
+        const i = next % STORES.length;
+        const inc = INCREMENTS[next % INCREMENTS.length];
+        setTick(next);
+        setStage("send");
+        setCounts((c) => c.map((v, j) => (j === i ? v + inc : v)));
+      },
+      tick < 0 ? 400 : TICK_MS,
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+    return () => clearTimeout(t);
+  }, [inView, tick]);
 
+  // Packet reaches the hub, then the dashboard.
   useEffect(() => {
-    if (!inView) return;
-    const interval = setInterval(() => {
-      setActiveBranch((prev) => (prev + 1) % BRANCHES.length);
-      setPulseKey((k) => k + 1);
-      setMobileStep(0);
-    }, CYCLE_DURATION * 1000);
-    return () => clearInterval(interval);
-  }, [inView]);
-
-  useEffect(() => {
-    if (!inView) return;
-    const stepDuration = (CYCLE_DURATION * 1000) / 2;
-    const timer = setTimeout(() => setMobileStep(1), stepDuration);
-    return () => clearTimeout(timer);
-  }, [inView, pulseKey]);
-
-  useEffect(() => {
-    if (!inView) return;
-    let raf: number;
-    const start = performance.now();
-
-    const tick = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      const t = Math.min(elapsed / PULSE_DURATION, 1);
-
-      const seg1 = seg1Ref.current;
-      const seg2 = seg2Ref.current;
-      if (!seg1 || !seg2) return;
-
-      const len1 = seg1.getTotalLength();
-      const len2 = seg2.getTotalLength();
-      const totalLen = len1 + len2;
-      const dist = t * totalLen;
-
-      let point: DOMPoint;
-      if (dist <= len1) {
-        point = seg1.getPointAtLength(dist);
-      } else {
-        point = seg2.getPointAtLength(Math.min(dist - len1, len2));
-      }
-
-      const opacity = t < 0.06 ? t / 0.06 : t > 0.92 ? (1 - t) / 0.08 : 1;
-      setPulsePos({ x: point.x, y: point.y, opacity: Math.max(0, Math.min(1, opacity)) });
-
-      if (t < 1) raf = requestAnimationFrame(tick);
+    if (tick < 0) return;
+    const i = tick % STORES.length;
+    const inc = INCREMENTS[tick % INCREMENTS.length];
+    const t1 = setTimeout(() => setStage("hub"), TO_HUB_MS);
+    const t2 = setTimeout(() => {
+      setStage("dash");
+      setSynced((c) => c.map((v, j) => (j === i ? v + inc : v)));
+      setLog((l) =>
+        [{ id: tick, time: clock(), text: `${STORES[i].name} sincronizou +${inc} ${inc === 1 ? "venda" : "vendas"}`, tone: "mint" as const }, ...l].slice(0, 6),
+      );
+    }, TO_HUB_MS + TO_DASH_MS);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
+  }, [tick]);
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [pulseKey, inView, activeBranch]);
+  const total = synced.reduce((a, b) => a + b, 0);
+  const max = Math.max(...synced);
 
-  const currentBranch = BRANCHES[activeBranch];
-  const allNodes = [...BRANCHES, HUB, DASHBOARD];
+  const dashboard = <Dashboard total={total} synced={synced} max={max} flash={stage === "dash" && tick >= 0 ? tick : null} />;
 
   return (
-    <section id="fluxo-filiais" aria-labelledby="fluxo-filiais-heading" className="section-divider relative px-4 py-28" ref={ref}>
+    <section id="fluxo-filiais" aria-labelledby="fluxo-filiais-heading" ref={ref} className="section-divider relative px-4 py-28">
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-xl text-center"
-        >
-          <span className="mono-label text-xs text-[var(--accent)]">system.merge</span>
-          <h2 id="fluxo-filiais-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            Várias filiais, uma única fonte de verdade
-          </h2>
-          <p className="mt-4 text-fg-muted">
-            Empresas com múltiplas unidades param de fechar planilhas no
-            fim do mês: cada filial alimenta a central automaticamente, em
-            tempo real.
-          </p>
-        </motion.div>
+        <FlowHeading tag="system.merge" id="fluxo-filiais-heading" title="Várias filiais, uma única fonte de verdade">
+          Cada loja envia suas vendas para a central assim que acontecem. Sem planilha no fim do mês: o
+          painel consolidado já mostra a empresa inteira, agora.
+        </FlowHeading>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 overflow-hidden rounded-[2rem] p-6 sm:p-10"
+          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
         >
-          <MobileFlowList
-            items={[
-              ...BRANCHES.map((b) => ({
-                id: b.id,
-                label: b.label,
-                detail: b.detail,
-                Icon: b.Icon,
-                active: b.id === currentBranch.id,
-                dimmed: b.id !== currentBranch.id,
-              })),
-              { id: HUB.id, label: HUB.label, detail: HUB.detail, Icon: HUB.Icon, active: true },
-              {
-                id: DASHBOARD.id,
-                label: DASHBOARD.label,
-                detail: DASHBOARD.detail,
-                active: true,
-                render: <MiniDashboard active={inView} />,
-              },
-            ]}
-            pulseSegment={mobileStep === 0 ? activeBranch : 3}
-            pulseKey={`${pulseKey}-${mobileStep}`}
-            pulseDuration={(CYCLE_DURATION * 1000) / 2 / 1000 * 0.85}
-          />
-
-          <div className="relative hidden aspect-[16/12] w-full sm:block sm:aspect-[2/1]">
+          {/* Desktop diagram */}
+          <div className="relative hidden aspect-[2.3/1] w-full lg:block">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
-              <defs>
-                <linearGradient id="mergeLine" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#5b8cff" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#7c5cff" stopOpacity="0.2" />
-                </linearGradient>
-                <linearGradient id="mergeLineFinal" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#3ddc97" stopOpacity="0.5" />
-                </linearGradient>
-              </defs>
-
-              {BRANCHES.map((b) => {
-                const active = b.id === currentBranch.id;
-                return (
-                  <path
-                    key={b.id}
-                    d={edgePath(b, HUB)}
-                    fill="none"
-                    stroke={active ? "url(#mergeLine)" : "var(--panel-border)"}
-                    strokeWidth={active ? 0.5 : 0.35}
-                    vectorEffect="non-scaling-stroke"
-                    className="transition-[stroke,stroke-width] duration-500"
-                  />
-                );
-              })}
-
-              <path
-                d={edgePath(HUB, DASHBOARD)}
-                fill="none"
-                stroke="url(#mergeLineFinal)"
-                strokeWidth={0.5}
-                vectorEffect="non-scaling-stroke"
+              {STORES.map((s, i) => (
+                <Edge
+                  key={s.id}
+                  d={curve(s.p.x, s.p.y, HUB.x, HUB.y)}
+                  lit={i === active}
+                  trigger={i === active ? `s${tick}` : null}
+                  duration={TO_HUB_MS / 1000}
+                />
+              ))}
+              <Edge
+                d={curve(HUB.x, HUB.y, DASH.x, DASH.y)}
+                lit
+                trigger={tick >= 0 && stage !== "send" ? `h${tick}` : null}
+                duration={TO_DASH_MS / 1000}
+                color="#3ddc97"
               />
-
-              {/* Hidden reference paths for the active route, used to sample exact curve points */}
-              <path ref={seg1Ref} d={edgePath(currentBranch, HUB)} fill="none" stroke="none" />
-              <path ref={seg2Ref} d={edgePath(HUB, DASHBOARD)} fill="none" stroke="none" />
             </svg>
 
-            <div
-              className="pointer-events-none absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_14px_4px_var(--accent)]"
-              style={{
-                left: `${pulsePos.x}%`,
-                top: `${pulsePos.y}%`,
-                opacity: pulsePos.opacity,
-              }}
-            />
+            {STORES.map((s, i) => (
+              <Positioned key={s.id} p={s.p}>
+                <NodeCard
+                  Icon={Store}
+                  title={s.name}
+                  width="10.5rem"
+                  state={i === active && stage === "send" ? "active" : "idle"}
+                  status={
+                    <span className="flex items-center justify-between gap-2">
+                      <span>
+                        <span className="font-semibold tabular-nums text-fg">{counts[i]}</span> vendas hoje
+                      </span>
+                      {i === active && stage === "send" && <RefreshCw className="h-3 w-3 animate-spin text-[var(--accent)]" strokeWidth={2.5} />}
+                    </span>
+                  }
+                  statusKey={`${s.id}`}
+                />
+              </Positioned>
+            ))}
 
-            {allNodes.map((n) => {
-              const isBranch = BRANCHES.some((b) => b.id === n.id);
-              const active = !isBranch || n.id === currentBranch.id;
-              const isHub = n.id === HUB.id;
-              const isDashboard = n.id === DASHBOARD.id;
-              return (
+            <Positioned p={HUB}>
+              <NodeCard
+                Icon={Network}
+                title="Central EMC"
+                width="10.5rem"
+                state={stage === "hub" ? "active" : "idle"}
+                pulse={stage === "hub" ? `hub${tick}` : null}
+                status={stage === "hub" && active >= 0 ? `Recebendo da ${STORES[active].name}` : "Consolidando em tempo real"}
+              />
+            </Positioned>
+
+            <Positioned p={DASH}>{dashboard}</Positioned>
+          </div>
+
+          {/* Mobile */}
+          <div className="flex flex-col gap-2.5 lg:hidden">
+            <div className="grid grid-cols-3 gap-2">
+              {STORES.map((s, i) => (
                 <div
-                  key={n.id}
-                  className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center"
-                  style={{ left: `${n.x}%`, top: `${n.y}%`, width: isDashboard ? "9rem" : isHub ? "10rem" : "8rem" }}
+                  key={s.id}
+                  className={`rounded-xl border bg-[#0b1120] p-2.5 text-center transition-colors duration-500 ${
+                    i === active && stage === "send" ? "border-[var(--panel-border-strong)]" : "border-white/[0.07]"
+                  }`}
                 >
-                  {isDashboard ? (
-                    <motion.div
-                      animate={{ borderColor: "rgba(61,220,151,0.5)", backgroundColor: "rgba(61,220,151,0.08)" }}
-                      className="h-16 w-full overflow-hidden rounded-2xl border sm:h-[4.5rem]"
-                    >
-                      <MiniDashboard active={inView} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      animate={{
-                        borderColor: active ? "rgba(140,170,255,0.6)" : "rgba(140,170,255,0.16)",
-                        backgroundColor: active ? "rgba(91,140,255,0.18)" : "rgba(255,255,255,0.02)",
-                        opacity: isBranch && !active ? 0.45 : 1,
-                      }}
-                      transition={{ duration: 0.4 }}
-                      className={`relative flex items-center justify-center rounded-2xl border ${
-                        isHub ? "h-14 w-14 sm:h-16 sm:w-16" : "h-11 w-11 sm:h-12 sm:w-12"
-                      }`}
-                    >
-                      <n.Icon
-                        strokeWidth={1.6}
-                        className={`transition-colors duration-300 ${isHub ? "h-6 w-6 sm:h-7 sm:w-7" : "h-5 w-5"} ${
-                          active ? "text-[var(--accent)]" : "text-fg-dim"
-                        }`}
-                      />
-                      {isHub && (
-                        <motion.span
-                          className="absolute inset-0 rounded-2xl border border-[var(--accent)]"
-                          initial={{ opacity: 0.5, scale: 1 }}
-                          animate={{ opacity: 0, scale: 1.35 }}
-                          transition={{ duration: CYCLE_DURATION, repeat: Infinity, ease: "easeOut" }}
-                        />
-                      )}
-                    </motion.div>
-                  )}
-                  <h3
-                    className={`mt-2 font-[family-name:var(--font-display)] text-xs font-semibold transition-opacity duration-300 sm:text-sm ${
-                      isBranch && !active ? "opacity-45" : "opacity-100"
-                    }`}
-                  >
-                    {n.label}
-                  </h3>
-                  <p
-                    className={`mt-0.5 hidden text-[11px] leading-snug text-fg-muted transition-opacity duration-300 sm:block ${
-                      isBranch && !active ? "opacity-45" : "opacity-100"
-                    }`}
-                  >
-                    {n.detail}
-                  </p>
+                  <Store className="mx-auto h-4 w-4 text-[var(--accent)]" strokeWidth={1.9} />
+                  <div className="mt-1 truncate text-[10.5px] text-fg-muted">{s.name}</div>
+                  <div className="text-sm font-semibold tabular-nums text-fg">{counts[i]}</div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+            <NodeCard
+              width="100%"
+              Icon={Network}
+              title="Central EMC"
+              state={stage === "hub" ? "active" : "idle"}
+              status={stage === "hub" && active >= 0 ? `Recebendo da ${STORES[active].name}` : "Consolidando em tempo real"}
+            />
+            <div className="[&>div]:!w-full">{dashboard}</div>
+          </div>
+
+          <div className="mt-6 lg:mt-8">
+            <EventLog lines={log} title="Sincronização" max={3} />
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+
+function Dashboard({ total, synced, max, flash }: { total: number; synced: number[]; max: number; flash: number | null }) {
+  return (
+    <div className="relative w-[15rem] rounded-2xl border border-[var(--accent-mint)]/30 bg-[#0b1120] p-4 shadow-[0_0_0_1px_rgba(61,220,151,0.1),0_20px_50px_-20px_rgba(61,220,151,0.35)]">
+      <AnimatePresence>
+        {flash !== null && (
+          <motion.span
+            key={flash}
+            className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--accent-mint)]"
+            initial={{ opacity: 0.8, scale: 1 }}
+            animate={{ opacity: 0, scale: 1.08 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          />
+        )}
+      </AnimatePresence>
+      <div className="flex items-center gap-2">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent-mint-soft)] text-[var(--accent-mint)]">
+          <LayoutDashboard className="h-4 w-4" strokeWidth={1.9} />
+        </span>
+        <div className="leading-tight">
+          <div className="text-[12.5px] font-semibold text-fg">Painel consolidado</div>
+          <div className="text-[10px] text-fg-dim">todas as lojas</div>
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-baseline gap-2">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span
+            key={total}
+            initial={{ y: 12, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -12, opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="font-[family-name:var(--font-display)] text-3xl font-semibold tabular-nums text-fg"
+          >
+            {total}
+          </motion.span>
+        </AnimatePresence>
+        <span className="text-[11px] text-fg-muted">vendas hoje</span>
+      </div>
+
+      <div className="mt-3 space-y-2">
+        {STORES.map((s, i) => (
+          <div key={s.id}>
+            <div className="flex justify-between text-[10.5px]">
+              <span className="text-fg-muted">{s.name}</span>
+              <span className="tabular-nums text-fg">{synced[i]}</span>
+            </div>
+            <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-mint)]"
+                animate={{ width: `${(synced[i] / max) * 100}%` }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex items-center gap-1.5 text-[10px] text-fg-dim">
+        <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-mint)]" />
+        Atualizado agora
+      </div>
+    </div>
+  );
+}
+

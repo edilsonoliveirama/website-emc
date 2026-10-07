@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
+import CasesSection from "@/components/CasesSection";
 import SalesFlow from "@/components/SalesFlow";
 import InlineCTA from "@/components/InlineCTA";
 import IntegrationFlow from "@/components/IntegrationFlow";
@@ -23,6 +24,7 @@ export default function Home() {
       <main className="relative z-10 flex-1">
         <Hero />
         <Services />
+        <CasesSection />
         <SalesFlow />
         <InlineCTA
           text="Quero um fluxo assim para o meu negócio"

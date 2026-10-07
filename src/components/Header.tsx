@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
 
 const LINKS = [
   { href: "/#servicos", label: "Serviços", id: "servicos" },
+  { href: "/#cases", label: "Cases", id: "cases" },
   { href: "/#sobre", label: "Sobre", id: "sobre" },
   { href: "/blog", label: "Blog", id: "blog" },
   { href: "/#contato", label: "Contato", id: "contato" },
@@ -17,6 +18,8 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -57,6 +60,11 @@ export default function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 pt-4"
     >
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: progress }}
+        className="absolute inset-x-0 top-0 h-[2px] origin-left bg-gradient-to-r from-[var(--accent)] via-[var(--accent-2)] to-[var(--accent-mint)]"
+      />
       <div
         className={`flex w-full max-w-6xl items-center justify-between rounded-2xl border border-[var(--panel-border)] bg-[var(--bg-elev)] px-5 py-3 transition-[box-shadow,border-color] duration-300 ${
           scrolled ? "border-[var(--panel-border-strong)] shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)]" : ""
@@ -97,7 +105,7 @@ export default function Header() {
             href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[#06080f] transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
+            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
           >
             Falar com a EMC
           </a>
@@ -153,7 +161,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="mt-1 rounded-full bg-[var(--accent)] px-4 py-3 text-center text-sm font-medium text-[#06080f]"
+              className="mt-1 rounded-full bg-[var(--accent)] px-4 py-3 text-center text-sm font-medium text-bg"
             >
               Falar com a EMC
             </a>
