@@ -24,6 +24,9 @@ export default function Footer() {
           <Link href="/privacidade" className="transition-colors hover:text-fg">
             Privacidade
           </Link>
+          <Link href="/exclusao-de-dados" className="transition-colors hover:text-fg">
+            Exclusão de Dados
+          </Link>
           <Link href="/termos" className="transition-colors hover:text-fg">
             Termos de Uso
           </Link>

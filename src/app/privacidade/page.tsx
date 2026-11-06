@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import LegalPage from "@/components/LegalPage";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/contact";
 
@@ -95,7 +96,8 @@ export default function PrivacidadePage() {
         </ul>
         <p>
           Para exercer qualquer desses direitos, entre em contato pelo e-mail{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Para pedir a exclusão dos seus dados,
+          siga as instruções da página <Link href="/exclusao-de-dados">Exclusão de Dados</Link>.
         </p>
       </div>
 
