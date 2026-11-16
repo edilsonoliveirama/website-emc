@@ -14,6 +14,7 @@ const SECTIONS = [
   "investimento",
   "perguntas-frequentes",
   "sobre",
+  "fundador",
   "contato",
 ];
 
@@ -54,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
           },
         ]
       : []),
+    {
+      url: `${SITE_URL}/sobre`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
     {
       url: `${SITE_URL}/blog`,
       lastModified,
