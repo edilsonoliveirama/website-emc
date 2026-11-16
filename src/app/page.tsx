@@ -11,6 +11,7 @@ import BlogTeaser from "@/components/BlogTeaser";
 import HowWeWork from "@/components/HowWeWork";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
+import Founder from "@/components/Founder";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -41,6 +42,7 @@ export default function Home() {
         <HowWeWork />
         <Pricing />
         <About />
+        <Founder />
         <FAQ />
         <Contact />
       </main>

@@ -16,6 +16,7 @@ Projetos sob medida têm escopo e valor fechados antes de começar, após um dia
 ## Páginas
 
 - [Site principal](https://emcsolucoes.com.br/): apresentação das soluções, exemplos de fluxos (venda pelo WhatsApp, pagamento até expedição, atendimento com IA, consolidação de filiais), preços, perguntas frequentes e contato.
+- [Sobre o fundador](https://emcsolucoes.com.br/sobre): experiência e certificações de Edilson Oliveira, fundador da EMC Soluções.
 - [Blog](https://emcsolucoes.com.br/blog): artigos sobre IA aplicada, integração de sistemas e gestão para PMEs.
 - [Case Athena](https://emcsolucoes.com.br/cases/athena): sistema de gestão desenvolvido pela EMC para agências de recrutamento, com vagas, candidatos, agenda, financeiro, comissões e NFS-e.
 - [Loja virtual Nuvemshop](https://emcsolucoes.com.br/loja-virtual): criação de loja virtual como parceira oficial Nuvemshop.
