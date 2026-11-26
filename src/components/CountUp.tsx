@@ -7,7 +7,9 @@ export default function CountUp({ to, duration = 1.4 }: { to: number; duration?:
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = useReducedMotion();
-  const [value, setValue] = useState(0);
+  // Starts at the final value so the server HTML, crawlers and link previews
+  // show the real number; the count-up only runs once it scrolls into view.
+  const [value, setValue] = useState(to);
 
   useEffect(() => {
     if (!inView || reduce) return;
@@ -19,5 +21,5 @@ export default function CountUp({ to, duration = 1.4 }: { to: number; duration?:
     return () => controls.stop();
   }, [inView, reduce, to, duration]);
 
-  return <span ref={ref}>{(reduce ? to : value).toLocaleString("pt-BR")}</span>;
+  return <span ref={ref}>{value.toLocaleString("pt-BR")}</span>;
 }
