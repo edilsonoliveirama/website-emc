@@ -81,12 +81,12 @@ function AthenaCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7 }}
-      className="group relative overflow-hidden rounded-[2rem] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18]"
+      className="group relative overflow-hidden rounded-[22px] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18]"
     >
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[radial-gradient(closest-side,rgba(29,91,191,0.35),transparent)]" />
       <div className="relative grid items-center gap-10 p-8 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-6 lg:p-14">
         <div>
-          <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]">
+          <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[var(--accent)]">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent)]" />
             Case · Athena
           </span>
@@ -104,7 +104,7 @@ function AthenaCard() {
           <Highlights items={ATHENA_HIGHLIGHTS} color="var(--accent)" />
           <Link
             href="/cases/athena"
-            className="btn-shine mt-9 inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="mt-9 inline-flex items-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
             Ver o case completo
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />
@@ -119,7 +119,7 @@ function AthenaCard() {
           </motion.div>
           <motion.div
             style={{ y: stripY }}
-            className="absolute -bottom-2 left-[8%] right-[-4%] overflow-hidden rounded-xl border border-white/15 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9)]"
+            className="absolute -bottom-2 left-[8%] right-[-4%] overflow-hidden rounded-[14px] border border-white/15 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9)]"
           >
             <Image src="/cases/athena/funil.webp" alt="Tela real do Athena: funil de contratação" width={1030} height={202} sizes="(min-width: 1024px) 40vw, 90vw" className="h-auto w-full" />
           </motion.div>
@@ -150,7 +150,7 @@ function SintafCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7 }}
-      className="group relative overflow-hidden rounded-[2rem] border border-[var(--accent-amber)]/25 bg-gradient-to-br from-[#10223a] via-[#0b1222] to-[#090d18]"
+      className="group relative overflow-hidden rounded-[22px] border border-[var(--accent-amber)]/25 bg-gradient-to-br from-[#10223a] via-[#0b1222] to-[#090d18]"
     >
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[radial-gradient(closest-side,rgba(180,134,42,0.22),transparent)]" />
       <div className="relative grid items-center gap-10 p-8 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-6 lg:p-14">
@@ -169,7 +169,7 @@ function SintafCard() {
           <Highlights items={SINTAF_HIGHLIGHTS} color="var(--accent-amber)" />
           <Link
             href="/cases/sintaf-area-do-filiado"
-            className="btn-shine mt-9 inline-flex items-center gap-2 rounded-full bg-[var(--accent-amber)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="mt-9 inline-flex items-center gap-2 rounded-md bg-[var(--accent-amber)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5"
           >
             Ver o case completo
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />

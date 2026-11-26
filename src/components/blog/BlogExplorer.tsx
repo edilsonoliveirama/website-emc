@@ -91,7 +91,7 @@ export default function BlogExplorer({ posts, tags }: { posts: ExplorerPost[]; t
       </p>
 
       {filtered.length === 0 ? (
-        <div className="glass mt-4 rounded-2xl px-6 py-16 text-center">
+        <div className="glass mt-4 rounded-[14px] px-6 py-16 text-center">
           <p className="text-fg">Nenhum artigo encontrado.</p>
           <button
             type="button"
@@ -129,7 +129,7 @@ export default function BlogExplorer({ posts, tags }: { posts: ExplorerPost[]; t
 export function PostCard({ post }: { post: ExplorerPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="block h-full">
-      <SpotlightCard className="glass h-full rounded-2xl transition-transform duration-300 hover:-translate-y-1">
+      <SpotlightCard className="glass h-full rounded-[14px] transition-transform duration-300 hover:-translate-y-1">
         <div className="flex h-full flex-col">
           {post.coverImage && (
             <div className="relative aspect-[1200/630] w-full overflow-hidden rounded-t-2xl">
@@ -138,7 +138,7 @@ export function PostCard({ post }: { post: ExplorerPost }) {
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                className="object-cover transition-transform duration-500 group-hover:-translate-y-0.5"
               />
             </div>
           )}

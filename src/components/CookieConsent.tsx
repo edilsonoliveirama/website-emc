@@ -35,7 +35,7 @@ export default function CookieConsent() {
           aria-label="Aviso de cookies"
           className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-xl sm:inset-x-auto sm:right-6 sm:bottom-6"
         >
-          <div className="flex flex-col gap-4 rounded-2xl border border-[var(--panel-border-strong)] bg-[var(--bg-elev)] p-5 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)] sm:flex-row sm:items-center sm:p-6">
+          <div className="flex flex-col gap-4 rounded-[14px] border border-[var(--panel-border-strong)] bg-[var(--bg-elev)] p-5 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)] sm:flex-row sm:items-center sm:p-6">
             <p className="text-sm leading-relaxed text-fg-muted">
               Usamos cookies para melhorar sua experiência e entender como o
               site é usado. Ao continuar, você concorda com nossa
@@ -48,13 +48,13 @@ export default function CookieConsent() {
             <div className="flex shrink-0 gap-2">
               <button
                 onClick={() => respond("rejected")}
-                className="rounded-full border border-[var(--panel-border-strong)] px-4 py-2 text-xs font-medium text-fg-muted transition-colors hover:bg-white/5 hover:text-fg"
+                className="rounded-md border border-[var(--panel-border-strong)] px-4 py-2 text-xs font-medium text-fg-muted transition-colors hover:bg-white/5 hover:text-fg"
               >
                 Recusar
               </button>
               <button
                 onClick={() => respond("accepted")}
-                className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                className="rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-4 py-2 text-xs font-semibold text-white transition-transform hover:-translate-y-0.5"
               >
                 Aceitar
               </button>

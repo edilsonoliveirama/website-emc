@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
+import BrandLogo from "@/components/BrandLogo";
 
 const LINKS = [
   { href: "/#servicos", label: "Serviços", id: "servicos" },
@@ -63,10 +63,10 @@ export default function Header() {
       <motion.div
         aria-hidden="true"
         style={{ scaleX: progress }}
-        className="absolute inset-x-0 top-0 h-[2px] origin-left bg-gradient-to-r from-[var(--accent)] via-[var(--accent-2)] to-[var(--accent-mint)]"
+        className="absolute inset-x-0 top-0 h-[2px] origin-left bg-[var(--cta)]"
       />
       <div
-        className={`flex w-full max-w-6xl items-center justify-between rounded-2xl border border-[var(--panel-border)] bg-[var(--bg-elev)] px-5 py-3 transition-[box-shadow,border-color] duration-300 ${
+        className={`flex w-full max-w-6xl items-center justify-between rounded-[14px] border border-[var(--panel-border)] bg-[var(--bg-elev)] px-5 py-3 transition-[box-shadow,border-color] duration-300 ${
           scrolled ? "border-[var(--panel-border-strong)] shadow-[0_12px_40px_-16px_rgba(0,0,0,0.7)]" : ""
         }`}
       >
@@ -75,8 +75,7 @@ export default function Header() {
           onClick={() => setMenuOpen(false)}
           className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
         >
-          <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7" priority />
-          EMC <span className="text-fg-muted font-medium">Soluções</span>
+          <BrandLogo height={34} priority />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -105,7 +104,7 @@ export default function Header() {
             href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] md:inline-block"
+            className="hidden rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-4 py-2 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 md:inline-block"
           >
             Falar com a EMC
           </a>
@@ -142,14 +141,14 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="glass-strong absolute left-4 right-4 top-[calc(100%+0.5rem)] flex flex-col gap-1 rounded-2xl p-3 md:hidden"
+            className="glass-strong absolute left-4 right-4 top-[calc(100%+0.5rem)] flex flex-col gap-1 rounded-[14px] p-3 md:hidden"
           >
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
-                className={`rounded-xl px-4 py-3 text-sm transition-colors ${
+                className={`rounded-[14px] px-4 py-3 text-sm transition-colors ${
                   activeId === l.id ? "bg-white/[0.06] text-fg" : "text-fg-muted hover:bg-white/5 hover:text-fg"
                 }`}
               >
@@ -161,7 +160,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="mt-1 rounded-full bg-[var(--accent)] px-4 py-3 text-center text-sm font-medium text-bg"
+              className="mt-1 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-4 py-3 text-center text-sm font-medium text-white"
             >
               Falar com a EMC
             </a>

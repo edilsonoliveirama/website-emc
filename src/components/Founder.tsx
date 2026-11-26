@@ -25,7 +25,7 @@ export default function Founder() {
             <div className="mt-8 flex items-center gap-4">
               <span
                 aria-hidden="true"
-                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-soft)] font-[family-name:var(--font-display)] text-lg font-semibold text-[var(--accent)] ring-1 ring-[var(--panel-border-strong)]"
+                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[14px] bg-[var(--accent-soft)] font-[family-name:var(--font-display)] text-lg font-semibold text-[var(--accent)] ring-1 ring-[var(--panel-border-strong)]"
               >
                 {FOUNDER.initials}
               </span>
@@ -46,7 +46,7 @@ export default function Founder() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link
                 href="/sobre"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
               >
                 Ver experiência completa
                 <ArrowRight className="h-4 w-4" />
@@ -69,7 +69,7 @@ export default function Founder() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="flex flex-col gap-6"
           >
-            <div className="glass grid grid-cols-3 gap-4 rounded-2xl p-6">
+            <div className="glass grid grid-cols-3 gap-4 rounded-[14px] p-6">
               {FOUNDER_STATS.map((s) => (
                 <div key={s.label}>
                   <div className="font-[family-name:var(--font-display)] text-3xl font-semibold text-gradient sm:text-4xl">
@@ -81,7 +81,7 @@ export default function Founder() {
               ))}
             </div>
 
-            <div className="glass rounded-2xl p-6">
+            <div className="glass rounded-[14px] p-6">
               <div className="mono-label text-xs text-fg-dim">Certificações</div>
               <ul className="mt-4 flex flex-col gap-3">
                 {CERTIFICATIONS.map((c) => (

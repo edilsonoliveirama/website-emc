@@ -56,7 +56,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: i * 0.1 }}
-              className="glass flex flex-col rounded-xl p-7"
+              className="glass flex flex-col rounded-[14px] p-7"
             >
               <div className="flex gap-0.5 text-[var(--accent-amber)]">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -67,7 +67,7 @@ export default function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="mt-6 flex items-center gap-3 border-t border-[var(--panel-border)] pt-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-xs font-semibold text-white">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--cta)] text-xs font-semibold text-white">
                   {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                 </div>
                 <div>

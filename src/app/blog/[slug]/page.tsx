@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {post.tags.map((t) => (
-                <span key={t} className="mono-label rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-2.5 py-1 text-[10px] text-[#bcd0ff]">
+                <span key={t} className="mono-label rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-2.5 py-1 text-[10px] text-[var(--accent)]">
                   {t}
                 </span>
               ))}
@@ -135,9 +135,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
 
           <div className="mt-8 flex flex-col gap-5 border-y border-white/[0.07] py-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#0b1120]">
-                <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7" />
-              </span>
+              <Image src="/brand/emc-simbolo.png" alt="" width={40} height={40} className="h-10 w-10 rounded-[10px]" />
               <div className="leading-tight">
                 <div className="text-sm font-semibold text-fg">{author}</div>
                 <div className="mt-0.5 text-xs text-fg-dim">
@@ -150,7 +148,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         </header>
 
         {post.coverImage && (
-          <div className="relative mx-auto mt-10 aspect-[1200/630] w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/[0.08] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)]">
+          <div className="relative mx-auto mt-10 aspect-[1200/630] w-full max-w-5xl overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)]">
             <Image src={post.coverImage} alt="" fill priority sizes="(min-width: 1024px) 64rem, 100vw" className="object-cover" />
           </div>
         )}
@@ -165,7 +163,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
 
           <div className="min-w-0">
             {headings.length > 0 && (
-              <details className="glass group mb-6 rounded-2xl px-5 py-4 lg:hidden [&_summary::-webkit-details-marker]:hidden">
+              <details className="glass group mb-6 rounded-[14px] px-5 py-4 lg:hidden [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-fg">
                   Neste artigo
                   <ChevronDown className="h-4 w-4 text-fg-dim transition-transform group-open:rotate-180" strokeWidth={2} />
@@ -182,17 +180,15 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
               </details>
             )}
 
-            <article className="glass rounded-[2rem] px-6 py-10 sm:px-12 sm:py-14">
+            <article className="glass rounded-[22px] px-6 py-10 sm:px-12 sm:py-14">
               <div className="mx-auto max-w-[40rem] text-pretty [&_p]:hyphens-auto [&_.code-block]:sm:-mx-6 [&_table]:sm:-mx-6 [&_h2]:scroll-mt-28">
                 <PostContent />
               </div>
             </article>
 
             {/* Author */}
-            <div className="mt-8 flex items-start gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[#0b1120]">
-                <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8" />
-              </span>
+            <div className="mt-8 flex items-start gap-4 rounded-[14px] border border-white/[0.07] bg-white/[0.02] p-6">
+              <Image src="/brand/emc-simbolo.png" alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-[10px]" />
               <div>
                 <div className="text-sm font-semibold text-fg">Escrito por {author}</div>
                 <p className="mt-1 text-sm leading-relaxed text-fg-muted">
@@ -202,8 +198,8 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             </div>
 
             {/* CTA */}
-            <div className="relative mt-8 overflow-hidden rounded-[2rem] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] p-8 sm:p-10">
-              <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(91,140,255,0.35),transparent)]" />
+            <div className="relative mt-8 overflow-hidden rounded-[22px] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] p-8 sm:p-10">
+              <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(41,120,237,0.35),transparent)]" />
               <div className="relative">
                 <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight">
                   Quer aplicar isso na sua empresa?
@@ -215,7 +211,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
                   href={whatsappLink(`Olá! Li o artigo "${post.title}" no blog e quero saber mais.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-shine mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                  className="mt-6 inline-flex items-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={2.2} />
                   Falar com a EMC no WhatsApp

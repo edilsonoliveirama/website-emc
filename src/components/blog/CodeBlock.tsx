@@ -36,7 +36,7 @@ export default function CodeBlock({ children, className = "", ...props }: HTMLAt
   }
 
   return (
-    <div className="code-block group/code relative mt-6 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0a0e1a]">
+    <div className="code-block group/code relative mt-6 overflow-hidden rounded-[14px] border border-white/[0.08] bg-[#0a0e1a]">
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-white/10" />

@@ -91,7 +91,7 @@ function WhatsVisual() {
         transition={{ delay: 0.5 }}
         className="w-fit max-w-[90%] rounded-lg rounded-tl-sm bg-white/[0.07] px-2.5 py-1.5 text-[11px] text-fg"
       >
-        Obrigada, chegou rápido 🙌
+        Obrigada, chegou rápido!
       </motion.div>
     </div>
   );
@@ -101,7 +101,7 @@ function ModelsVisual() {
   const models = [
     { n: "GPT", c: "#3ddc97" },
     { n: "Claude", c: "#ffb454" },
-    { n: "GLM", c: "#5b8cff" },
+    { n: "GLM", c: "#2978ed" },
   ];
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -258,10 +258,10 @@ export default function Services() {
               transition={{ duration: 0.55, delay: (i % 3) * 0.08 }}
               className={s.span}
             >
-              <SpotlightCard className="glass h-full rounded-2xl transition-transform duration-300 hover:-translate-y-1">
+              <SpotlightCard className="glass h-full rounded-[14px] transition-transform duration-300 hover:-translate-y-1">
                 <div className="flex h-full flex-col p-7">
                   <div className="flex items-start justify-between gap-4">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[var(--accent)]">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-[14px] border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[var(--accent)]">
                       <s.Icon className="h-5 w-5" strokeWidth={1.8} />
                     </span>
                     <a
@@ -269,7 +269,7 @@ export default function Services() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Quero conhecer: ${s.title}`}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-fg-dim transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-bg"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-fg-dim transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--cta)] hover:bg-[var(--cta-deep)] group-hover:text-white"
                     >
                       <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
                     </a>
@@ -288,7 +288,7 @@ export default function Services() {
                   </ul>
 
                   <div className="mt-auto pt-6">
-                    <div className="rounded-xl border border-white/[0.05] bg-black/20 p-4">{s.visual}</div>
+                    <div className="rounded-[14px] border border-white/[0.05] bg-black/20 p-4">{s.visual}</div>
                   </div>
                 </div>
               </SpotlightCard>

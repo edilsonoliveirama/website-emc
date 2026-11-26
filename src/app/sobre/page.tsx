@@ -94,7 +94,7 @@ export default function SobrePage() {
       <main className="relative z-10 flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden px-4 pb-24 pt-32">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[600px] bg-[radial-gradient(60%_50%_at_30%_20%,rgba(91,140,255,0.16),transparent)]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[600px] bg-[radial-gradient(60%_50%_at_30%_20%,rgba(41,120,237,0.16),transparent)]" />
           <div className="relative mx-auto max-w-6xl">
             <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-fg-dim">
               <Link href="/" className="hover:text-fg">Início</Link>
@@ -119,7 +119,7 @@ export default function SobrePage() {
                     href={whatsappLink(CTA_MESSAGE)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                    className="inline-flex items-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
                   >
                     <MessageCircle className="h-4 w-4" />
                     Conversar sobre um projeto
@@ -140,7 +140,7 @@ export default function SobrePage() {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.1} className="glass-strong flex flex-col gap-5 rounded-2xl p-7">
+              <Reveal delay={0.1} className="glass-strong flex flex-col gap-5 rounded-[14px] p-7">
                 {FOUNDER_STATS.map((s) => (
                   <div key={s.label} className="border-b border-[var(--panel-border)] pb-5 last:border-0 last:pb-0">
                     <div className="font-[family-name:var(--font-display)] text-4xl font-semibold text-gradient">
@@ -183,8 +183,8 @@ export default function SobrePage() {
               {EXPERIENCE_AREAS.map((area, i) => {
                 const Icon = AREA_ICONS[area.icon];
                 return (
-                  <Reveal key={area.title} delay={Math.min(i * 0.05, 0.25)} className="glass flex h-full flex-col rounded-2xl p-6">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]">
+                  <Reveal key={area.title} delay={Math.min(i * 0.05, 0.25)} className="glass flex h-full flex-col rounded-[14px] p-6">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[var(--accent-soft)] text-[var(--accent)]">
                       <Icon className="h-5 w-5" strokeWidth={1.8} />
                     </span>
                     <h3 className="mt-4 font-[family-name:var(--font-display)] text-lg font-semibold">{area.title}</h3>
@@ -215,8 +215,8 @@ export default function SobrePage() {
             />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {CERTIFICATIONS.map((c, i) => (
-                <Reveal key={c.name} delay={Math.min(i * 0.05, 0.25)} className="glass flex h-full items-start gap-4 rounded-2xl p-6">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-mint-soft)] text-[var(--accent-mint)]">
+                <Reveal key={c.name} delay={Math.min(i * 0.05, 0.25)} className="glass flex h-full items-start gap-4 rounded-[14px] p-6">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] bg-[var(--accent-mint-soft)] text-[var(--accent-mint)]">
                     <BadgeCheck className="h-5 w-5" strokeWidth={1.8} />
                   </span>
                   <div>
@@ -233,7 +233,7 @@ export default function SobrePage() {
 
         {/* CTA */}
         <section className="px-4 pb-28 pt-8">
-          <Reveal className="glass-strong mx-auto max-w-4xl rounded-[2rem] p-10 text-center sm:p-14">
+          <Reveal className="glass-strong mx-auto max-w-4xl rounded-[22px] p-10 text-center sm:p-14">
             <h2 className="font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
               Leve essa experiência para o seu negócio
             </h2>
@@ -244,7 +244,7 @@ export default function SobrePage() {
               href={whatsappLink(CTA_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+              className="mt-8 inline-flex items-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
             >
               <MessageCircle className="h-4 w-4" />
               Falar no WhatsApp

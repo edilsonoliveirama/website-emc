@@ -22,7 +22,7 @@ export default function WhatsAppButton() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 8 }}
               transition={{ duration: 0.2 }}
-              className="glass-strong absolute right-full mr-3 whitespace-nowrap rounded-xl px-3 py-2 text-sm text-fg"
+              className="glass-strong absolute right-full mr-3 whitespace-nowrap rounded-[14px] px-3 py-2 text-sm text-fg"
               role="tooltip"
             >
               Fale com a gente no WhatsApp
@@ -39,7 +39,7 @@ export default function WhatsAppButton() {
           onFocus={() => setHovered(true)}
           onBlur={() => setHovered(false)}
           aria-label="Falar com a EMC Soluções no WhatsApp"
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-[0_8px_28px_-6px_rgba(37,211,102,0.65)] transition-transform hover:scale-[1.06] active:scale-[0.96]"
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white transition-transform hover:-translate-y-0.5"
         >
           <span className="absolute inset-0 rounded-full bg-whatsapp opacity-60 animate-ping [animation-duration:2.4s]" />
           <svg viewBox="0 0 24 24" className="relative h-7 w-7" fill="currentColor" aria-hidden="true">

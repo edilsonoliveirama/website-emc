@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function LegalPage({
   title,
@@ -21,14 +22,13 @@ export default function LegalPage({
             href="/"
             className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
           >
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_2px_var(--accent)]" />
-            EMC <span className="text-fg-muted font-medium">Soluções</span>
+            <BrandLogo height={34} />
           </Link>
         </div>
       </header>
 
       <main className="relative z-10 flex-1 px-4 py-16">
-        <div className="glass mx-auto max-w-3xl rounded-[2rem] p-8 sm:p-12">
+        <div className="glass mx-auto max-w-3xl rounded-[22px] p-8 sm:p-12">
           <span className="mono-label text-xs text-[var(--accent)]">Legal</span>
           <h1 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
             {title}

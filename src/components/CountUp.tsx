@@ -3,7 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "framer-motion";
 
-export default function CountUp({ to, duration = 1.4 }: { to: number; duration?: number }) {
+export default function CountUp({
+  to,
+  duration = 1.4,
+  decimals = 0,
+}: {
+  to: number;
+  duration?: number;
+  decimals?: number;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = useReducedMotion();
@@ -16,10 +24,14 @@ export default function CountUp({ to, duration = 1.4 }: { to: number; duration?:
     const controls = animate(0, to, {
       duration,
       ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => setValue(Math.round(v)),
+      onUpdate: (v) => setValue(Number(v.toFixed(decimals))),
     });
     return () => controls.stop();
-  }, [inView, reduce, to, duration]);
+  }, [inView, reduce, to, duration, decimals]);
 
-  return <span ref={ref}>{value.toLocaleString("pt-BR")}</span>;
+  return (
+    <span ref={ref}>
+      {value.toLocaleString("pt-BR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+    </span>
+  );
 }

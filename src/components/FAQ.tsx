@@ -74,7 +74,7 @@ export default function FAQ() {
           {FAQS.map((f) => (
             <details
               key={f.question}
-              className="glass group rounded-xl px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
+              className="glass group rounded-[14px] px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-[family-name:var(--font-display)] text-base font-semibold marker:content-none">
                 {f.question}

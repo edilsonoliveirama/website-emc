@@ -46,7 +46,7 @@ const components: MDXComponents = {
   ),
   blockquote: ({ children, ...props }: HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="glass mt-6 rounded-xl border-l-2 border-l-[var(--accent)] px-5 py-4 text-[1.0625rem] leading-[1.8] text-fg-muted italic"
+      className="glass mt-6 rounded-[14px] border-l-2 border-l-[var(--accent)] px-5 py-4 text-[1.0625rem] leading-[1.8] text-fg-muted italic"
       {...props}
     >
       {children}
@@ -85,7 +85,7 @@ const components: MDXComponents = {
     </strong>
   ),
   table: ({ children, ...props }: HTMLAttributes<HTMLTableElement>) => (
-    <div className="mt-6 overflow-x-auto rounded-xl border border-[var(--panel-border)]">
+    <div className="mt-6 overflow-x-auto rounded-[14px] border border-[var(--panel-border)]">
       <table className="w-full border-collapse text-sm" {...props}>
         {children}
       </table>

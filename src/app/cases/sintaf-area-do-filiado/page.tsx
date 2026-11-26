@@ -238,13 +238,13 @@ export default function SintafCasePage() {
                     href={whatsappLink(CTA_MESSAGE)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-shine w-full rounded-full bg-[var(--accent)] px-6 py-3 text-center text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                    className="w-full rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
                   >
                     Quero uma área assim para a minha entidade
                   </a>
                   <a
                     href="#telas"
-                    className="w-full rounded-full border border-[var(--panel-border-strong)] px-6 py-3 text-center text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                    className="w-full rounded-md border border-[var(--panel-border-strong)] px-6 py-3 text-center text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
                   >
                     Ver as telas
                   </a>
@@ -316,11 +316,11 @@ export default function SintafCasePage() {
                 <Reveal
                   key={title}
                   delay={i * 0.06}
-                  className={`glass group relative overflow-hidden rounded-xl p-7 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[var(--panel-border-strong)] ${
+                  className={`glass group relative overflow-hidden rounded-[14px] p-7 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[var(--panel-border-strong)] ${
                     i === 0 ? "lg:col-span-2" : ""
                   }`}
                 >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--accent-amber)]/30 bg-[var(--accent-amber-soft)] text-[var(--accent-amber)]">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-[14px] border border-[var(--accent-amber)]/30 bg-[var(--accent-amber-soft)] text-[var(--accent-amber)]">
                     <Icon className="h-5 w-5" strokeWidth={1.8} />
                   </span>
                   <h3 className="mt-5 font-[family-name:var(--font-display)] text-xl font-semibold">{title}</h3>
@@ -381,7 +381,7 @@ export default function SintafCasePage() {
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {STEPS.map(({ Icon, title, text }, i) => (
                   <Reveal key={title} delay={i * 0.1} className="relative text-center">
-                    <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-amber)]/40 bg-[#0e1424] text-[var(--accent-amber)] shadow-[0_0_30px_-8px_rgba(180,134,42,0.6)]">
+                    <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-[14px] border border-[var(--accent-amber)]/40 bg-[#0e1424] text-[var(--accent-amber)] shadow-[0_0_30px_-8px_rgba(180,134,42,0.6)]">
                       <Icon className="h-6 w-6" strokeWidth={1.7} />
                     </span>
                     <span className="mono-label mt-4 block text-[11px] text-fg-dim">0{i + 1}</span>
@@ -404,7 +404,7 @@ export default function SintafCasePage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-2">
               {AUDIENCE.map((a) => (
-                <span key={a} className="rounded-full border border-[var(--panel-border-strong)] bg-white/[0.03] px-4 py-2 text-sm text-fg-muted">
+                <span key={a} className="rounded-md border border-[var(--panel-border-strong)] bg-white/[0.03] px-4 py-2 text-sm text-fg-muted">
                   {a}
                 </span>
               ))}
@@ -419,7 +419,7 @@ export default function SintafCasePage() {
             <div className="mt-12 flex flex-col gap-3">
               {FAQS.map((f, i) => (
                 <Reveal key={f.q} delay={i * 0.04}>
-                  <details className="glass group rounded-xl px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
+                  <details className="glass group rounded-[14px] px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-[family-name:var(--font-display)] text-base font-semibold">
                       {f.q}
                       <span className="text-xl font-light text-[var(--accent-amber)] transition-transform group-open:rotate-45">+</span>
@@ -434,7 +434,7 @@ export default function SintafCasePage() {
 
         {/* Final CTA */}
         <section className="px-4 pb-28 pt-8">
-          <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-[var(--accent-amber)]/30 bg-gradient-to-br from-[#143a5f] via-[#0e1a33] to-[#0b0f1c] px-8 py-16 text-center sm:px-16">
+          <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[22px] border border-[var(--accent-amber)]/30 bg-gradient-to-br from-[#143a5f] via-[#0e1a33] to-[#0b0f1c] px-8 py-16 text-center sm:px-16">
             <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(180,134,42,0.35),transparent)]" />
             <h2 className="relative font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
               Vamos conversar sobre a área restrita da sua entidade
@@ -447,7 +447,7 @@ export default function SintafCasePage() {
                 href={whatsappLink(CTA_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent-amber)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--accent-amber)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5 sm:w-auto"
               >
                 <MessageCircle className="h-4 w-4" strokeWidth={2.2} />
                 Fale com um especialista da EMC
@@ -456,7 +456,7 @@ export default function SintafCasePage() {
                 href={whatsappLink("Olá! Quero uma demonstração da área do filiado que a EMC fez para o SINTAF-MA.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/20 px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
               >
                 Peça uma demonstração
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
