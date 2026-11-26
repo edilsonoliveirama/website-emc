@@ -137,7 +137,8 @@ function GhostBtn({ children }: { children: ReactNode }) {
 }
 
 function useCount(to: number, ms = 1100) {
-  const [v, setV] = useState(0);
+  // Server render shows the real value (crawlers/previews); the client animates from 0.
+  const [v, setV] = useState(to);
   useEffect(() => {
     const start = performance.now();
     let raf = 0;

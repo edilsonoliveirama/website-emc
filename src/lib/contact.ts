@@ -3,6 +3,9 @@ export const WHATSAPP_NUMBER = "5598981271251";
 export const WHATSAPP_DISPLAY = "(98) 98127-1251";
 export const CONTACT_EMAIL = "contato@emcsolucoes.com.br";
 export const GA_MEASUREMENT_ID = "G-8F2N3YCKRG";
+// ID do Pixel (conjunto de dados) do Meta, em Gerenciador de Eventos > Fontes de dados.
+// Vazio = Pixel desligado. Não é segredo: o ID fica visível no HTML de qualquer site.
+export const META_PIXEL_ID = "";
 export const CONSENT_STORAGE_KEY = "emc-cookie-consent";
 export const CONSENT_EVENT = "emc-cookie-consent-change";
 

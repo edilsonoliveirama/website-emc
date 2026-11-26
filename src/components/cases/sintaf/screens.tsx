@@ -205,7 +205,7 @@ const INDICADORES = [
 ];
 
 function CountUp({ to }: { to: number }) {
-  const [v, setV] = useState(0);
+  const [v, setV] = useState(to);
   useEffect(() => {
     const start = performance.now();
     let raf = 0;
