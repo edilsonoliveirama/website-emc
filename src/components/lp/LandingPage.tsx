@@ -35,7 +35,14 @@ export type LandingConfig = {
   features: { tag: string; title: string; subtitle: string; items: LpItem[] };
   demo?: ReactNode;
   segments?: { title: string; subtitle: string; items: LpItem[] };
-  offer: { title: string; subtitle: string; items: string[]; note: string };
+  offer: {
+    title: string;
+    subtitle: string;
+    /** Optional price anchor, e.g. { prefix: "A partir de", value: "R$ 499", period: "/mês" }. */
+    price?: { prefix: string; value: string; period: string };
+    items: string[];
+    note: string;
+  };
   faqs: { question: string; answer: string }[];
   finalTitle: string;
   finalText: string;
@@ -242,6 +249,15 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
                 {c.offer.title}
               </h2>
               <p className="mt-4 text-fg-muted">{c.offer.subtitle}</p>
+              {c.offer.price && (
+                <div className="mt-6 flex items-baseline gap-2">
+                  <span className="text-sm text-fg-muted">{c.offer.price.prefix}</span>
+                  <span className="font-[family-name:var(--font-display)] text-5xl font-semibold text-gradient">
+                    {c.offer.price.value}
+                  </span>
+                  <span className="text-sm text-fg-muted">{c.offer.price.period}</span>
+                </div>
+              )}
               <ul className="mt-8 space-y-4">
                 {c.offer.items.map((b) => (
                   <li key={b} className="flex items-start gap-3 text-sm leading-relaxed text-fg-muted">

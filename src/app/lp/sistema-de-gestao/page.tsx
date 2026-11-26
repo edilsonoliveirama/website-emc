@@ -20,7 +20,7 @@ import { SITE_URL } from "@/lib/contact";
 const PATH = "/lp/sistema-de-gestao";
 const TITLE = "Sistema de gestão com nota fiscal para pequenas empresas";
 const DESCRIPTION =
-  "Vendas, estoque, financeiro e nota fiscal em um só lugar, no computador ou no celular. Sem fidelidade e com suporte de quem desenvolveu. Diagnóstico gratuito.";
+  "Vendas, estoque, financeiro e nota fiscal em um só lugar, no computador ou no celular. A partir de R$ 499/mês, sem fidelidade. Diagnóstico gratuito.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -40,7 +40,7 @@ const config: LandingConfig = {
     "Registre a venda, emita a nota e saiba quanto entrou, quanto falta receber e o que está acabando no estoque. Simples de usar, no computador ou no celular.",
   ctaLabel: "Quero meu diagnóstico gratuito",
   ctaMessage: "Olá! Vi a página do sistema de gestão com nota fiscal e quero meu diagnóstico gratuito.",
-  guarantees: ["Diagnóstico gratuito", "Sem fidelidade", "Suporte de quem desenvolveu"],
+  guarantees: ["A partir de R$ 499/mês", "Sem fidelidade", "Diagnóstico gratuito"],
   visual: <LpShowcase panels={[0, 1]} />,
   pains: {
     title: "Sua empresa ainda roda assim?",
@@ -79,7 +79,8 @@ const config: LandingConfig = {
   },
   offer: {
     title: "Assinatura mensal, sem fidelidade",
-    subtitle: "Plano conforme o tamanho da sua operação, com valor definido no diagnóstico gratuito.",
+    subtitle: "O plano acompanha o tamanho da sua operação. O valor exato sai no diagnóstico gratuito.",
+    price: { prefix: "A partir de", value: "R$ 499", period: "/mês" },
     items: [
       "Configuração inicial feita pela EMC, com você",
       "Mensalidade que inclui atualizações e suporte de quem desenvolveu",
@@ -97,6 +98,11 @@ const config: LandingConfig = {
       question: "Consigo trazer o que já tenho na planilha?",
       answer:
         "Os seus dados atuais e a melhor forma de levá-los para o sistema são avaliados no diagnóstico gratuito.",
+    },
+    {
+      question: "Quanto custa?",
+      answer:
+        "Os planos começam em R$ 499 por mês. O valor final depende do tamanho da operação e do que você precisa (por exemplo, nota fiscal e avisos pelo WhatsApp) e é fechado no diagnóstico gratuito, antes de qualquer cobrança.",
     },
     {
       question: "Tem fidelidade ou multa para cancelar?",
