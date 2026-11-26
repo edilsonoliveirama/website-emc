@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -35,6 +36,16 @@ export type LandingConfig = {
   pains: { title: string; items: string[] };
   features: { tag: string; title: string; subtitle: string; items: LpItem[] };
   demo?: ReactNode;
+  /** Cliente real usando a solução. Só preencha `quote` com uma fala real e autorizada do cliente. */
+  caseStudy?: {
+    logo: string;
+    name: string;
+    segment: string;
+    summary: string;
+    flowTitle: string;
+    flow: { title: string; desc: string }[];
+    quote?: { text: string; author: string; role: string };
+  };
   segments?: { title: string; subtitle: string; items: LpItem[] };
   offer: {
     title: string;
@@ -205,6 +216,56 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
             <ItemGrid items={c.features.items} />
           </div>
         </section>
+
+        {c.caseStudy && (
+          <section className="section-divider px-4 py-24">
+            <div className="mx-auto max-w-6xl">
+              <SectionHeading tag="Quem já usa" title={`Como a ${c.caseStudy.name} atende pelo WhatsApp`} />
+              <div className="glass-strong mt-12 grid gap-10 rounded-[22px] p-8 sm:p-12 lg:grid-cols-[0.9fr_1.1fr]">
+                <div>
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={c.caseStudy.logo}
+                      alt={`Logo ${c.caseStudy.name}`}
+                      width={72}
+                      height={72}
+                      className="h-[72px] w-[72px] rounded-[14px]"
+                    />
+                    <div>
+                      <p className="font-[family-name:var(--font-display)] text-xl font-semibold">{c.caseStudy.name}</p>
+                      <p className="mono-label mt-1 text-[11px] text-fg-dim">{c.caseStudy.segment}</p>
+                    </div>
+                  </div>
+                  <p className="mt-6 leading-relaxed text-fg-muted">{c.caseStudy.summary}</p>
+                  {c.caseStudy.quote && (
+                    <figure className="mt-8 border-l-2 border-[var(--cta)] pl-5">
+                      <blockquote className="text-fg">&ldquo;{c.caseStudy.quote.text}&rdquo;</blockquote>
+                      <figcaption className="mt-3 text-sm text-fg-muted">
+                        <span className="font-semibold text-fg">{c.caseStudy.quote.author}</span>, {c.caseStudy.quote.role}
+                      </figcaption>
+                    </figure>
+                  )}
+                </div>
+                <div>
+                  <p className="mono-label text-[11px] text-[var(--accent)]">{c.caseStudy.flowTitle}</p>
+                  <ol className="mt-5 space-y-4">
+                    {c.caseStudy.flow.map((step, i) => (
+                      <li key={step.title} className="flex gap-4">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-[var(--panel-border-strong)] font-[family-name:var(--font-mono)] text-xs text-[var(--accent)]">
+                          0{i + 1}
+                        </span>
+                        <div>
+                          <p className="font-semibold text-fg">{step.title}</p>
+                          <p className="mt-0.5 text-sm leading-relaxed text-fg-muted">{step.desc}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {c.demo}
 
