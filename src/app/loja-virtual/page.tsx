@@ -15,6 +15,7 @@ import {
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { whatsappLink, SITE_URL } from "@/lib/contact";
+import BrandLogo from "@/components/BrandLogo";
 
 const TITLE = "Loja Virtual Nuvemshop: Criação e Configuração | EMC Soluções";
 const DESCRIPTION =
@@ -101,8 +102,7 @@ export default function LojaVirtualPage() {
             href="/"
             className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
           >
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_2px_var(--accent)]" />
-            EMC <span className="text-fg-muted font-medium">Soluções</span>
+            <BrandLogo height={36} priority />
           </Link>
         </div>
       </header>
@@ -112,7 +112,7 @@ export default function LojaVirtualPage() {
         <section className="px-4 pt-16 pb-20">
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
-              <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]">
+              <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[var(--accent)]">
                 <Store className="h-3 w-3" strokeWidth={2} />
                 Parceiro oficial Nuvemshop
               </span>
@@ -134,20 +134,20 @@ export default function LojaVirtualPage() {
                   href={whatsappLink(ctaMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                  className="w-full rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
                 >
                   Quero minha loja na Nuvemshop
                 </a>
                 <a
                   href="#como-funciona"
-                  className="w-full rounded-full border border-[var(--panel-border-strong)] px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                  className="w-full rounded-md border border-[var(--panel-border-strong)] px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
                 >
                   Ver como funciona
                 </a>
               </div>
             </div>
 
-            <div className="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-[#f4f2ee] sm:aspect-[4/3] lg:aspect-square">
+            <div className="relative aspect-square w-full overflow-hidden rounded-[22px] bg-[#f4f2ee] sm:aspect-[4/3] lg:aspect-square">
               <Image
                 src="/loja-virtual/hero.webp"
                 alt="Cliente comprando pelo celular em uma loja virtual Nuvemshop"
@@ -176,9 +176,9 @@ export default function LojaVirtualPage() {
 
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((step, i) => (
-                <div key={step.title} className="glass flex flex-col rounded-xl p-7">
+                <div key={step.title} className="glass flex flex-col rounded-[14px] p-7">
                   <span className="mono-label text-[11px] text-fg-dim">0{i + 1}</span>
-                  <div className="mt-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
+                  <div className="mt-3 flex h-11 w-11 items-center justify-center rounded-[14px] border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
                     <step.Icon className="h-5 w-5 text-[var(--accent)]" strokeWidth={1.6} />
                   </div>
                   <h3 className="mt-4 font-[family-name:var(--font-display)] text-lg font-semibold">
@@ -194,7 +194,7 @@ export default function LojaVirtualPage() {
         {/* Benefits */}
         <section className="section-divider px-4 py-28">
           <div className="mx-auto max-w-3xl">
-            <div className="glass-strong rounded-[2rem] p-8 sm:p-12">
+            <div className="glass-strong rounded-[22px] p-8 sm:p-12">
               <span className="mono-label text-xs text-[var(--accent)]">O que entregamos</span>
               <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
                 Tudo que sua loja precisa para ir ao ar
@@ -209,7 +209,7 @@ export default function LojaVirtualPage() {
                 ))}
               </ul>
 
-              <div className="mt-8 flex items-center gap-3 rounded-xl border border-[var(--panel-border)] bg-white/[0.02] p-4">
+              <div className="mt-8 flex items-center gap-3 rounded-[14px] border border-[var(--panel-border)] bg-white/[0.02] p-4">
                 <Truck className="h-5 w-5 shrink-0 text-fg-dim" strokeWidth={1.6} />
                 <p className="text-xs leading-relaxed text-fg-dim">
                   Depois da loja pronta, a EMC também integra atendimento via
@@ -224,7 +224,7 @@ export default function LojaVirtualPage() {
         {/* Partnership */}
         <section className="section-divider px-4 py-28">
           <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="relative order-2 aspect-square w-full overflow-hidden rounded-[2rem] bg-[#f4f2ee] lg:order-1">
+            <div className="relative order-2 aspect-square w-full overflow-hidden rounded-[22px] bg-[#f4f2ee] lg:order-1">
               <Image
                 src="/loja-virtual/integracoes.webp"
                 alt="Ecossistema de integrações da Nuvemshop: pagamento, frete, avaliações e CRM"
@@ -271,7 +271,7 @@ export default function LojaVirtualPage() {
               </p>
             </div>
 
-            <div className="glass-strong mt-10 rounded-[2rem] p-8 sm:p-12">
+            <div className="glass-strong mt-10 rounded-[22px] p-8 sm:p-12">
               <div className="grid gap-8 sm:grid-cols-2">
                 <div>
                   <span className="mono-label text-[11px] text-fg-dim">Criação da loja</span>
@@ -301,7 +301,7 @@ export default function LojaVirtualPage() {
                 href={whatsappLink(ctaMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
               >
                 Pedir orçamento da minha loja
               </a>
@@ -323,7 +323,7 @@ export default function LojaVirtualPage() {
               {FAQS.map((f) => (
                 <details
                   key={f.question}
-                  className="glass group rounded-xl px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
+                  className="glass group rounded-[14px] px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
                 >
                   <summary className="cursor-pointer list-none font-[family-name:var(--font-display)] text-base font-semibold marker:content-none">
                     {f.question}
@@ -349,7 +349,7 @@ export default function LojaVirtualPage() {
               href={whatsappLink(ctaMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="glass group mt-6 inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
+              className="glass group mt-6 inline-flex items-center gap-3 rounded-md px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
             >
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-whatsapp/15 text-whatsapp">
                 <MessageCircle className="h-4 w-4" strokeWidth={2} />

@@ -83,7 +83,7 @@ export default function MergeFlow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
+          className="glass mt-14 rounded-[22px] p-5 sm:p-8"
         >
           {/* Desktop diagram */}
           <div className="relative hidden aspect-[2.3/1] w-full lg:block">
@@ -146,7 +146,7 @@ export default function MergeFlow() {
               {STORES.map((s, i) => (
                 <div
                   key={s.id}
-                  className={`rounded-xl border bg-[#0b1120] p-2.5 text-center transition-colors duration-500 ${
+                  className={`rounded-[14px] border bg-[#0b1120] p-2.5 text-center transition-colors duration-500 ${
                     i === active && stage === "send" ? "border-[var(--panel-border-strong)]" : "border-white/[0.07]"
                   }`}
                 >
@@ -177,12 +177,12 @@ export default function MergeFlow() {
 
 function Dashboard({ total, synced, max, flash }: { total: number; synced: number[]; max: number; flash: number | null }) {
   return (
-    <div className="relative w-[15rem] rounded-2xl border border-[var(--accent-mint)]/30 bg-[#0b1120] p-4 shadow-[0_0_0_1px_rgba(61,220,151,0.1),0_20px_50px_-20px_rgba(61,220,151,0.35)]">
+    <div className="relative w-[15rem] rounded-[14px] border border-[var(--accent-mint)]/30 bg-[#0b1120] p-4 shadow-[0_0_0_1px_rgba(61,220,151,0.1),0_20px_50px_-20px_rgba(61,220,151,0.35)]">
       <AnimatePresence>
         {flash !== null && (
           <motion.span
             key={flash}
-            className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--accent-mint)]"
+            className="pointer-events-none absolute inset-0 rounded-[14px] border border-[var(--accent-mint)]"
             initial={{ opacity: 0.8, scale: 1 }}
             animate={{ opacity: 0, scale: 1.08 }}
             exit={{ opacity: 0 }}

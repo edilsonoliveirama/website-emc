@@ -3,17 +3,18 @@
 import { motion } from "framer-motion";
 import CountUp from "./CountUp";
 
+// Números oficiais do Manual de Marca EMC (cap. 01): "promessa só vale com prova".
 const STATS = [
-  { value: 6, label: "soluções que se conectam entre si", suffix: "" },
-  { value: 100, label: "foco em pequenas e médias empresas", suffix: "%" },
-  { value: 1, label: "ponto de contato, do diagnóstico à entrega", suffix: "" },
+  { value: 14, decimals: 0, prefix: "", suffix: " anos", label: "de operação, desde 2012 em São Luís" },
+  { value: 120, decimals: 0, prefix: "+", suffix: "", label: "projetos entregues" },
+  { value: 99.8, decimals: 1, prefix: "", suffix: "%", label: "de SLA em infraestrutura e nuvem" },
 ];
 
 export default function About() {
   return (
     <section id="sobre" aria-labelledby="sobre-heading" className="section-divider relative px-4 py-28">
       <div className="mx-auto max-w-6xl">
-        <div className="glass-strong grid gap-10 rounded-[2rem] p-8 sm:p-12 lg:grid-cols-[1.3fr_0.9fr] lg:p-16">
+        <div className="glass-strong grid gap-10 rounded-[22px] p-8 sm:p-12 lg:grid-cols-[1.3fr_0.9fr] lg:p-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +49,8 @@ export default function About() {
             {STATS.map((s) => (
               <div key={s.label} className="border-b border-[var(--panel-border)] pb-5 last:border-0 last:pb-0">
                 <div className="font-[family-name:var(--font-display)] text-4xl font-semibold text-gradient">
-                  <CountUp to={s.value} />
+                  {s.prefix}
+                  <CountUp to={s.value} decimals={s.decimals} />
                   {s.suffix}
                 </div>
                 <div className="mt-1 text-sm text-fg-muted">{s.label}</div>

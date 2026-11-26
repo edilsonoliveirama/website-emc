@@ -27,7 +27,7 @@ export default function Hero() {
   const [paused, setPaused] = useState(false);
   const sx = useMotionValue(-1000);
   const sy = useMotionValue(-1000);
-  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(91,140,255,0.10), transparent 70%)`;
+  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(41,120,237,0.10), transparent 70%)`;
 
   useEffect(() => {
     if (reduce || paused) return;
@@ -54,7 +54,7 @@ export default function Hero() {
           <motion.span
             variants={fadeUp}
             transition={{ duration: 0.6 }}
-            className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]"
+            className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[var(--accent)]"
           >
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-70" />
@@ -71,20 +71,26 @@ export default function Hero() {
             <span onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
               {HEADLINE.map((w, i) => {
                 const on = i === active;
+                // Pontuação colada à palavra: a vírgula nunca começa uma linha.
+                const punct = /^[,.]/.test(w.sep) ? w.sep[0] : "";
+                const rest = punct ? w.sep.slice(1) : w.sep;
                 return (
                   <Fragment key={w.text}>
-                    <span onMouseEnter={() => setActive(i)} className="relative inline-block cursor-default whitespace-nowrap">
-                      <span className={`transition-colors duration-500 ${on ? "text-gradient" : "text-fg"}`}>{w.text}</span>
-                      {on && (
-                        <motion.span
-                          layoutId="headline-underline"
-                          aria-hidden="true"
-                          className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] shadow-[0_0_16px_rgba(91,140,255,0.8)]"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
+                    <span className="whitespace-nowrap">
+                      <span onMouseEnter={() => setActive(i)} className="relative inline-block cursor-default">
+                        <span className={`transition-colors duration-500 ${on ? "text-gradient" : "text-fg"}`}>{w.text}</span>
+                        {on && (
+                          <motion.span
+                            layoutId="headline-underline"
+                            aria-hidden="true"
+                            className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-[var(--cta)]"
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          />
+                        )}
+                      </span>
+                      {punct && <span className="text-fg">{punct}</span>}
                     </span>
-                    <span className="text-fg">{w.sep}</span>
+                    <span className="text-fg">{rest}</span>
                   </Fragment>
                 );
               })}
@@ -102,14 +108,14 @@ export default function Hero() {
               href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-shine group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3.5 text-[15px] font-semibold text-bg shadow-[0_10px_40px_-10px_rgba(91,140,255,0.8)] transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
             >
               Quero meu diagnóstico gratuito
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.4} />
             </a>
             <a
               href="#servicos"
-              className="inline-flex w-full items-center justify-center rounded-full border border-[var(--panel-border-strong)] px-7 py-3.5 text-[15px] font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-md border border-[var(--panel-border-strong)] px-7 py-3.5 text-[15px] font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
             >
               Conhecer as soluções
             </a>

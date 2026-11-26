@@ -17,6 +17,7 @@ import Footer from "@/components/Footer";
 import StickyCta from "./StickyCta";
 import { whatsappLink } from "@/lib/contact";
 import { FOUNDER, FOUNDER_STATS } from "@/lib/founder";
+import BrandLogo from "@/components/BrandLogo";
 
 export type LpItem = { Icon: LucideIcon; title: string; desc: string };
 
@@ -87,8 +88,8 @@ function ItemGrid({ items, cols = "lg:grid-cols-3" }: { items: LpItem[]; cols?: 
   return (
     <div className={`mt-12 grid gap-5 sm:grid-cols-2 ${cols}`}>
       {items.map((it) => (
-        <div key={it.title} className="glass flex flex-col rounded-xl p-7">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
+        <div key={it.title} className="glass flex flex-col rounded-[14px] p-7">
+          <div className="flex h-11 w-11 items-center justify-center rounded-[14px] border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
             <it.Icon className="h-5 w-5 text-[var(--accent)]" strokeWidth={1.6} />
           </div>
           <h3 className="mt-4 font-[family-name:var(--font-display)] text-lg font-semibold">{it.title}</h3>
@@ -106,7 +107,7 @@ function PrimaryCta({ href, label, cta }: { href: string; label: string; cta: st
       target="_blank"
       rel="noopener noreferrer"
       data-cta={cta}
-      className="btn-shine group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-3.5 text-[15px] font-semibold text-bg shadow-[0_10px_40px_-10px_rgba(91,140,255,0.8)] transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+      className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-7 py-3.5 text-[15px] font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
     >
       {label}
       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.4} />
@@ -130,15 +131,14 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
             href="/"
             className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight"
           >
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_2px_var(--accent)]" />
-            EMC <span className="font-medium text-fg-muted">Soluções</span>
+            <BrandLogo height={36} priority />
           </Link>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
             data-cta={`${c.ctaLabel} (topo)`}
-            className="hidden items-center gap-2 rounded-full border border-[var(--panel-border-strong)] px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:inline-flex"
+            className="hidden items-center gap-2 rounded-md border border-[var(--panel-border-strong)] px-4 py-2 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:inline-flex"
           >
             <MessageCircle className="h-4 w-4 text-whatsapp" strokeWidth={2} />
             Falar no WhatsApp
@@ -151,7 +151,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
         <section className="px-4 pb-20 pt-12 sm:pt-16">
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
-              <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]">
+              <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[var(--accent)]">
                 <c.BadgeIcon className="h-3 w-3" strokeWidth={2} />
                 {c.badge}
               </span>
@@ -163,7 +163,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
                 <PrimaryCta href={href} label={c.ctaLabel} cta={`${c.ctaLabel} (hero)`} />
                 <a
                   href="#como-funciona"
-                  className="inline-flex w-full items-center justify-center rounded-full border border-[var(--panel-border-strong)] px-7 py-3.5 text-[15px] font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-md border border-[var(--panel-border-strong)] px-7 py-3.5 text-[15px] font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
                 >
                   Ver como funciona
                 </a>
@@ -187,7 +187,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
             <SectionHeading tag="Soa familiar?" title={c.pains.title} />
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {c.pains.items.map((p) => (
-                <li key={p} className="glass flex items-start gap-3 rounded-xl p-5 text-sm leading-relaxed text-fg-muted">
+                <li key={p} className="glass flex items-start gap-3 rounded-[14px] p-5 text-sm leading-relaxed text-fg-muted">
                   <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent-amber)]" strokeWidth={2} />
                   {p}
                 </li>
@@ -227,9 +227,9 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
             </SectionHeading>
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((s, i) => (
-                <div key={s.title} className="glass flex flex-col rounded-xl p-7">
+                <div key={s.title} className="glass flex flex-col rounded-[14px] p-7">
                   <span className="mono-label text-[11px] text-fg-dim">0{i + 1}</span>
-                  <div className="mt-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
+                  <div className="mt-3 flex h-11 w-11 items-center justify-center rounded-[14px] border border-[var(--panel-border-strong)] bg-[var(--accent-soft)]">
                     <s.Icon className="h-5 w-5 text-[var(--accent)]" strokeWidth={1.6} />
                   </div>
                   <h3 className="mt-4 font-[family-name:var(--font-display)] text-lg font-semibold">{s.title}</h3>
@@ -243,7 +243,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
         {/* Offer */}
         <section className="section-divider px-4 py-24">
           <div className="mx-auto max-w-3xl">
-            <div className="glass-strong rounded-[2rem] p-8 sm:p-12">
+            <div className="glass-strong rounded-[22px] p-8 sm:p-12">
               <span className="mono-label text-xs text-[var(--accent)]">Investimento</span>
               <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
                 {c.offer.title}
@@ -293,7 +293,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
                 Conheça a EMC →
               </Link>
             </div>
-            <div className="glass grid gap-5 rounded-[2rem] p-8">
+            <div className="glass grid gap-5 rounded-[22px] p-8">
               {FOUNDER_STATS.map((s) => (
                 <div key={s.label} className="border-b border-[var(--panel-border)] pb-5 last:border-0 last:pb-0">
                   <div className="font-[family-name:var(--font-display)] text-3xl font-semibold text-gradient">
@@ -315,7 +315,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
               {c.faqs.map((f) => (
                 <details
                   key={f.question}
-                  className="glass group rounded-xl px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
+                  className="glass group rounded-[14px] px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-[family-name:var(--font-display)] text-base font-semibold">
                     {f.question}
@@ -330,7 +330,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
 
         {/* Final CTA */}
         <section className="px-4 py-24">
-          <div className="glass-strong mx-auto max-w-3xl rounded-[2rem] p-8 text-center sm:p-12">
+          <div className="glass-strong mx-auto max-w-3xl rounded-[22px] p-8 text-center sm:p-12">
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl">
               {c.finalTitle}
             </h2>

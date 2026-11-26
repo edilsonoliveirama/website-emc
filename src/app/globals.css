@@ -1,22 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #06080f;
-  --bg-elev: #0b0f1c;
-  --panel: #0e1424;
-  --panel-border: rgba(140, 170, 255, 0.16);
-  --panel-border-strong: rgba(140, 170, 255, 0.32);
-  --fg: #e8ecfa;
-  --fg-muted: #93a0c2;
-  --fg-dim: #5f6b8c;
-  --accent: #5b8cff;
-  --accent-2: #7c5cff;
-  --accent-soft: rgba(91, 140, 255, 0.14);
-  --accent-mint: #3ddc97;
-  --accent-mint-soft: rgba(61, 220, 151, 0.14);
-  --accent-amber: #ffb454;
-  --accent-amber-soft: rgba(255, 180, 84, 0.14);
+  /* Manual de Marca EMC (EMC-BM-001 v1.0): Ink + EMC Blue, acento Teal, escala neutra.
+     O site usa a superfície escura (Ink); textos de destaque em Blue Light (AA sobre Ink). */
+  --bg: #0f131a;            /* Ink */
+  --bg-elev: #1a2030;       /* Ink 2 */
+  --panel: #151a24;
+  --panel-border: rgba(216, 220, 229, 0.10);
+  --panel-border-strong: rgba(216, 220, 229, 0.20);
+  --fg: #f7f8fa;            /* Paper */
+  --fg-muted: #a8b0bf;
+  --fg-dim: #6b7280;        /* Ink soft */
+  --accent: #5b97f2;        /* Blue Light: texto, ícones e links sobre Ink */
+  --accent-2: #43d1d1;      /* Teal: só grafismos e indicadores no escuro */
+  --accent-soft: rgba(41, 120, 237, 0.14);
+  --cta: #2978ed;           /* EMC Blue: cor de ação */
+  --cta-deep: #1554c4;      /* Blue Deep: hover/pressed */
+  --accent-mint: #43d1d1;
+  --accent-mint-soft: rgba(67, 209, 209, 0.14);
+  --accent-amber: #f59e0b;
+  --accent-amber-soft: rgba(245, 158, 11, 0.14);
   --whatsapp: #25d366;
+
+  /* Movimento */
+  --ease-base: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 150ms;
+  --t-base: 250ms;
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -32,6 +41,8 @@
   --color-fg-dim: var(--fg-dim);
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
+  --color-cta: var(--cta);
+  --color-cta-deep: var(--cta-deep);
   --color-accent-mint: var(--accent-mint);
   --color-accent-amber: var(--accent-amber);
   --color-whatsapp: var(--whatsapp);
@@ -56,8 +67,12 @@ body {
 }
 
 ::selection {
-  background: var(--accent);
-  color: #06080f;
+  background: var(--cta);
+  color: #ffffff;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
 }
 
 /* Ambient background grid + glow, shared across page */
@@ -67,68 +82,45 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(60vw 60vw at 82% -10%, rgba(124, 92, 255, 0.20), transparent 60%),
-    radial-gradient(50vw 50vw at 10% 20%, rgba(91, 140, 255, 0.16), transparent 60%),
-    radial-gradient(45vw 45vw at 15% 85%, rgba(61, 220, 151, 0.08), transparent 60%),
-    radial-gradient(40vw 40vw at 88% 65%, rgba(255, 180, 84, 0.06), transparent 60%),
-    linear-gradient(180deg, #06080f 0%, #070a13 40%, #06080f 100%);
+    radial-gradient(55vw 45vw at 80% -5%, rgba(41, 120, 237, 0.18), transparent 60%),
+    var(--bg);
 }
 
+/* Grid visível em fundo escuro: parte da marca (manual, cap. 09) */
 .bg-scene::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(140, 170, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(140, 170, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(80% 60% at 50% 0%, black, transparent 75%);
+  mask-image: radial-gradient(90% 70% at 60% 0%, black, transparent 80%);
 }
 
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  background: rgba(26, 32, 48, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--panel-border);
-  box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
-    0 30px 60px -30px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.35);
 }
 
 .glass-strong {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  background: rgba(26, 32, 48, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--panel-border-strong);
 }
 
+/* Destaque de título: Blue Light sólido (o manual não usa gradientes coloridos) */
 .text-gradient {
-  background: linear-gradient(100deg, #ffffff 10%, #b9c6ff 45%, #8ba4ff 65%, #7c5cff 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 
-/* Periodic light sweep across primary CTAs */
+/* Mantido por compatibilidade: o manual pede movimento só com função, sem brilho decorativo */
 .btn-shine {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.btn-shine::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
-  transform: translateX(-120%);
-  animation: btn-shine 5s ease-in-out 1.5s infinite;
-}
-
-@keyframes btn-shine {
-  0%, 72% { transform: translateX(-120%); }
-  100% { transform: translateX(120%); }
 }
 
 @keyframes flow-dash {
@@ -143,7 +135,7 @@ body {
 
 .spotlight-card__border {
   padding: 1px;
-  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(140, 170, 255, 0.55), transparent 70%);
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(91, 151, 242, 0.5), transparent 70%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -151,7 +143,8 @@ body {
 
 .mono-label {
   font-family: var(--font-mono), ui-monospace, monospace;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
+  font-weight: 500;
   text-transform: uppercase;
 }
 
@@ -226,7 +219,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--cta);
   outline-offset: 3px;
   border-radius: 4px;
 }

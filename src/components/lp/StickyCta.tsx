@@ -9,7 +9,7 @@ export default function StickyCta({ href, label }: { href: string; label: string
         target="_blank"
         rel="noopener noreferrer"
         data-cta={`${label} (barra fixa)`}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-3.5 text-[15px] font-semibold text-[#06210f]"
+        className="flex w-full items-center justify-center gap-2 rounded-md bg-whatsapp px-5 py-3.5 text-[15px] font-semibold text-[#06210f]"
       >
         <MessageCircle className="h-4 w-4" strokeWidth={2.4} />
         {label}

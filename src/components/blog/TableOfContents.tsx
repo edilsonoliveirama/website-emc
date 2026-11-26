@@ -34,7 +34,7 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
               {on && (
                 <motion.span
                   layoutId="toc-active"
-                  className="absolute -left-px top-0 h-full w-[2px] rounded-full bg-[var(--accent)] shadow-[0_0_10px_rgba(91,140,255,0.8)]"
+                  className="absolute -left-px top-0 h-full w-[2px] rounded-full bg-[var(--accent)] shadow-[0_0_10px_rgba(41,120,237,0.8)]"
                   transition={{ type: "spring", stiffness: 400, damping: 34 }}
                 />
               )}

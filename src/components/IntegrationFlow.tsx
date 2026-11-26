@@ -129,7 +129,7 @@ export default function IntegrationFlow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
+          className="glass mt-14 rounded-[22px] p-5 sm:p-8"
         >
           <div className="relative hidden h-36 w-full lg:block">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
@@ -139,7 +139,7 @@ export default function IntegrationFlow() {
                   d={curve(X[i], Y, X[i + 1], Y)}
                   lit={phase >= i * 2 + 1}
                   trigger={phase >= i * 2 + 1 ? `${cycle}-${i}` : null}
-                  color={i === 1 ? "#3ddc97" : "#8ba4ff"}
+                  color={i === 1 ? "#43d1d1" : "#5b97f2"}
                 />
               ))}
             </svg>

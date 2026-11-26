@@ -91,7 +91,7 @@ export default function BlogIndexPage() {
               <Reveal delay={0.1} className="mt-12">
                 <Link
                   href={`/blog/${featured.slug}`}
-                  className="glass group grid overflow-hidden rounded-[2rem] transition-[border-color] duration-300 hover:border-[var(--panel-border-strong)] lg:grid-cols-[1.25fr_1fr]"
+                  className="glass group grid overflow-hidden rounded-[22px] transition-[border-color] duration-300 hover:border-[var(--panel-border-strong)] lg:grid-cols-[1.25fr_1fr]"
                 >
                   {featured.coverImage && (
                     <div className="relative aspect-[1200/630] w-full overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
@@ -101,7 +101,7 @@ export default function BlogIndexPage() {
                         fill
                         priority
                         sizes="(min-width: 1024px) 55vw, 100vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        className="object-cover transition-transform duration-700 group-hover:-translate-y-0.5"
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06080f]/60 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#06080f]/40" />
                     </div>
@@ -140,8 +140,8 @@ export default function BlogIndexPage() {
           )}
 
           <Reveal className="mt-20">
-            <div className="relative overflow-hidden rounded-[2rem] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] px-8 py-12 sm:px-12">
-              <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(91,140,255,0.35),transparent)]" />
+            <div className="relative overflow-hidden rounded-[22px] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] px-8 py-12 sm:px-12">
+              <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(41,120,237,0.35),transparent)]" />
               <div className="relative grid items-center gap-6 lg:grid-cols-[1fr_auto]">
                 <div>
                   <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -153,7 +153,7 @@ export default function BlogIndexPage() {
                   href={whatsappLink("Olá! Vim pelo blog da EMC e quero um diagnóstico gratuito.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-shine inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={2.2} />
                   Falar no WhatsApp
