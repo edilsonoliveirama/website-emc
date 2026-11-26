@@ -24,7 +24,7 @@ export default function InlineCTA({
           href={whatsappLink(message)}
           target="_blank"
           rel="noopener noreferrer"
-          className="glass group inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
+          className="glass group inline-flex items-center gap-3 rounded-md px-5 py-3 text-sm font-medium text-fg transition-colors hover:border-[var(--panel-border-strong)]"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-whatsapp/15 text-whatsapp transition-transform group-hover:scale-110">
             <MessageCircle className="h-4 w-4" strokeWidth={2} />

@@ -72,7 +72,7 @@ export default function Pricing() {
               )}
               <SpotlightCard
                 glow={tier.featured ? "rgba(255,180,84,0.14)" : undefined}
-                className={`h-full rounded-2xl ${tier.featured ? "glass-strong border-[var(--accent-amber)]/40" : "glass"}`}
+                className={`h-full rounded-[14px] ${tier.featured ? "glass-strong border-[var(--accent-amber)]/40" : "glass"}`}
               >
                 <div className="flex h-full flex-col p-7">
                   <span className="mono-label text-[11px] text-fg-dim">Projeto</span>
@@ -83,7 +83,7 @@ export default function Pricing() {
                     className={`mt-6 inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-[12px] ${
                       tier.featured
                         ? "border-[var(--accent-amber)]/40 bg-[var(--accent-amber-soft)] text-[var(--accent-amber)]"
-                        : "border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[#bcd0ff]"
+                        : "border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[var(--accent)]"
                     }`}
                   >
                     Escopo e valor fechados antes de começar
@@ -106,8 +106,8 @@ export default function Pricing() {
                       href={whatsappLink(`Olá! Quero um orçamento para ${tier.quoteLabel}.`)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
-                        tier.featured ? "btn-shine bg-[var(--accent-amber)] text-bg" : "border border-[var(--panel-border-strong)] text-fg"
+                      className={`flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold transition-transform hover:-translate-y-0.5 ${
+                        tier.featured ? "bg-[var(--accent-amber)] text-bg" : "border border-[var(--panel-border-strong)] text-fg"
                       }`}
                     >
                       Solicitar orçamento
@@ -126,7 +126,7 @@ export default function Pricing() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-5"
         >
-          <SpotlightCard className="glass rounded-2xl">
+          <SpotlightCard className="glass rounded-[14px]">
             <div className="grid items-center gap-6 p-7 lg:grid-cols-[1fr_auto] lg:gap-10">
               <div>
                 <span className="mono-label text-[11px] text-fg-dim">Produtos por assinatura</span>
@@ -150,7 +150,7 @@ export default function Pricing() {
                   href={whatsappLink("Olá! Quero saber os planos de assinatura da EMC (gestão, nota fiscal, WhatsApp ou tokens de IA).")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/cta inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:bg-white/5"
+                  className="group/cta inline-flex items-center gap-2 rounded-md border border-[var(--panel-border-strong)] px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:bg-white/5"
                 >
                   Consultar planos
                   <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" strokeWidth={2.2} />

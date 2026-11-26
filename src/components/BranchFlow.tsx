@@ -124,7 +124,7 @@ export default function BranchFlow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="glass mt-14 rounded-[2rem] p-5 sm:p-8"
+          className="glass mt-14 rounded-[22px] p-5 sm:p-8"
         >
           {/* Desktop diagram */}
           <div className="relative hidden aspect-[2.3/1] w-full lg:block">
@@ -186,7 +186,7 @@ export default function BranchFlow() {
               <span
                 className={`mono-label rounded-full border px-3 py-1 text-[11px] transition-colors ${
                   sc.route === "auto"
-                    ? "border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[#bcd0ff]"
+                    ? "border-[var(--panel-border-strong)] bg-[var(--accent-soft)] text-[var(--accent)]"
                     : "border-[var(--accent-amber)]/40 bg-[var(--accent-amber-soft)] text-[var(--accent-amber)]"
                 }`}
               >

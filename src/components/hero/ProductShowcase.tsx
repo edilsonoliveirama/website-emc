@@ -69,15 +69,15 @@ function GestaoPanel() {
         <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="mt-2 h-[calc(100%-1.5rem)] w-full overflow-visible">
           <defs>
             <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#5b8cff" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#5b8cff" stopOpacity="0" />
+              <stop offset="0%" stopColor="#2978ed" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#2978ed" stopOpacity="0" />
             </linearGradient>
           </defs>
           <motion.path d={area} fill="url(#gArea)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.6 }} />
           <motion.path
             d={line}
             fill="none"
-            stroke="#5b8cff"
+            stroke="#2978ed"
             strokeWidth={1.2}
             vectorEffect="non-scaling-stroke"
             initial={{ pathLength: 0 }}
@@ -267,7 +267,7 @@ function WhatsAppPanel() {
 const MODELS = [
   { name: "GPT", color: "#3ddc97" },
   { name: "Claude", color: "#ffb454" },
-  { name: "GLM", color: "#5b8cff" },
+  { name: "GLM", color: "#2978ed" },
 ];
 
 const CALLS = [
@@ -324,8 +324,8 @@ function IaPanel() {
                 <motion.div
                   key={c.key}
                   layout
-                  initial={{ opacity: 0, y: -14, backgroundColor: "rgba(91,140,255,0.12)" }}
-                  animate={{ opacity: 1, y: 0, backgroundColor: "rgba(91,140,255,0)" }}
+                  initial={{ opacity: 0, y: -14, backgroundColor: "rgba(41,120,237,0.12)" }}
+                  animate={{ opacity: 1, y: 0, backgroundColor: "rgba(41,120,237,0)" }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.45, backgroundColor: { duration: 1.4 } }}
                   className="grid grid-cols-[1fr_auto_auto] items-center gap-x-3 border-b border-white/[0.04] px-3 py-2 text-[11.5px]"
@@ -402,7 +402,7 @@ export default function ProductShowcase({
       }}
       className="relative [perspective:1200px]"
     >
-      <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(closest-side,rgba(91,140,255,0.26),transparent)] blur-2xl" />
+      <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(closest-side,rgba(41,120,237,0.26),transparent)] blur-2xl" />
 
       <motion.div
         style={{ rotateX, rotateY }}

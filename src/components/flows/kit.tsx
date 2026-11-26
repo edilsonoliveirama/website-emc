@@ -39,7 +39,7 @@ export function Edge({
   trigger,
   delay = 0,
   duration = 0.9,
-  color = "#8ba4ff",
+  color = "#5b97f2",
 }: {
   d: string;
   lit: boolean;
@@ -121,9 +121,9 @@ export function NodeCard({
       }}
       transition={{ duration: 0.4 }}
       style={{ width }}
-      className={`relative rounded-2xl border bg-[#0b1120] p-3 text-left shadow-[0_20px_40px_-20px_rgba(0,0,0,0.9)] transition-[border-color,box-shadow] duration-500 ${
+      className={`relative rounded-[14px] border bg-[#0b1120] p-3 text-left shadow-[0_20px_40px_-20px_rgba(0,0,0,0.9)] transition-[border-color,box-shadow] duration-500 ${
         state === "active"
-          ? "border-[var(--panel-border-strong)] shadow-[0_0_0_1px_rgba(91,140,255,0.25),0_12px_36px_-8px_rgba(91,140,255,0.45)]"
+          ? "border-[var(--panel-border-strong)] shadow-[0_0_0_1px_rgba(41,120,237,0.25),0_12px_36px_-8px_rgba(41,120,237,0.45)]"
           : "border-white/[0.07]"
       }`}
     >
@@ -132,7 +132,7 @@ export function NodeCard({
         {pulse !== null && pulse !== undefined && (
           <motion.span
             key={String(pulse)}
-            className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--accent)]"
+            className="pointer-events-none absolute inset-0 rounded-[14px] border border-[var(--accent)]"
             initial={{ opacity: 0.8, scale: 1 }}
             animate={{ opacity: 0, scale: 1.12 }}
             exit={{ opacity: 0 }}
@@ -142,7 +142,7 @@ export function NodeCard({
       </AnimatePresence>
 
       <div className="flex items-center gap-2.5">
-        <span className={`relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl ${toneClass}`}>
+        <span className={`relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-[14px] ${toneClass}`}>
           {iconNode ?? <Icon className="h-[18px] w-[18px]" strokeWidth={1.9} />}
         </span>
         <div className="min-w-0 flex-1 text-[12.5px] font-semibold leading-tight text-fg">{title}</div>
@@ -188,7 +188,7 @@ export type LogLine = { id: string | number; time: string; text: string; tone?: 
 export function EventLog({ lines, title = "Bastidores", max = 4 }: { lines: LogLine[]; title?: string; max?: number }) {
   const dot = { accent: "bg-[var(--accent)]", mint: "bg-[var(--accent-mint)]", amber: "bg-[var(--accent-amber)]", whatsapp: "bg-whatsapp" };
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.07] bg-black/30">
+    <div className="overflow-hidden rounded-[14px] border border-white/[0.07] bg-black/30">
       <div className="flex items-center gap-2 border-b border-white/[0.05] px-4 py-2.5">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent-mint)] opacity-60" />

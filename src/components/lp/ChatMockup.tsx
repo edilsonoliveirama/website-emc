@@ -7,14 +7,14 @@ const MESSAGES: Msg[] = [
   { from: "bot", text: "Boa noite! Temos sim, 8 kits em estoque por R$ 89,90. Quer que eu separe um para você?", time: "23:14" },
   { from: "client", text: "Quero! Pode mandar o Pix", time: "23:15" },
   { from: "bot", text: "Pronto! Seu pedido #4821 está reservado. É só pagar pelo Pix abaixo:", time: "23:15", pix: true },
-  { from: "bot", text: "Pagamento confirmado ✅ A nota fiscal já foi para o seu e-mail.", time: "23:16" },
+  { from: "bot", text: "Pagamento confirmado. A nota fiscal já foi para o seu e-mail.", time: "23:16" },
 ];
 
 /** Static WhatsApp conversation: the AI answering, selling and charging after hours. */
 export default function ChatMockup() {
   return (
     <div className="relative mx-auto w-full max-w-[22rem]">
-      <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(closest-side,rgba(37,211,102,0.22),transparent)] blur-2xl" />
+      <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[22px] bg-[radial-gradient(closest-side,rgba(37,211,102,0.22),transparent)] blur-2xl" />
       <div className="overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#0b141a] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)]">
         <div className="flex items-center gap-3 bg-[#1f2c34] px-4 py-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-whatsapp/20 text-whatsapp">
@@ -30,7 +30,7 @@ export default function ChatMockup() {
           {MESSAGES.map((m, i) => (
             <div key={i} className={`flex ${m.from === "client" ? "justify-end" : "justify-start"}`}>
               <div
-                className={`max-w-[85%] rounded-xl px-3 py-2 text-[13px] leading-snug text-[#e9edef] ${
+                className={`max-w-[85%] rounded-[14px] px-3 py-2 text-[13px] leading-snug text-[#e9edef] ${
                   m.from === "client" ? "rounded-tr-sm bg-[#005c4b]" : "rounded-tl-sm bg-[#1f2c34]"
                 }`}
               >

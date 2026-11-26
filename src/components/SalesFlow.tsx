@@ -34,25 +34,25 @@ type PhoneConfig = {
 const AIRPODS_SCRIPT: Bubble[] = [
   { id: "m1", from: "customer", kind: "text", text: "Oi, vocês têm o AirPods Max preto?", sys: { stage: 0, log: "API WhatsApp: nova mensagem recebida", tone: "whatsapp" } },
   { id: "t1", from: "ai", kind: "typing", sys: { stage: 1, log: "IA: consultando catálogo e estoque", tone: "accent" } },
-  { id: "m2", from: "ai", kind: "image", text: "Temos! Esse aqui é o mais pedido 👇" },
+  { id: "m2", from: "ai", kind: "image", text: "Temos! Esse aqui é o mais pedido:" },
   { id: "m3", from: "ai", kind: "text", text: "AirPods Max, R$ 179,90, com frete grátis" },
   { id: "m4", from: "customer", kind: "text", text: "Perfeito, quero esse!" },
   { id: "m5", from: "ai", kind: "pix", text: "Segue o Pix para pagamento", sys: { stage: 2, log: "Pagamento: cobrança Pix gerada", tone: "amber" } },
   { id: "m6", from: "ai", kind: "system", text: "Pagamento confirmado", sys: { stage: 3, log: "Banco: pagamento confirmado", tone: "mint" } },
-  { id: "m7", from: "ai", kind: "text", text: "Recebemos! Comprovante enviado no WhatsApp e no e-mail ✅" },
+  { id: "m7", from: "ai", kind: "text", text: "Recebemos! Comprovante enviado no WhatsApp e no e-mail." },
   { id: "m8", from: "ai", kind: "system", text: "Pedido liberado: envio ou retirada na loja", sys: { stage: 4, log: "Gestão: estoque baixado e NF-e emitida", tone: "accent" } },
 ];
 
 const PIZZARIA_SCRIPT: Bubble[] = [
   { id: "p1", from: "customer", kind: "text", text: "Boa noite! Fazem entrega no Bairro Renascença?", sys: { stage: 0, log: "API WhatsApp: nova mensagem recebida", tone: "whatsapp" } },
   { id: "pt1", from: "ai", kind: "typing", sys: { stage: 1, log: "IA: conferindo área de entrega e cardápio", tone: "accent" } },
-  { id: "p2", from: "ai", kind: "text", text: "Fazemos sim! 🍕 Qual pizza você quer hoje?" },
+  { id: "p2", from: "ai", kind: "text", text: "Fazemos sim! Qual pizza você quer hoje?" },
   { id: "p3", from: "customer", kind: "text", text: "Uma grande de calabresa, borda recheada" },
   { id: "p4", from: "ai", kind: "text", text: "Grande calabresa c/ borda recheada, R$ 62,00\nEntrega em ~35 min" },
   { id: "p5", from: "customer", kind: "text", text: "Fechado!" },
   { id: "p6", from: "ai", kind: "pix", text: "Segue o Pix para pagamento", sys: { stage: 2, log: "Pagamento: cobrança Pix gerada", tone: "amber" } },
   { id: "p7", from: "ai", kind: "system", text: "Pagamento confirmado", sys: { stage: 3, log: "Banco: pagamento confirmado", tone: "mint" } },
-  { id: "p8", from: "ai", kind: "text", text: "Pedido na cozinha! Chega em ~35 min 🛵" },
+  { id: "p8", from: "ai", kind: "text", text: "Pedido na cozinha! Chega em ~35 min." },
   { id: "p9", from: "ai", kind: "system", text: "Pedido a caminho", sys: { stage: 4, log: "Gestão: pedido na cozinha e NF-e emitida", tone: "accent" } },
 ];
 
@@ -147,7 +147,7 @@ export default function SalesFlow() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="glass rounded-[2rem] p-5 sm:p-7"
+            className="glass rounded-[22px] p-5 sm:p-7"
           >
             <div className="flex items-center justify-between">
               <span className="mono-label text-[11px] text-fg-dim">Por trás da conversa</span>
@@ -266,7 +266,7 @@ function PhoneChat({
 
             {/* Chat header */}
             <div className="relative z-10 flex items-center gap-3 border-b border-black/10 bg-white/60 px-4 py-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-sm font-semibold text-white">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--cta)] text-sm font-semibold text-white">
                 IA
               </div>
               <div>
@@ -325,7 +325,7 @@ function ChatBubble({ bubble, productImage }: { bubble: Bubble; productImage?: s
         transition={{ duration: 0.3 }}
         className="flex justify-start"
       >
-        <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm border border-black/10 bg-white px-4 py-3 shadow-sm">
+        <div className="flex items-center gap-1 rounded-[14px] rounded-bl-sm border border-black/10 bg-white px-4 py-3 shadow-sm">
           {[0, 1, 2].map((i) => (
             <motion.span
               key={i}
@@ -347,14 +347,14 @@ function ChatBubble({ bubble, productImage }: { bubble: Bubble; productImage?: s
       className={`flex ${isCustomer ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`max-w-[80%] whitespace-pre-line rounded-2xl border px-4 py-2.5 text-[13px] leading-snug shadow-sm ${
+        className={`max-w-[80%] whitespace-pre-line rounded-[14px] border px-4 py-2.5 text-[13px] leading-snug shadow-sm ${
           isCustomer
             ? "rounded-br-sm border-transparent bg-[var(--accent)] text-white"
             : "rounded-bl-sm border-black/10 bg-white text-[#1b1b1f]"
         }`}
       >
         {bubble.kind === "image" && (
-          <div className="relative mb-2 flex h-32 w-full items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-[#f4f2ee]">
+          <div className="relative mb-2 flex h-32 w-full items-center justify-center overflow-hidden rounded-[14px] border border-black/10 bg-[#f4f2ee]">
             {productImage ? (
               <Image
                 src={productImage}
@@ -370,7 +370,7 @@ function ChatBubble({ bubble, productImage }: { bubble: Bubble; productImage?: s
         )}
 
         {bubble.kind === "pix" && (
-          <div className="mb-2 flex flex-col items-center gap-2 rounded-xl border border-black/10 bg-[#f4f2ee] p-4">
+          <div className="mb-2 flex flex-col items-center gap-2 rounded-[14px] border border-black/10 bg-[#f4f2ee] p-4">
             <QrCode className="h-16 w-16 text-[var(--accent-amber)]" strokeWidth={1.2} />
             <span className="mono-label text-[10px] text-[#6b6f7a]">pix copia e cola</span>
           </div>

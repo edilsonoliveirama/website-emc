@@ -7,7 +7,7 @@ import type { ReactNode, PointerEvent } from "react";
 export default function SpotlightCard({
   children,
   className = "",
-  glow = "rgba(91,140,255,0.16)",
+  glow = "rgba(41,120,237,0.16)",
 }: {
   children: ReactNode;
   className?: string;

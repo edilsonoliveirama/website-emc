@@ -121,7 +121,7 @@ export default function AthenaCasePage() {
                 <Link href="/#cases" className="hover:text-fg">Cases</Link>
               </nav>
               <Reveal y={12}>
-                <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[#bcd0ff]">
+                <span className="mono-label inline-flex items-center gap-2 rounded-full border border-[var(--panel-border-strong)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] text-[var(--accent)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                   Case · Athena
                 </span>
@@ -145,13 +145,13 @@ export default function AthenaCasePage() {
                     href={whatsappLink(CTA_MESSAGE)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-shine w-full rounded-full bg-[var(--accent)] px-6 py-3 text-center text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                    className="w-full rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
                   >
                     Quero um sistema assim
                   </a>
                   <a
                     href="#funcionalidades"
-                    className="w-full rounded-full border border-[var(--panel-border-strong)] px-6 py-3 text-center text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                    className="w-full rounded-md border border-[var(--panel-border-strong)] px-6 py-3 text-center text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
                   >
                     Ver funcionando
                   </a>
@@ -173,7 +173,7 @@ export default function AthenaCasePage() {
             <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {PAINS.map(({ Icon, text }, i) => (
                 <Reveal key={text} delay={i * 0.06}>
-                  <div className="flex h-full flex-col gap-3 rounded-2xl border border-[#ff6b6b]/20 bg-[#ff6b6b]/[0.04] p-5">
+                  <div className="flex h-full flex-col gap-3 rounded-[14px] border border-[#ff6b6b]/20 bg-[#ff6b6b]/[0.04] p-5">
                     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ff6b6b]/10 text-[#ff9b9b]">
                       <Icon className="h-4 w-4" strokeWidth={2} />
                     </span>
@@ -193,7 +193,7 @@ export default function AthenaCasePage() {
               title="Desenhado em torno do ciclo real de uma vaga"
               text="Uma plataforma em nuvem, multiempresa, que acompanha cada vaga do primeiro contato até a nota fiscal."
             />
-            <Reveal delay={0.1} className="glass mt-14 rounded-[2rem] p-5 sm:p-8">
+            <Reveal delay={0.1} className="glass mt-14 rounded-[22px] p-5 sm:p-8">
               <VacancyCycle />
             </Reveal>
           </div>
@@ -255,8 +255,8 @@ export default function AthenaCasePage() {
 
         {/* CTA */}
         <section className="px-4 pb-28 pt-4">
-          <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] px-8 py-16 text-center sm:px-16">
-            <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(91,140,255,0.4),transparent)]" />
+          <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-[22px] border border-[var(--panel-border-strong)] bg-gradient-to-br from-[#10204a] via-[#0b1222] to-[#090d18] px-8 py-16 text-center sm:px-16">
+            <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(41,120,237,0.4),transparent)]" />
             <h2 className="relative font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
               Sua operação também está espalhada em planilhas?
             </h2>
@@ -268,14 +268,14 @@ export default function AthenaCasePage() {
                 href={whatsappLink(CTA_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-shine inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98] sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--cta)] hover:bg-[var(--cta-deep)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto"
               >
                 <MessageCircle className="h-4 w-4" strokeWidth={2.2} />
                 Fale com a EMC Soluções
               </a>
               <Link
                 href="/#servicos"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/20 px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5 sm:w-auto"
               >
                 Ver todas as soluções
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
