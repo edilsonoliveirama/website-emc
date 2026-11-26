@@ -42,7 +42,7 @@ const config: LandingConfig = {
   guarantees: ["Diagnóstico gratuito", "Preço fechado antes de começar", "Sem fidelidade"],
   visual: <ChatMockup />,
   pains: {
-    title: "Quanto cliente seu está ficando sem resposta?",
+    title: "Quantos clientes estão ficando sem resposta no seu WhatsApp?",
     items: [
       "O cliente chama à noite ou no fim de semana e acaba comprando no concorrente que respondeu primeiro.",
       "Sua equipe passa o dia respondendo as mesmas perguntas: preço, horário, endereço, se tem disponível.",

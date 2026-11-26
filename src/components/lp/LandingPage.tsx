@@ -184,7 +184,7 @@ export default function LandingPage({ c }: { c: LandingConfig }) {
         {/* Pains */}
         <section className="section-divider px-4 py-24">
           <div className="mx-auto max-w-3xl">
-            <SectionHeading tag="Soa familiar?" title={c.pains.title} />
+            <SectionHeading tag="O problema" title={c.pains.title} />
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {c.pains.items.map((p) => (
                 <li key={p} className="glass flex items-start gap-3 rounded-[14px] p-5 text-sm leading-relaxed text-fg-muted">
