@@ -9,7 +9,7 @@ import {
   Stethoscope,
   UtensilsCrossed,
   Store,
-  Wrench,
+  PartyPopper,
 } from "lucide-react";
 import LandingPage, { type LandingConfig } from "@/components/lp/LandingPage";
 import ChatMockup from "@/components/lp/ChatMockup";
@@ -36,31 +36,46 @@ const config: LandingConfig = {
   titleStart: "Seu WhatsApp respondendo, vendendo e cobrando",
   titleHighlight: "24 horas por dia.",
   subtitle:
-    "Um assistente de IA que responde na hora, tira dúvidas, informa preço e disponibilidade, envia o Pix e chama sua equipe quando o assunto pede uma pessoa. Configurado para o jeito do seu negócio.",
+    "Um assistente de IA que responde na hora, faz as perguntas certas, agenda, envia o Pix e só chama sua equipe quando o cliente já disse o que precisa. Configurado para o jeito do seu negócio.",
   ctaLabel: "Quero meu diagnóstico gratuito",
   ctaMessage: "Olá! Vi a página de atendimento com IA no WhatsApp e quero meu diagnóstico gratuito.",
   guarantees: ["Diagnóstico gratuito", "Preço fechado antes de começar", "Sem fidelidade"],
   visual: <ChatMockup />,
   pains: {
-    title: "Quanto cliente seu está ficando sem resposta?",
+    title: "Quantos clientes estão ficando sem resposta no seu WhatsApp?",
     items: [
-      "O cliente chama à noite ou no fim de semana e acaba comprando no concorrente que respondeu primeiro.",
+      "O cliente chama à noite ou no fim de semana e fecha com o concorrente que respondeu primeiro.",
       "Sua equipe passa o dia respondendo as mesmas perguntas: preço, horário, endereço, se tem disponível.",
-      "Pedido anotado errado, cobrança esquecida e cliente que some depois do orçamento.",
-      "Você não sabe quantas conversas viraram venda e quantas ficaram pelo caminho.",
+      "Informação pela metade: alguém precisa voltar ao cliente para perguntar data, quantidade ou endereço.",
+      "Cliente que some depois do orçamento, e você sem saber quantas conversas viraram venda.",
     ],
   },
   features: {
     tag: "O que a IA faz",
-    title: "Um atendente que não dorme, não esquece e não perde a paciência",
+    title: "Um atendente que não dorme, não esquece e não deixa ninguém esperando",
     subtitle: "Treinado com as informações do seu negócio e ligado aos seus sistemas.",
     items: [
       { Icon: Clock, title: "Responde na hora, 24h", desc: "Nenhuma mensagem fica sem resposta, nem às 23h de domingo." },
       { Icon: QrCode, title: "Vende e cobra com Pix", desc: "Monta o pedido, gera o Pix e confirma quando o pagamento cai." },
-      { Icon: UserRound, title: "Chama um humano quando precisa", desc: "Reclamação, negociação ou caso delicado vão direto para sua equipe, com o histórico da conversa." },
+      { Icon: UserRound, title: "Qualifica antes de passar", desc: "Faz as perguntas padrão, organiza as respostas e só então chama sua equipe, que já entra sabendo o que o cliente quer." },
       { Icon: Plug, title: "Conectada aos seus sistemas", desc: "Consulta estoque, agenda ou pedidos de verdade, em vez de inventar resposta." },
-      { Icon: BellRing, title: "Lembretes e cobranças", desc: "Confirma agendamentos, avisa sobre entregas e lembra pagamentos em atraso." },
+      { Icon: BellRing, title: "Agenda e lembra", desc: "Marca horários e eventos, confirma na véspera e lembra pagamentos em atraso." },
       { Icon: Bot, title: "API oficial do WhatsApp", desc: "Funciona pela API oficial da Meta, com o nome e a marca da sua empresa." },
+    ],
+  },
+  caseStudy: {
+    logo: "/cases/festou/logo.webp",
+    name: "Festou SLZ",
+    segment: "Pegue e monte e personalizados · São Luís",
+    summary:
+      "A Festou recebe pedidos de festa pelo WhatsApp a qualquer hora. O assistente da EMC atende cada cliente na hora, coleta tudo o que a equipe precisa saber e agenda o evento. Quando alguém da Festou entra na conversa, as principais informações já estão respondidas.",
+    flowTitle: "O que o assistente faz",
+    flow: [
+      { title: "Atende 24 horas", desc: "Nenhum cliente fica esperando, nem de madrugada ou no fim de semana." },
+      { title: "Classifica o atendimento", desc: "Identifica o que o cliente quer e organiza a conversa." },
+      { title: "Faz as perguntas padrão", desc: "Data, tipo de festa e demais detalhes, sem ninguém da equipe precisar perguntar." },
+      { title: "Agenda o evento", desc: "Registra a data e os detalhes combinados." },
+      { title: "Passa para a equipe", desc: "O atendente entra com as principais informações já respondidas e foca em fechar." },
     ],
   },
   demo: <SalesFlow />,
@@ -71,7 +86,7 @@ const config: LandingConfig = {
       { Icon: Stethoscope, title: "Clínicas e consultórios", desc: "Agenda, confirma e remarca consultas sem a recepção parar." },
       { Icon: UtensilsCrossed, title: "Restaurantes e delivery", desc: "Mostra o cardápio, fecha o pedido e recebe pelo Pix." },
       { Icon: Store, title: "Lojas e varejo", desc: "Informa preço e disponibilidade e fecha a venda pela conversa." },
-      { Icon: Wrench, title: "Prestadores de serviço", desc: "Coleta as informações, envia orçamento e agenda a visita." },
+      { Icon: PartyPopper, title: "Eventos e locação", desc: "Confere a data, coleta os detalhes da festa e reserva o evento." },
     ],
   },
   offer: {
@@ -94,6 +109,11 @@ const config: LandingConfig = {
       question: "E se a IA não souber responder?",
       answer:
         "Ela responde só com base nas informações do seu negócio. Quando não sabe, ou quando o cliente pede, passa a conversa para alguém da sua equipe com todo o histórico.",
+    },
+    {
+      question: "A IA consegue agendar?",
+      answer:
+        "Sim. Ela coleta as informações, confere a disponibilidade e registra o agendamento. Na Festou SLZ, por exemplo, o assistente agenda os eventos e a equipe entra depois com tudo respondido.",
     },
     {
       question: "O cliente vai perceber que é um robô?",
