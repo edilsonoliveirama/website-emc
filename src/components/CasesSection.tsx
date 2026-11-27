@@ -9,6 +9,9 @@ import { BrowserFrame, PhoneFrame } from "./cases/sintaf/visuals";
 import { DocumentosScreen, FiliadoPhoneScreen } from "./cases/sintaf/screens";
 import { VisaoGeralScreen } from "./cases/athena/screens";
 import { SINTAF_CASE_ENABLED } from "@/lib/features";
+import ChatMockup, { type Msg } from "./lp/ChatMockup";
+import { whatsappLink } from "@/lib/contact";
+import { Clock, ListChecks, CalendarCheck, UserRound } from "lucide-react";
 
 export default function CasesSection() {
   return (
@@ -23,12 +26,13 @@ export default function CasesSection() {
         >
           <span className="mono-label text-xs text-[var(--accent)]">Cases</span>
           <h2 id="cases-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            Sistemas que construímos
+            Quem já trabalha com a EMC
           </h2>
-          <p className="mt-4 text-fg-muted">Software sob medida em produção, resolvendo problemas reais de quem usa todo dia.</p>
+          <p className="mt-4 text-fg-muted">Soluções em produção, usadas todos os dias por empresas reais.</p>
         </motion.div>
 
         <div className="mt-14 space-y-8">
+          <FestouCard />
           <AthenaCard />
           {SINTAF_CASE_ENABLED && <SintafCard />}
         </div>
@@ -191,5 +195,67 @@ function SintafCard() {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+const FESTOU_CHAT: Msg[] = [
+  { from: "client", text: "Oi! Vocês fazem pegue e monte para o dia 14?", time: "22:41" },
+  { from: "bot", text: "Oi! Fazemos sim. Para eu adiantar seu atendimento: é festa de quantos anos e qual o tema?", time: "22:41" },
+  { from: "client", text: "3 anos, tema Safari. Uns 40 convidados", time: "22:43" },
+  { from: "bot", text: "Anotado: dia 14, Safari, 3 anos, 40 convidados. Já deixei a data pré-agendada e nossa equipe continua com você para fechar os detalhes.", time: "22:43" },
+];
+
+function FestouCard() {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6 }}
+      className="glass-strong grid gap-10 overflow-hidden rounded-[22px] p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"
+    >
+      <div>
+        <div className="flex items-center gap-4">
+          <Image src="/cases/festou/logo.webp" alt="Logo Festou SLZ" width={56} height={56} className="h-14 w-14 rounded-[14px]" />
+          <div>
+            <span className="mono-label text-[11px] text-[var(--accent)]">Case · Festou SLZ</span>
+            <h3 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold">Atendimento com IA no WhatsApp</h3>
+          </div>
+        </div>
+        <p className="mt-5 leading-relaxed text-fg-muted">
+          A Festou, de pegue e monte e personalizados em São Luís, recebe pedidos de festa pelo WhatsApp a qualquer hora.
+          O assistente da EMC atende na hora, coleta o que a equipe precisa saber e agenda o evento. Quando alguém da
+          Festou entra na conversa, as principais informações já estão respondidas.
+        </p>
+        <Highlights
+          color="var(--accent)"
+          items={[
+            { Icon: Clock, value: "24 horas", label: "de atendimento, inclusive fim de semana" },
+            { Icon: ListChecks, value: "Perguntas padrão", label: "feitas e organizadas pela IA" },
+            { Icon: CalendarCheck, value: "Eventos agendados", label: "direto na conversa" },
+            { Icon: UserRound, value: "Equipe entra depois", label: "só para fechar" },
+          ]}
+        />
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={whatsappLink("Olá! Vi o case da Festou no site e quero um atendimento com IA assim no meu WhatsApp.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="Case Festou: quero um assim"
+            className="group inline-flex items-center justify-center gap-2 rounded-md bg-[var(--cta)] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--cta-deep)]"
+          >
+            Quero um assistente assim
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.4} />
+          </a>
+          <Link
+            href="/lp/atendimento-ia-whatsapp"
+            className="inline-flex items-center justify-center rounded-md border border-[var(--panel-border-strong)] px-6 py-3 text-sm font-medium text-fg transition-colors hover:bg-white/5"
+          >
+            Como funciona
+          </Link>
+        </div>
+      </div>
+      <ChatMockup messages={FESTOU_CHAT} contact="Festou SLZ" />
+    </motion.article>
   );
 }

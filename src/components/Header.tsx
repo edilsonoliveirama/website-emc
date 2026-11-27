@@ -7,11 +7,11 @@ import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
 import BrandLogo from "@/components/BrandLogo";
 
 const LINKS = [
-  { href: "/#servicos", label: "Serviços", id: "servicos" },
+  { href: "/#servicos", label: "Soluções", id: "servicos" },
   { href: "/#cases", label: "Cases", id: "cases" },
+  { href: "/#investimento", label: "Preços", id: "investimento" },
   { href: "/#sobre", label: "Sobre", id: "sobre" },
   { href: "/blog", label: "Blog", id: "blog" },
-  { href: "/#contato", label: "Contato", id: "contato" },
 ];
 
 export default function Header() {
