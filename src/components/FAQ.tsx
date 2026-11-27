@@ -19,12 +19,27 @@ const FAQS = [
   {
     question: "Quanto custa um projeto com a EMC Soluções?",
     answer:
-      "Depende do escopo. Depois de um diagnóstico gratuito, a EMC envia uma proposta com escopo e valor fechados antes de começar, sem surpresa no meio do projeto. Sistema de gestão, emissor de nota fiscal, API de WhatsApp e tokens de IA têm planos mensais conforme o volume de uso.",
+      "Depende do escopo. Depois de um diagnóstico gratuito, a EMC envia uma proposta com escopo e valor fechados antes de começar, sem surpresa no meio do projeto. Os produtos por assinatura têm planos mensais conforme o volume de uso; o sistema de gestão começa em R$ 499 por mês, sem fidelidade.",
+  },
+  {
+    question: "Em quanto tempo fica pronto?",
+    answer:
+      "Depende do que for preciso integrar. O prazo vai por escrito na proposta, junto com o valor, e a entrega acontece em etapas: você começa a usar partes do sistema antes do fim do projeto.",
+  },
+  {
+    question: "E se eu não gostar do resultado?",
+    answer:
+      "Cada etapa é testada e aprovada por você antes da próxima, então os ajustes acontecem durante o projeto, não no final. Nas assinaturas não há fidelidade: se não fizer sentido, você cancela.",
+  },
+  {
+    question: "Meus dados e os dos meus clientes ficam seguros?",
+    answer:
+      "Sim. A EMC é fundada por um especialista em segurança e nuvem com certificações Microsoft, e aplica nos projetos de pequenas empresas as mesmas práticas usadas em telecom e no setor público: acesso controlado, registro de atividades e backups.",
   },
   {
     question: "É possível automatizar vendas pelo WhatsApp com a EMC?",
     answer:
-      "Sim. A EMC constrói agentes de IA que conduzem toda a venda pelo WhatsApp: respondem dúvidas, enviam fotos e valores de produtos, geram cobrança via Pix e confirmam o pagamento, sem intervenção manual.",
+      "Sim. A EMC constrói agentes de IA que conduzem toda a venda pelo WhatsApp: respondem dúvidas, fazem as perguntas padrão, agendam, enviam fotos e valores de produtos, geram cobrança via Pix e confirmam o pagamento. A equipe só entra quando o cliente já disse o que precisa, como no case da Festou SLZ.",
   },
   {
     question: "A EMC integra sistemas que já uso, como ERP ou CRM?",

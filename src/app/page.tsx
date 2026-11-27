@@ -5,10 +5,9 @@ import CasesSection from "@/components/CasesSection";
 import SalesFlow from "@/components/SalesFlow";
 import InlineCTA from "@/components/InlineCTA";
 import IntegrationFlow from "@/components/IntegrationFlow";
-import BranchFlow from "@/components/BranchFlow";
-import MergeFlow from "@/components/MergeFlow";
 import BlogTeaser from "@/components/BlogTeaser";
 import HowWeWork from "@/components/HowWeWork";
+import WhyEMC from "@/components/WhyEMC";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
 import Founder from "@/components/Founder";
@@ -28,22 +27,21 @@ export default function Home() {
         <CasesSection />
         <SalesFlow />
         <InlineCTA
-          text="Quero um fluxo assim para o meu negócio"
+          text="Quero um atendimento assim no meu WhatsApp"
           message="Olá! Vi o exemplo de venda automatizada no site e quero algo assim para o meu negócio."
         />
+        <WhyEMC />
         <IntegrationFlow />
-        <BranchFlow />
-        <MergeFlow />
         <InlineCTA
           text="Quero integrar meus sistemas"
           message="Olá! Vi os exemplos de integração no site e quero saber mais."
         />
-        <BlogTeaser />
         <HowWeWork />
         <Pricing />
         <About />
         <Founder />
         <FAQ />
+        <BlogTeaser />
         <Contact />
       </main>
       <Footer />

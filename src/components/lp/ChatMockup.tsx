@@ -1,6 +1,6 @@
 import { CheckCheck, Sparkles } from "lucide-react";
 
-type Msg = { from: "client" | "bot"; text: string; time: string; pix?: boolean };
+export type Msg = { from: "client" | "bot"; text: string; time: string; pix?: boolean };
 
 const MESSAGES: Msg[] = [
   { from: "client", text: "Boa noite! Vocês ainda têm o kit de 12 unidades?", time: "23:14" },
@@ -11,7 +11,13 @@ const MESSAGES: Msg[] = [
 ];
 
 /** Static WhatsApp conversation: the AI answering, selling and charging after hours. */
-export default function ChatMockup() {
+export default function ChatMockup({
+  messages = MESSAGES,
+  contact = "Sua empresa",
+}: {
+  messages?: Msg[];
+  contact?: string;
+}) {
   return (
     <div className="relative mx-auto w-full max-w-[22rem]">
       <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[22px] bg-[radial-gradient(closest-side,rgba(37,211,102,0.22),transparent)] blur-2xl" />
@@ -21,13 +27,13 @@ export default function ChatMockup() {
             <Sparkles className="h-4 w-4" strokeWidth={2} />
           </div>
           <div className="leading-tight">
-            <p className="text-sm font-semibold text-white">Sua empresa</p>
+            <p className="text-sm font-semibold text-white">{contact}</p>
             <p className="text-[11px] text-[#8696a0]">online · atendimento com IA</p>
           </div>
         </div>
 
         <div className="flex flex-col gap-2 px-3 py-4" aria-label="Exemplo de conversa no WhatsApp">
-          {MESSAGES.map((m, i) => (
+          {messages.map((m, i) => (
             <div key={i} className={`flex ${m.from === "client" ? "justify-end" : "justify-start"}`}>
               <div
                 className={`max-w-[85%] rounded-[14px] px-3 py-2 text-[13px] leading-snug text-[#e9edef] ${

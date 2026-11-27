@@ -13,6 +13,7 @@ import {
   Check,
   CheckCheck,
 } from "lucide-react";
+import Link from "next/link";
 import SpotlightCard from "./SpotlightCard";
 import { whatsappLink } from "@/lib/contact";
 
@@ -24,6 +25,11 @@ type Service = {
   points: string[];
   span: string;
   message: string;
+  /** Página com mais detalhes (landing page ou case). */
+  href?: string;
+  hrefLabel?: string;
+  price?: string;
+  badge?: string;
   visual: ReactNode;
 };
 
@@ -167,51 +173,45 @@ function FlowVisual() {
 
 const SERVICES: Service[] = [
   {
+    id: "atendimento-ia",
+    Icon: MessageCircle,
+    title: "Atendimento com IA no WhatsApp",
+    desc: "Um assistente que responde na hora, 24 horas, faz as perguntas certas, agenda e cobra pelo Pix. Sua equipe só entra quando o cliente já disse o que precisa.",
+    points: ["Responde em segundos, inclusive à noite e no fim de semana", "Qualifica e agenda antes de passar para a equipe", "API oficial do WhatsApp, com a marca da sua empresa"],
+    span: "lg:col-span-2",
+    message: "Olá! Quero saber sobre o atendimento com IA no WhatsApp.",
+    href: "/lp/atendimento-ia-whatsapp",
+    badge: "Mais procurado",
+    visual: <WhatsVisual />,
+  },
+  {
     id: "gestao",
     Icon: LayoutDashboard,
     title: "Sistema de gestão",
     desc: "Vendas, financeiro, estoque e clientes em um só lugar, com os números do negócio na tela em vez de espalhados em planilhas.",
     points: ["Faturamento e contas a receber em tempo real", "Alerta de estoque mínimo", "Acesso pelo computador ou celular"],
-    span: "lg:col-span-2",
+    span: "",
     message: "Olá! Quero conhecer o sistema de gestão da EMC.",
+    href: "/lp/sistema-de-gestao",
+    price: "A partir de R$ 499/mês",
     visual: <BarsVisual />,
   },
   {
     id: "nfe",
     Icon: FileText,
     title: "Emissor de nota fiscal",
-    desc: "Emissão integrada às vendas, sem redigitar pedido. XML e DANFE enviados ao cliente automaticamente.",
+    desc: "A nota sai da própria venda, sem redigitar o pedido. XML e DANFE vão para o cliente automaticamente.",
     points: ["Nota a partir da venda", "Envio automático ao cliente"],
     span: "",
     message: "Olá! Quero conhecer o emissor de nota fiscal da EMC.",
     visual: <NfeVisual />,
   },
   {
-    id: "whatsapp",
-    Icon: MessageCircle,
-    title: "API de WhatsApp",
-    desc: "Seus sistemas falando com o cliente no WhatsApp: confirmação de pedido, cobrança, aviso de entrega.",
-    points: ["Mensagens disparadas pelo sistema", "Status de entrega e leitura"],
-    span: "",
-    message: "Olá! Quero conhecer a API de WhatsApp da EMC.",
-    visual: <WhatsVisual />,
-  },
-  {
-    id: "ia",
-    Icon: Sparkles,
-    title: "Tokens de IA",
-    desc: "Acesso a GPT, Claude, GLM e outros modelos com uma única chave, para usar IA em qualquer sistema sem depender de um fornecedor só.",
-    points: ["Um ponto de acesso para vários modelos", "Consumo e custo visíveis em um painel", "Limite de gasto por chave"],
-    span: "lg:col-span-2",
-    message: "Olá! Quero saber sobre o fornecimento de tokens de IA (GPT, Claude, GLM).",
-    visual: <ModelsVisual />,
-  },
-  {
     id: "integracao",
     Icon: Workflow,
     title: "Integração de sistemas",
-    desc: "ERP, CRM, loja virtual e planilhas trocando dados sozinhos. Fim do copiar e colar entre sistemas.",
-    points: ["Conexão por API e webhooks", "Dados sincronizados em tempo real"],
+    desc: "ERP, CRM, loja virtual e planilhas trocando dados sozinhos, e avisos de pedido, cobrança e entrega saindo pelo WhatsApp. Fim do copiar e colar.",
+    points: ["Dados sincronizados entre os sistemas", "Mensagens automáticas no WhatsApp"],
     span: "lg:col-span-2",
     message: "Olá! Quero integrar os sistemas da minha empresa.",
     visual: <FlowVisual />,
@@ -224,7 +224,19 @@ const SERVICES: Service[] = [
     points: ["Do diagnóstico ao suporte"],
     span: "",
     message: "Olá! Quero um sistema sob medida para a minha empresa.",
+    href: "/cases/athena",
+    hrefLabel: "Ver um case",
     visual: <CodeVisual />,
+  },
+  {
+    id: "ia",
+    Icon: Sparkles,
+    title: "IA dentro dos seus sistemas",
+    desc: "GPT, Claude e outros modelos com uma única chave, para colocar IA em qualquer sistema sem depender de um fornecedor só.",
+    points: ["Vários modelos com um só acesso", "Consumo e custo visíveis em um painel", "Limite de gasto por chave"],
+    span: "lg:col-span-2",
+    message: "Olá! Quero saber sobre o fornecimento de tokens de IA (GPT, Claude, GLM).",
+    visual: <ModelsVisual />,
   },
 ];
 
@@ -241,10 +253,10 @@ export default function Services() {
         >
           <span className="mono-label text-xs text-[var(--accent)]">Soluções</span>
           <h2 id="servicos-heading" className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-            Tudo que a sua empresa precisa, conectado
+            Escolha por onde começar
           </h2>
           <p className="mt-4 text-fg-muted">
-            Use uma solução ou todas juntas. Cada uma funciona sozinha e conversa com as outras quando fizer sentido.
+            Cada solução funciona sozinha. Comece pela que resolve o problema mais urgente e conecte as outras quando fizer sentido.
           </p>
         </motion.div>
 
@@ -275,7 +287,15 @@ export default function Services() {
                     </a>
                   </div>
 
-                  <h3 className="mt-5 font-[family-name:var(--font-display)] text-xl font-semibold">{s.title}</h3>
+                  <h3 className="mt-5 flex flex-wrap items-center gap-2 font-[family-name:var(--font-display)] text-xl font-semibold">
+                    {s.title}
+                    {s.badge && (
+                      <span className="mono-label rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] text-[var(--accent)]">
+                        {s.badge}
+                      </span>
+                    )}
+                  </h3>
+                  {s.price && <p className="mt-1 text-sm font-semibold text-[var(--accent)]">{s.price}</p>}
                   <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.desc}</p>
 
                   <ul className="mt-4 space-y-1.5">
@@ -286,6 +306,16 @@ export default function Services() {
                       </li>
                     ))}
                   </ul>
+
+                  {s.href && (
+                    <Link
+                      href={s.href}
+                      className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[var(--accent)] underline-offset-4 hover:underline"
+                    >
+                      {s.hrefLabel ?? "Ver como funciona"}
+                      <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.2} />
+                    </Link>
+                  )}
 
                   <div className="mt-auto pt-6">
                     <div className="rounded-[14px] border border-white/[0.05] bg-black/20 p-4">{s.visual}</div>

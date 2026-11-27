@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import FlowField from "./hero/FlowField";
+import HeroProof from "./HeroProof";
 import ProductShowcase, { PRODUCTS, AUTO_MS } from "./hero/ProductShowcase";
 import { whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from "@/lib/contact";
 
@@ -14,7 +15,7 @@ const HEADLINE = [
   { text: "WhatsApp", sep: " e " },
   { text: "IA", sep: "." },
 ];
-const GUARANTEES = ["Diagnóstico gratuito", "Resposta em até 1 dia útil", "Sem fidelidade"];
+const GUARANTEES = ["Diagnóstico gratuito", "Preço fechado antes de começar", "Sem fidelidade"];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -95,12 +96,12 @@ export default function Hero() {
                 );
               })}
             </span>
-            <span className="mt-2 block text-fg-muted">Tudo integrado, em um só parceiro.</span>
+            <span className="mt-2 block text-fg-muted">Menos trabalho, mais venda.</span>
           </motion.h1>
 
           <motion.p variants={fadeUp} transition={{ duration: 0.7 }} className="mt-6 max-w-xl text-base leading-relaxed text-fg-muted sm:text-lg">
-            Sistema de gestão, emissor de nota fiscal, API de WhatsApp e acesso a GPT, Claude, GLM e outros
-            modelos de IA. Cada peça conversa com a outra, e o suporte é de quem desenvolveu.
+            Atendimento com IA no WhatsApp, sistema de gestão e nota fiscal funcionando juntos. Sua empresa para de
+            perder cliente sem resposta e de digitar a mesma informação duas vezes, e o suporte é de quem desenvolveu.
           </motion.p>
 
           <motion.div variants={fadeUp} transition={{ duration: 0.6 }} className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
@@ -129,6 +130,10 @@ export default function Hero() {
               </li>
             ))}
           </motion.ul>
+
+          <motion.div variants={fadeUp} transition={{ duration: 0.6 }} className="mt-8 border-t border-[var(--panel-border)] pt-6">
+            <HeroProof />
+          </motion.div>
         </motion.div>
 
         <motion.div
